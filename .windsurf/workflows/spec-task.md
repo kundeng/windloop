@@ -1,17 +1,17 @@
 ---
-description: Implement a single task from specs/tasks.md by ID. Use this for parallel worktree execution where each Cascade handles one task.
+description: Implement a single task from .windloop/<name>/tasks.md by ID. Use this for parallel worktree execution where each Cascade handles one task.
 ---
 
 ## Implement a Single Task
 
-Specify the spec name and task ID in your message (e.g. `/implement-task taskrunner T3`).
-If only one spec exists in `specs/index.md`, the spec name can be omitted (e.g. `/implement-task T3`).
+Specify the spec name and task ID in your message (e.g. `/spec-task taskrunner T3`).
+If only one spec exists in `.windloop/index.md`, the spec name can be omitted (e.g. `/spec-task T3`).
 
 Let SPEC be the resolved spec name.
 
-1. Read `specs/SPEC/spec.md` to understand the project scope and conventions.
+1. Read `.windloop/SPEC/spec.md` to understand the project scope and conventions.
 
-2. Read `specs/SPEC/tasks.md` and locate the specified task by ID.
+2. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
 
 3. Verify that all dependencies for this task are marked as done (`[x]`). If not, report which dependencies are missing and STOP.
 
@@ -29,14 +29,14 @@ Let SPEC be the resolved spec name.
 8. If verification fails, analyze and fix. Retry up to 3 times.
 
 // turbo
-9. Run lint if configured: check `specs/SPEC/spec.md` for the lint command.
+9. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
 
-10. Update `specs/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
+10. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
 
 // turbo
 11. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
 
-12. Append to `specs/SPEC/progress.txt`: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
+12. Append to `.windloop/SPEC/progress.txt`: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
 
 13. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
 

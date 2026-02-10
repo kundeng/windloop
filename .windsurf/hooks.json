@@ -2,7 +2,7 @@
   "hooks": {
     "post_setup_worktree": [
       {
-        "command": "bash $ROOT_WORKSPACE_PATH/hooks/setup_worktree.sh",
+        "command": "bash $ROOT_WORKSPACE_PATH/.windsurf/hooks/setup_worktree.sh",
         "show_output": true
       }
     ],

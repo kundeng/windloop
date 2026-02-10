@@ -7,7 +7,7 @@ description: Guides spec-driven autonomous development. Use when implementing fe
 
 This project uses a spec-driven development workflow with **multiple specs**:
 
-1. **Specs** are registered in `specs/index.md` and live in `specs/<name>/`
+1. **Specs** are registered in `.windloop/index.md` and live in `.windloop/<name>/`
 2. Each spec has: `spec.md` (requirements), `tasks.md` (ordered work items), `progress.txt` (log)
 3. **Progress** is tracked automatically per spec
 
@@ -17,15 +17,18 @@ All workflows accept an optional spec name. If only one spec exists, it can be o
 
 | Command | Purpose |
 |---------|---------|
-| `/plan-spec <name>` | Generate spec + tasks from a project idea |
+| `/spec-help` | Show onboarding guide and available commands |
+| `/spec-plan <name>` | Generate spec + tasks from a project idea |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
-| `/implement-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
-| `/verify-all <name>` | Run all tests + lint and report status |
-| `/review-merge <name>` | Review progress and validate after merges |
+| `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
+| `/spec-verify <name>` | Run all tests + lint and report status |
+| `/spec-merge <name>` | Review progress and validate after merges |
+| `/spec-status <name>` | Dashboard: progress across all specs and sessions |
+| `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks, clear claims |
 
 ## Task Format
 
-Each task in `specs/<name>/tasks.md` has:
+Each task in `.windloop/<name>/tasks.md` has:
 - **ID**: T1, T2, etc.
 - **Priority**: P0 (critical), P1 (important), P2 (nice-to-have)
 - **Dependencies**: Which tasks must be done first
@@ -36,7 +39,7 @@ Each task in `specs/<name>/tasks.md` has:
 
 ## Rules for Implementation
 
-1. Always read `specs/index.md` first to find available specs
+1. Always read `.windloop/index.md` first to find available specs
 2. Read the spec before starting any task
 3. Check dependencies before implementing — never skip ahead
 4. Run the task's verify command after implementation
@@ -50,7 +53,7 @@ Each task in `specs/<name>/tasks.md` has:
 
 For independent tasks (no shared dependencies), use worktree mode:
 1. Open a new Cascade in Worktree mode
-2. Run `/implement-task <name> T[N]` for the specific task
+2. Run `/spec-task <name> T[N]` for the specific task
 3. After completion, merge the worktree back
 
 Tasks are independent if they don't share the same `Files` and their dependency chains don't overlap.

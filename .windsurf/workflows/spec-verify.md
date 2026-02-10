@@ -4,12 +4,12 @@ description: Run all verification checks (tests + lint) and report results. Use 
 
 ## Verify All
 
-Pass the spec name in your message (e.g. `/verify-all taskrunner`).
-If omitted, check `specs/index.md`. If only one active spec exists, use it.
+Pass the spec name in your message (e.g. `/spec-verify taskrunner`).
+If omitted, check `.windloop/index.md`. If only one active spec exists, use it.
 
 Let SPEC be the resolved spec name.
 
-1. Read `specs/SPEC/spec.md` to find the test and lint commands.
+1. Read `.windloop/SPEC/spec.md` to find the test and lint commands.
 
 // turbo
 2. Run the full test suite (e.g. `python -m pytest tests/ -v`).

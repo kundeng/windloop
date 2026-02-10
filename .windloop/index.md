@@ -1,19 +1,21 @@
 # Specs Index
 
-This project supports multiple specs, each in its own subdirectory under `specs/`.
+This project supports multiple specs, each in its own subdirectory under `.windloop/`.
 
 ## Active Specs
 
 | Spec | Directory | Status | Description |
 |------|-----------|--------|-------------|
-| taskrunner | `specs/taskrunner/` | active | Test project: Python CLI task runner |
+| taskrunner | `.windloop/taskrunner/` | active | Test project: Python CLI task runner |
 
 ## How Multi-Spec Works
 
-Each spec lives in `specs/<name>/` and contains:
+Each spec lives in `.windloop/<name>/` and contains:
 - `spec.md` — full project specification
 - `tasks.md` — ordered task list with dependencies
 - `progress.txt` — auto-updated progress log
+
+Cross-spec dependencies are declared in `.windloop/dependencies.md`.
 
 ### Invoking workflows on a specific spec
 
@@ -21,18 +23,18 @@ Pass the spec name when invoking workflows:
 
 ```
 /spec-loop taskrunner
-/implement-task taskrunner T3
-/verify-all taskrunner
+/spec-task taskrunner T3
+/spec-verify taskrunner
 ```
 
 If only one spec exists, the spec name can be omitted.
 
 ### Adding a new spec
 
-1. Create `specs/<name>/` directory
-2. Run `/plan-spec <name>` to generate spec.md and tasks.md from requirements
-3. Or copy from `specs/templates/` and fill in manually
-4. Add an entry to this index
+1. Run `/spec-plan <name>` to generate spec.md and tasks.md from requirements
+2. Or create `.windloop/<name>/` manually from `.windloop/templates/`
+3. Add an entry to this index
+4. If it depends on other specs, add to `.windloop/dependencies.md`
 
 ### Parallel spec execution
 
