@@ -394,3 +394,125 @@ If/when Windsurf exposes a CLI or API:
 4. **Hooks are the secret weapon** — they provide the observability and automation glue that no other AI IDE offers at this level.
 
 5. **For maximum autonomy today**: Turbo mode + Auto-Continue + recursive workflows + worktrees + well-structured specs = the closest thing to "intervention-free" that Windsurf supports.
+
+---
+
+## 9. Additional Research (Round 2)
+
+### 9.1 Windsurf CLI Status
+
+**Finding**: Windsurf has a basic CLI (`windsurf .` to open a folder, `windsurf --goto file:line:col`), inherited from VS Code OSS. However, there is **no headless mode, no programmatic Cascade API, and no way to inject prompts from the command line**.
+
+- `windsurf .` — opens a folder in the IDE
+- `windsurf --diff file1 file2` — opens diff view
+- `windsurf --goto file:line:col` — opens file at position
+- Standard VS Code CLI flags work (extensions, settings, etc.)
+
+**What's missing**:
+- No `windsurf cascade --prompt "..."` or equivalent
+- No API endpoint for Cascade (the Windsurf API is analytics/admin only)
+- No headless/daemon mode for running Cascade without the GUI
+
+**Implication**: You cannot build an external orchestrator that programmatically drives Cascade sessions. The mailbox protocol (file-based coordination) is the best available workaround.
+
+**Comparison**: Claude Code has full CLI + agent teams (`claude --print`, subagents, tmux-based multi-session). OpenAI Codex has a CLI + API. Windsurf is GUI-first.
+
+### 9.2 File-Based Inter-Session Communication
+
+**Finding**: Cascade has **real-time awareness** of file changes in the workspace. This is a unique capability that can be exploited for inter-session coordination.
+
+#### How It Works
+
+When one Cascade session writes a file, another session in the same workspace (or a worktree that shares the git history) can detect the change. Combined with workflows/rules that instruct Cascade to check specific files, this creates a primitive message-passing system.
+
+#### The Mailbox Protocol
+
+We designed a file-based coordination protocol at `.windsurf/mailbox/`:
+
+```
+.windsurf/mailbox/
+├── board/status.json    # Shared state visible to all sessions
+├── board/claims.json    # Task claim registry (prevents double-work)
+├── inbox/<session>/     # Messages TO a session
+└── outbox/<session>/    # Completion signals FROM a session
+```
+
+**Three coordination patterns**:
+
+1. **Lead-Worker**: A lead session assigns tasks by writing to `inbox/worker-N/`. Workers check their inbox, implement, write completion to `outbox/worker-N/`. Lead watches outbox.
+
+2. **Claim Board**: All sessions read `board/claims.json`. Before starting a task, a session writes a claim. Other sessions check before claiming the same task. Self-organizing.
+
+3. **Pipeline**: Session A completes Phase 1, writes handoff to `inbox/session-b/`. Session B picks up Phase 2. Sequential handoff chain.
+
+**Limitations**:
+- No true file locking (use claim-then-verify pattern)
+- Sessions must be instructed to poll mailbox files (not automatic)
+- Each parallel session must be launched manually
+- Worktree sessions have separate filesystem copies — mailbox works best in the main workspace or via git commits
+
+#### Comparison with Claude Code Agent Teams
+
+Claude Code's agent teams use:
+- `~/.claude/teams/{team-name}/config.json` — team config
+- `~/.claude/tasks/{team-name}/` — shared task list
+- Automatic message delivery between teammates
+- Idle notifications when teammates finish
+- tmux sessions for parallel execution
+
+Our mailbox protocol is a manual approximation of this, constrained by Windsurf's lack of a programmatic API.
+
+### 9.3 Multi-Spec Architecture
+
+**Rationale**: Large projects benefit from decomposition into independent specs, each with its own task list and progress tracking. This enables:
+
+- **Parallel spec execution**: Different Cascade sessions (in worktrees) can implement different specs simultaneously
+- **Team decomposition**: Assign specs to different team members or sessions
+- **Incremental delivery**: Complete and merge one spec while others are still in progress
+- **Reduced context window pressure**: Each spec's task list is smaller, keeping Cascade focused
+
+**Structure**:
+```
+specs/
+├── index.md           # Registry of all specs
+├── templates/         # Reusable templates
+├── auth/              # Auth module spec
+│   ├── spec.md
+│   ├── tasks.md
+│   └── progress.txt
+├── api/               # API spec
+│   ├── spec.md
+│   ├── tasks.md
+│   └── progress.txt
+└── dashboard/         # Dashboard spec
+    ├── spec.md
+    ├── tasks.md
+    └── progress.txt
+```
+
+All workflows now accept a spec name parameter: `/spec-loop auth`, `/implement-task api T3`, etc.
+
+### 9.4 Can Sessions Drive Other Sessions?
+
+**Short answer**: Not directly. But there are workarounds:
+
+| Approach | Feasibility | Notes |
+|----------|-------------|-------|
+| Cascade A writes file, Cascade B reads it | ✅ Works | Requires B to be instructed to watch for the file |
+| Hook triggers external script | ✅ Works | `post_cascade_response` can run any script, but can't inject prompts back |
+| Queued messages | ✅ Works (same session) | Queue follow-up prompts while Cascade is working |
+| Workflow calls workflow | ✅ Works (same session) | `/spec-loop` can call `/verify-all` etc. |
+| MCP server as coordination hub | 🟡 Possible | Custom MCP server could maintain state, but still can't inject prompts |
+| External script opens Windsurf | ❌ No | `windsurf .` opens IDE but can't send prompts to Cascade |
+
+**Best current approach**: Use the mailbox protocol + workflows that instruct each session to check its inbox. The lead session writes assignments; worker sessions are launched manually with instructions to check `inbox/<name>/` for their task.
+
+### 9.5 Future Possibilities
+
+If Windsurf adds any of these, the framework becomes significantly more powerful:
+
+1. **Cascade CLI** (`windsurf cascade --prompt "..." --worktree`) — enables true outer-loop orchestration
+2. **Inter-Cascade messaging** — native message passing between simultaneous sessions
+3. **Cascade API** — REST/WebSocket API for programmatic session control
+4. **Hook prompt injection** — ability for `post_cascade_response` hooks to feed the next prompt back
+5. **Workflow triggers** — file-watch triggers that auto-invoke workflows when files change
