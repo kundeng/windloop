@@ -248,7 +248,8 @@ Omit diagram sections that don't apply. Use Mermaid syntax (renders in GitHub, V
 # Tasks: [SPEC NAME]
 
 <!--
-STATUS: [ ] pending | [x] done | [!] blocked
+STATUS: [ ] pending | [x] done | [~] partial/skipped | [!] blocked
+OPTIONAL: add * after bracket to mark optional, e.g. [ ]* or [x]*
 PRIORITY: P0 critical | P1 important | P2 nice-to-have
 DEPENDS: task IDs that must complete first
 REQUIREMENTS: requirement IDs from spec.md this task fulfills
@@ -265,7 +266,7 @@ PROPERTIES: property IDs from design.md this task should satisfy
   - [ ] Property test — P1: [Property name] (validates R1.1, R1.2)
 - **Acceptance criteria**:
   - [ ] Criterion 1
-  - [ ] Criterion 2
+  - [ ]* Criterion 2 (optional)
 - **Files**: `src/...`, `tests/...`
 - **Verify**: `[command]`
 - **Status**: [ ]

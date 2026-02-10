@@ -15,7 +15,7 @@ Let SPEC be the resolved spec name.
 
 3. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
 
-4. Verify that all dependencies for this task are marked as done (`[x]`). If not, report which dependencies are missing and STOP.
+4. Verify that all dependencies for this task are satisfied (`[x]` or `[~]`). If not, report which dependencies are missing and STOP.
 
 5. If `.windsurf/mailbox/board/claims.json` exists, check that this task is not already claimed by another session. If unclaimed, write your claim (use your trajectory ID or session name as the claimant).
 

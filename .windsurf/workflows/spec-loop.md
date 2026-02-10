@@ -17,7 +17,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
 4. Read `.windloop/SPEC/progress.txt` to understand what has already been completed.
 
-5. Identify the NEXT uncompleted task (status `[ ]`) whose dependencies are ALL marked `[x]`. Tasks are ordered by phase, then by ID. If ALL tasks are complete, print a summary and STOP.
+5. Identify the NEXT uncompleted task (status `[ ]`) whose dependencies are ALL satisfied (`[x]` or `[~]`). A `[~]` dependency counts as satisfied. Skip `[ ]*` optional tasks if their dependencies aren't met — they can be done later or skipped entirely. Tasks are ordered by phase, then by ID. If ALL required tasks are `[x]` or `[~]` and only optional tasks remain, print a summary and STOP.
 
 6. Announce: "Starting task [TASK_ID]: [TASK_TITLE] (spec: SPEC)"
 

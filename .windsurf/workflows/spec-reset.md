@@ -15,7 +15,7 @@ Let SPEC be the resolved spec name.
 
 2. If confirmed, proceed. Otherwise STOP.
 
-3. Read `.windloop/SPEC/tasks.md` and change ALL task statuses from `[x]` or `[!]` back to `[ ]`. Uncheck all acceptance criteria checkboxes.
+3. Read `.windloop/SPEC/tasks.md` and change ALL task statuses from `[x]`, `[~]`, or `[!]` back to `[ ]` (preserve `*` on optional tasks). Uncheck all acceptance criteria checkboxes.
 
 4. Reset `.windloop/SPEC/progress.txt` to just the header:
    ```
