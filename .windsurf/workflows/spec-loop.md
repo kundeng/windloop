@@ -42,8 +42,10 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 // turbo
 13. Stage and commit the changes with a descriptive message: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description of what was implemented]"`
 
-14. Update `.windloop/SPEC/progress.txt`:
+14. **Post-commit tracking guard**: For each file listed in the task's `Files` field, run `git ls-files <file>` to confirm it is tracked. If any file is missing from git (likely gitignored), run `git add -f <file>` for each untracked file, then `git commit --amend --no-edit` to include them. Report a warning: "File <file> was gitignored — force-added to commit."
+
+15. Update `.windloop/SPEC/progress.txt`:
     - Append a line: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
     - Update the `# SUMMARY:` line to reflect current counts and next task.
 
-15. Call `/spec-loop SPEC` to continue with the next task.
+16. Call `/spec-loop SPEC` to continue with the next task.

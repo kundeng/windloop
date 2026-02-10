@@ -40,10 +40,12 @@ Let SPEC be the resolved spec name.
 // turbo
 12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
 
-13. Update `.windloop/SPEC/progress.txt`:
+13. **Post-commit tracking guard**: For each file listed in the task's `Files` field, run `git ls-files <file>` to confirm it is tracked. If any file is missing from git (likely gitignored), run `git add -f <file>` for each untracked file, then `git commit --amend --no-edit` to include them. Report a warning: "File <file> was gitignored — force-added to commit."
+
+14. Update `.windloop/SPEC/progress.txt`:
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
     - Update the `# SUMMARY:` line to reflect current counts and next task.
 
-14. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
+15. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
 
-15. Report completion and list any issues encountered.
+16. Report completion and list any issues encountered.

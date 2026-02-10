@@ -15,15 +15,17 @@ Let SPEC be the resolved spec name.
 
 3. If `.windsurf/mailbox/outbox/` has completion signals, read them to see which parallel sessions finished.
 
-// turbo
-4. Run the full test suite (from `.windloop/SPEC/spec.md`) to confirm everything still passes after merges.
+4. **File-tracking audit**: Read `.windloop/SPEC/tasks.md` and collect all files from every completed task's `Files` field. For each file, run `git ls-files <file>` to confirm it is tracked. Report any untracked/gitignored source files as a warning — these indicate commits that silently excluded source code.
 
 // turbo
-5. Run lint to confirm no issues.
+5. Run the full test suite (from `.windloop/SPEC/spec.md`) to confirm everything still passes after merges.
 
-6. If tests or lint fail, identify which task introduced the issue and describe the fix needed.
+// turbo
+6. Run lint to confirm no issues.
 
-7. Summarize:
+7. If tests or lint fail, identify which task introduced the issue and describe the fix needed.
+
+8. Summarize:
    - Tasks completed: [list]
    - Tasks remaining: [list]
    - Test status: PASS/FAIL
