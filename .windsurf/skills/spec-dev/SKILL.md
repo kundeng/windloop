@@ -136,7 +136,16 @@ tests/
 # Design: [PROJECT NAME]
 
 ## Architecture Overview
-<!-- High-level component diagram or description -->
+
+<!-- Include a Mermaid component diagram showing major modules and their relationships -->
+
+\```mermaid
+graph TD
+    A[Module A] --> B[Module B]
+    A --> C[Module C]
+    B --> D[Shared Service]
+    C --> D
+\```
 
 ## Module Design
 
@@ -149,7 +158,48 @@ tests/
 - **Dependencies**: [what it depends on]
 
 ## Data Flow
-<!-- How data moves through the system -->
+
+<!-- Include a Mermaid sequence diagram for key interactions -->
+
+\```mermaid
+sequenceDiagram
+    participant User
+    participant CLI
+    participant Service
+    participant Store
+    User->>CLI: command
+    CLI->>Service: process(args)
+    Service->>Store: read/write
+    Store-->>Service: result
+    Service-->>CLI: output
+    CLI-->>User: display
+\```
+
+## State Management
+
+<!-- Include a Mermaid state diagram if the system has stateful behavior -->
+<!-- Omit this section if the system is stateless -->
+
+\```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Processing: request
+    Processing --> Success: ok
+    Processing --> Error: fail
+    Success --> Idle
+    Error --> Idle: retry
+\```
+
+## Data Models
+
+<!-- Include a Mermaid ER diagram if there are data relationships -->
+<!-- Omit this section for simple data models -->
+
+\```mermaid
+erDiagram
+    USER ||--o{ ORDER : places
+    ORDER ||--|{ ITEM : contains
+\```
 
 ## Error Handling Strategy
 <!-- How errors are propagated and handled -->
@@ -177,10 +227,27 @@ Properties that must hold true. Each property validates one or more requirements
 <!-- If applicable -->
 ```
 
+**Diagram guidance**: Include diagrams that match the project's complexity:
+- **Always**: Component diagram (architecture overview)
+- **Multi-actor systems**: Sequence diagram (swimming lanes)
+- **Stateful systems**: State diagram
+- **Data-heavy systems**: ER diagram
+- **Complex logic**: Flowchart
+
+Omit diagram sections that don't apply. Use Mermaid syntax (renders in GitHub, VS Code, most markdown viewers).
+
 #### tasks.md template
 
 ```markdown
 # Tasks: [PROJECT NAME]
+
+<!-- QUICK STATUS (machine-readable, updated after each task)
+TOTAL: 4
+DONE: 0
+BLOCKED: 0
+PENDING: 4
+NEXT: T1
+-->
 
 <!--
 STATUS: [ ] pending | [x] done | [!] blocked
@@ -230,6 +297,12 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - ...
 ```
 
+**QUICK STATUS block**: The `<!-- QUICK STATUS ... -->` comment at the top of tasks.md is a machine-readable summary. Agents MUST update it after each task completion:
+- Increment `DONE`, decrement `PENDING`
+- Set `NEXT` to the next eligible task (dependencies met, status `[ ]`)
+- If no tasks remain, set `NEXT: DONE`
+- If all remaining tasks are blocked, set `NEXT: BLOCKED`
+
 #### progress.txt template
 
 ```
@@ -237,7 +310,10 @@ PROPERTIES: property IDs from design.md this task should satisfy
 # Auto-updated by spec-loop workflow
 # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
 # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS
+# SUMMARY: 0/N done | next: T1
 ```
+
+The `# SUMMARY:` line is a machine-readable one-liner that agents update after each task. Format: `# SUMMARY: <done>/<total> done | next: <NEXT_TASK_ID or DONE>`
 
 #### index.md template
 

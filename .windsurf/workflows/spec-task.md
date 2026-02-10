@@ -33,12 +33,16 @@ Let SPEC be the resolved spec name.
 // turbo
 10. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
 
-11. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
+11. Update `.windloop/SPEC/tasks.md`:
+    - Mark the task status as `[x]` and check off acceptance criteria.
+    - Update the `<!-- QUICK STATUS -->` block: increment `DONE`, decrement `PENDING`, set `NEXT` to the next eligible task. If no tasks remain, set `NEXT: DONE`. If all remaining are blocked, set `NEXT: BLOCKED`.
 
 // turbo
 12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
 
-13. Append to `.windloop/SPEC/progress.txt`: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
+13. Update `.windloop/SPEC/progress.txt`:
+    - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
+    - Update the `# SUMMARY:` line to reflect current counts and next task.
 
 14. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
 
