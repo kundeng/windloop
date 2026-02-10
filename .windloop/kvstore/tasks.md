@@ -18,7 +18,6 @@ DEPENDS: task IDs that must complete first
   - [ ] Round-trip: save then load returns identical dict
 - **Files**: `kv.py`, `pyproject.toml`
 - **Verify**: `python -c "from kv import load_store, save_store; print('OK')"`
-- **Properties**: P1 (round-trip), P4 (empty store on missing file)
 - **Status**: [ ]
 
 ## Phase 2: Core
@@ -35,7 +34,6 @@ DEPENDS: task IDs that must complete first
   - [ ] Running with no args prints usage
 - **Files**: `kv.py`
 - **Verify**: `python kv.py set test_key test_val && python kv.py get test_key && python kv.py delete test_key`
-- **Properties**: P1, P2, P3, P5
 - **Status**: [ ]
 
 ## Phase 3: Polish
@@ -50,5 +48,4 @@ DEPENDS: task IDs that must complete first
   - [ ] `ruff check .` passes with zero violations
 - **Files**: `tests/test_kv.py`
 - **Verify**: `pytest --cov=kv --cov-report=term-missing --cov-fail-under=100 && ruff check .`
-- **Properties**: P1, P2, P3, P4, P5
 - **Status**: [ ]

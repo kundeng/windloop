@@ -1,6 +1,7 @@
 # Design: kvstore
 
 ## Architecture Overview
+<!-- High-level component diagram or description -->
 Single-module design. `kv.py` contains all logic: argument parsing, file I/O, and command dispatch. No classes needed — just functions.
 
 ```
@@ -34,12 +35,14 @@ CLI (argparse) → dispatch → load/save (JSON file)
 - **Dependencies**: `argparse`, `json`, `pathlib`, `sys`
 
 ## Data Flow
+<!-- How data moves through the system -->
 
 1. **set**: parse args → `load_store()` → update dict → `save_store()` → exit 0
 2. **get**: parse args → `load_store()` → lookup key → print value or exit 1
 3. **delete**: parse args → `load_store()` → pop key → `save_store()` → exit 0
 
 ## Error Handling Strategy
+<!-- How errors are propagated and handled -->
 
 | Scenario | Behavior |
 |----------|----------|
@@ -79,10 +82,12 @@ Properties that must hold true across the system. These guide implementation and
 - **Test approach**: Set same key twice with different values, verify latest wins
 
 ## Edge Cases
+<!-- Known edge cases and how they should be handled -->
 - Empty string as key or value (allowed — strings are strings)
 - Very long keys/values (no limit enforced)
 - `data.json` with extra whitespace or formatting (json.load handles it)
 - Running commands with no prior `data.json` (handled by P4)
 
 ## Security Considerations
+<!-- If applicable -->
 - Not applicable for this scope (local CLI tool, no network, no auth)

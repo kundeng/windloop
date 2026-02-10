@@ -1,6 +1,7 @@
 # Specification: kvstore
 
 ## Overview
+<!-- Brief description of what this project does and why -->
 A tiny Python CLI key-value store. Three commands (`get`, `set`, `delete`) persist data to a local JSON file. Zero external dependencies beyond the standard library.
 
 ## Goals
@@ -39,6 +40,7 @@ pyproject.toml     # project config (ruff + pytest settings)
 3. **NFR-3**: Zero ruff lint violations
 
 ## Data Models
+<!-- Key data structures, schemas, interfaces -->
 - **Store**: A flat `dict[str, str]` serialized as JSON in `data.json`
 - Keys and values are always strings
 
@@ -48,12 +50,14 @@ pyproject.toml     # project config (ruff + pytest settings)
 - **Coverage target**: 100%
 
 ## Constraints
+<!-- Important decisions and constraints -->
 - Single-file implementation (`kv.py`) — keep it simple
 - `data.json` is created on first write if it doesn't exist
 - Reading a missing `data.json` is treated as an empty store
 - All keys and values are strings (no type coercion)
 
 ## Out of Scope
+<!-- What this project explicitly does NOT do -->
 - Nested values or complex data types
 - Concurrent access / file locking
 - Remote storage or networking
