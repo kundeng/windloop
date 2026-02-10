@@ -24,7 +24,7 @@ The traceability chain ensures nothing is lost:
 | Command | Purpose |
 |---------|---------|
 | `/spec-help` | Onboarding guide |
-| `/spec-plan <name>` | Create or refine a spec (idea → spec → design → tasks) |
+| `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected if omitted) |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement single task (parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint |

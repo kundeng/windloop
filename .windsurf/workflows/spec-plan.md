@@ -4,16 +4,20 @@ description: Generate a spec and task breakdown from a project idea. Use this to
 
 ## Plan a Spec
 
-Provide a spec name in your message (e.g. `/spec-plan auth`). Optionally include a description.
+Usage: `/spec-plan <name> [create|refine|update]`
 
-This workflow handles three modes:
-- **Create**: new spec from scratch (`.windloop/SPEC/` doesn't exist)
-- **Refine**: update an existing spec (user says "refine", "update", or "revise")
-- **Resume**: pick up where you left off if the spec exists but is incomplete
+Modes (auto-detected if not specified):
+- **Create**: `.windloop/SPEC/` doesn't exist → build from scratch
+- **Refine**: spec exists, user wants to rethink requirements or design (broader changes)
+- **Update**: spec exists, user wants to adjust specific items discovered during implementation (targeted back-propagation)
 
 Let SPEC be the spec name.
 
-### 0. Scaffold `.windloop/` if it doesn't exist
+---
+
+### Mode: Create
+
+#### 0. Scaffold `.windloop/` if it doesn't exist
 
 If `.windloop/` directory does not exist, create it with:
 - `.windloop/index.md` — use the index.md template from the spec-driven-dev skill
@@ -21,7 +25,7 @@ If `.windloop/` directory does not exist, create it with:
 
 If the host project has an existing `AGENTS.md`, read it and check if it already contains a "Windloop" section. If not, append the AGENTS.md snippet from the spec-driven-dev skill. If no `AGENTS.md` exists, create one with just the windloop snippet.
 
-### 1. Scan existing project
+#### 1. Scan existing project
 
 Before gathering requirements, understand what already exists:
 - Read `README.md`, `AGENTS.md`, `package.json`, `pyproject.toml`, `Cargo.toml`, or any manifest files
@@ -31,13 +35,11 @@ Before gathering requirements, understand what already exists:
 
 The spec should **align with the existing codebase** — preserve conventions, tech stack, and patterns unless the user explicitly asks for a rewrite or drastic change.
 
-### 2. Gather requirements
+#### 2. Gather requirements
 
 Ask the user to describe the project idea, goals, and constraints. If they already provided this in the prompt, proceed.
 
-For **Refine** mode: read the existing `.windloop/SPEC/spec.md` and ask what should change.
-
-### 3. Generate spec.md
+#### 3. Generate spec.md
 
 Create `.windloop/SPEC/spec.md` using the spec.md template from the spec-driven-dev skill:
 - If existing code was found, align tech stack, directory structure, and conventions with it
@@ -47,9 +49,9 @@ Create `.windloop/SPEC/spec.md` using the spec.md template from the spec-driven-
 - Define clear testing strategy with actual commands
 - List specific data models and interfaces
 
-Present the spec to the user for review. Ask if any changes are needed. Iterate until approved.
+Present the spec to the user for review. Iterate until approved.
 
-### 4. Generate design.md
+#### 4. Generate design.md
 
 Create `.windloop/SPEC/design.md` using the design.md template from the spec-driven-dev skill:
 - If existing code was found, reflect the actual architecture (don't redesign what works)
@@ -61,7 +63,7 @@ Create `.windloop/SPEC/design.md` using the design.md template from the spec-dri
 
 Present the design to the user for review. Iterate until approved.
 
-### 5. Generate tasks.md
+#### 5. Generate tasks.md
 
 Create `.windloop/SPEC/tasks.md` using the tasks.md template from the spec-driven-dev skill:
 - Each task completable in a single Cascade session
@@ -74,26 +76,75 @@ Create `.windloop/SPEC/tasks.md` using the tasks.md template from the spec-drive
 - Order by phase: Foundation → Core → Integration → Polish
 - Every requirement from spec.md should be covered by at least one task
 
-### 6. Create progress.txt
+#### 6. Create progress.txt
 
 Create `.windloop/SPEC/progress.txt` using the progress.txt template from the skill.
 
-### 7. Register the spec
+#### 7. Register the spec
 
 Add an entry for SPEC in `.windloop/index.md`.
 
 If cross-spec dependencies exist, add them to `.windloop/dependencies.md`.
 
 // turbo
-### 8. Commit
+#### 8. Commit
 
 ```
 git add -A && git commit -m "spec(SPEC): create spec, design, and tasks"
 ```
 
-### 9. Report
+#### 9. Report
 
 Print: "Spec **SPEC** is ready with [N] tasks across [M] phases."
 - Run `/spec-loop SPEC` for autonomous implementation
 - Run `/spec-task SPEC T1` to start with the first task
 - Run `/spec-status` to see the dashboard
+
+---
+
+### Mode: Refine
+
+Use when rethinking requirements or design more broadly (e.g. "we need to change the approach to auth").
+
+1. Read all existing spec artifacts: `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`, `progress.txt`
+2. Ask the user what should change. If they already described changes in the prompt, proceed.
+3. Identify which **requirements** (R-numbers) are affected.
+4. Update `spec.md` — add, modify, or remove requirements. Preserve unchanged requirements and their numbering.
+5. Update `design.md` — adjust affected modules and properties. For each changed requirement, check that its validating properties (P-numbers) still hold. Add/update properties as needed.
+6. Update `tasks.md`:
+   - For **completed tasks** (`[x]`): do NOT uncheck them. If their requirements changed, add a new follow-up task to reconcile.
+   - For **pending tasks** (`[ ]`): update requirements, properties, acceptance criteria, and files as needed.
+   - Add new tasks if new requirements were introduced.
+   - Remove tasks only if their requirements were fully removed AND no code was written for them.
+7. Present a **change summary** showing: requirements changed → properties affected → tasks added/modified.
+
+// turbo
+8. Commit: `git add -A && git commit -m "spec(SPEC): refine requirements and propagate to design/tasks"`
+
+---
+
+### Mode: Update
+
+Use for targeted adjustments discovered during implementation (e.g. "T3 revealed we need an extra API endpoint" or "the data model needs a new field").
+
+1. Read all existing spec artifacts: `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`, `progress.txt`
+2. Ask the user what was discovered. If they already described it in the prompt, proceed.
+3. Trace the change through the chain:
+
+   **If the change starts from a task** (bottom-up):
+   - Identify which requirements the task references
+   - Determine if the requirement needs updating or a new sub-requirement (e.g. R1.3)
+   - Update `spec.md` with the new/modified requirement
+   - Update `design.md` — adjust the relevant property or add a new one, with `Validates:` reference
+   - Update the task's acceptance criteria and any dependent tasks
+
+   **If the change starts from a requirement** (top-down):
+   - Update `spec.md`
+   - Propagate to `design.md` (properties)
+   - Propagate to `tasks.md` (affected tasks)
+
+4. For completed tasks: do NOT uncheck. Add follow-up tasks if reconciliation is needed.
+5. Present a **change summary**: what changed at each level (spec → design → tasks).
+
+// turbo
+6. Commit: `git add -A && git commit -m "spec(SPEC): update — [brief description of what changed]"`

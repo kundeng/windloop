@@ -28,7 +28,7 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 | Command | Purpose |
 |---------|---------|
 | `/spec-help` | Onboarding guide |
-| `/spec-plan <name>` | Create or refine a spec (idea → spec → design → tasks) |
+| `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected) |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task (for parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint |
@@ -42,12 +42,14 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 
 `/spec-plan` walks you through each stage interactively:
 
-1. **spec.md** — Requirements, tech stack, testing strategy, constraints
-2. **design.md** — Architecture, module interfaces, data flow, **property tests** (invariants that guide implementation)
-3. **tasks.md** — Ordered work items with dependencies, acceptance criteria, and verification commands
-4. **progress.txt** — Auto-updated log of completed tasks
+1. **spec.md** — Requirements as numbered user stories (R1.1, R1.2, NF1), tech stack, testing strategy
+2. **design.md** — Architecture, module interfaces, **property tests** that validate requirements ("P1 validates R1.1, R1.2")
+3. **tasks.md** — Tasks reference requirements + properties they fulfill (`Requirements: R1.1` / `Properties: P1`)
+4. **progress.txt** — Auto-updated log
 
-Each stage is reviewed with you before proceeding. You can re-run `/spec-plan` to refine any existing spec.
+Each stage is reviewed with you before proceeding.
+
+**Modes**: `/spec-plan <name> create` (new), `refine` (broad rethink), `update` (targeted back-propagation from implementation). Auto-detected if omitted.
 
 ## What Gets Created
 

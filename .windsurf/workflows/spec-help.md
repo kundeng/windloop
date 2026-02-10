@@ -17,7 +17,7 @@ Print the following guide:
 | Command | Purpose |
 |---------|---------|
 | `/spec-help` | Show this help guide |
-| `/spec-plan <name>` | Create or refine a spec (idea → spec → design → tasks) |
+| `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected if omitted) |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint and report status |
