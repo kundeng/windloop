@@ -25,8 +25,9 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
 8. Implement the task (test-first):
    - Read any relevant existing code first to understand current patterns
-   - **Write tests first**: implement the property tests and E2E tests listed in the task's `Tests` field
+   - **Write tests first**: if the task has a `Tests` field, implement those property tests before production code
    - Then write the production code to make the tests pass
+   - For E2E test tasks (no production code): implement the test, run it, verify it passes
    - Follow the coding conventions from `.windloop/SPEC/spec.md`
    - Add type hints where the spec requires them
 

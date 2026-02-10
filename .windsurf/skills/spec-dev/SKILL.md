@@ -38,7 +38,7 @@ The traceability chain ensures nothing is lost:
 2. Read `.windloop/index.md` first to find specs
 3. Read spec.md AND design.md before implementing
 4. Check task dependencies — never skip ahead
-5. **Write tests first**: implement the task's property tests and E2E tests before writing production code
+5. **Write tests first**: implement the task's property tests before production code. E2E tests are separate tasks.
 6. Run verify after implementation; fix up to 3 times before BLOCKED
 7. Commit per task: `feat(<spec>/T[N]): [description]`
 8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
@@ -122,8 +122,8 @@ tests/
 
 ## Testing Strategy
 
-- **Property tests**: Verify invariants from design.md (required per task)
-- **E2E tests**: Validate user stories end-to-end (required per task)
+- **Property tests**: Verify design invariants, inline with implementation tasks (required)
+- **E2E tests**: Validate user stories end-to-end, as separate tasks (required)
 - **Unit tests**: For complex internal logic only (optional, add when warranted)
 - **Test command**: `[command]`
 - **Lint command**: `[command]`
@@ -262,8 +262,7 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Requirements**: R1.1, R1.2
 - **Properties**: P1
 - **Tests**:
-  - [ ] Property test for P1: [what to assert]
-  - [ ] E2E test: [user story scenario to verify]
+  - [ ] Property test — P1: [Property name] (validates R1.1, R1.2)
 - **Acceptance criteria**:
   - [ ] Criterion 1
   - [ ] Criterion 2
@@ -277,8 +276,7 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Requirements**: R2.1
 - **Properties**: P2
 - **Tests**:
-  - [ ] Property test for P2: [what to assert]
-  - [ ] E2E test: [user story scenario to verify]
+  - [ ] Property test — P2: [Property name] (validates R2.1)
 - **Acceptance criteria**:
   - [ ] Criterion 1
 - **Files**: `src/...`, `tests/...`
@@ -293,10 +291,32 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Properties**: P1, P2
 - ...
 
-## Phase 3: Polish
+## Phase 3: E2E Tests
 
-### T4: [Task title] `P2`
+### T4: E2E — [User story scenario] `P0`
+- **Description**: End-to-end test validating [user story]
+- **Depends**: T1, T2
+- **Requirements**: R1.1, R1.2, R2.1
+- **Acceptance criteria**:
+  - [ ] [Full scenario passes]
+- **Files**: `tests/...`
+- **Verify**: `[command]`
+- **Status**: [ ]
+
+### T5: E2E — [Another scenario] `P1`
+- **Description**: End-to-end test validating [user story]
 - **Depends**: T3
+- **Requirements**: R1.3
+- **Acceptance criteria**:
+  - [ ] [Full scenario passes]
+- **Files**: `tests/...`
+- **Verify**: `[command]`
+- **Status**: [ ]
+
+## Phase 4: Polish
+
+### T6: [Task title] `P2`
+- **Depends**: T4
 - **Requirements**: NF1
 - ...
 ```

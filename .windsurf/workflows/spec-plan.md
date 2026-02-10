@@ -74,7 +74,9 @@ Create `.windloop/SPEC/tasks.md` using the tasks.md template from the spec-drive
 - Include a verification command for each task
 - **Minimize dependencies**: only depend on tasks that produce something this task directly needs. Avoid chaining tasks sequentially when they can run in parallel. More independent tasks = more parallelism.
 - No circular deps
-- Order by phase: Foundation → Core → Integration → Polish
+- Order by phase: Foundation → Core → E2E Tests → Polish
+- **Property tests** go inline with implementation tasks (in the `Tests` field)
+- **E2E tests** are separate tasks in their own phase, each validating a user story end-to-end
 - Every requirement from spec.md should be covered by at least one task
 
 #### 6. Create progress.txt
