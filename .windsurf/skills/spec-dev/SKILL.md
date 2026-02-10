@@ -63,16 +63,9 @@ If the host project already has an `AGENTS.md`, append the windloop snippet (see
 When creating or updating AGENTS.md for a host project, append this block:
 
 ```markdown
-## Windloop (Spec-Driven Development)
+## Windloop
 
-This project uses windloop for spec-driven autonomous development.
-
-- Specs live in `.windloop/<name>/` — read `.windloop/index.md` for the registry
-- Run `/spec-help` for available commands
-- Run `/spec-plan <name>` to create or refine a spec
-- Run `/spec-loop <name>` for autonomous implementation
-- Run `/spec-status` to check progress across all specs
-- Commit format: `feat(<spec>/T[N]): [description]`
+This project uses the `spec-driven-dev` skill for autonomous development. Run `/spec-help` to get started.
 ```
 
 ### Embedded Templates
