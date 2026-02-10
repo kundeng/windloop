@@ -33,9 +33,7 @@ Let SPEC be the resolved spec name.
 // turbo
 10. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
 
-11. Update `.windloop/SPEC/tasks.md`:
-    - Mark the task status as `[x]` and check off acceptance criteria.
-    - Update the `<!-- QUICK STATUS -->` block: increment `DONE`, decrement `PENDING`, set `NEXT` to the next eligible task. If no tasks remain, set `NEXT: DONE`. If all remaining are blocked, set `NEXT: BLOCKED`.
+11. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
 
 // turbo
 12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`

@@ -17,11 +17,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
 4. Read `.windloop/SPEC/progress.txt` to understand what has already been completed.
 
-5. Check the `<!-- QUICK STATUS -->` block at the top of `tasks.md` for the `NEXT:` field.
-   - If `NEXT: DONE` → print a summary of all work done and STOP.
-   - If `NEXT: BLOCKED` → report all blocked tasks and STOP.
-   - If `NEXT: T[N]` → use that task.
-   - If no QUICK STATUS block exists, fall back to scanning: find the first `[ ]` task whose dependencies are all `[x]`.
+5. Identify the NEXT uncompleted task (status `[ ]`) whose dependencies are ALL marked `[x]`. Tasks are ordered by phase, then by ID. If ALL tasks are complete, print a summary and STOP.
 
 6. Announce: "Starting task [TASK_ID]: [TASK_TITLE] (spec: SPEC)"
 
@@ -40,9 +36,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 // turbo
 11. Run the project-wide lint check if one is configured in `.windloop/SPEC/spec.md` (e.g. `ruff check src/ tests/`). Fix any lint issues found.
 
-12. Update `.windloop/SPEC/tasks.md`:
-    - Change the task's `Status` from `[ ]` to `[x]` and check off completed acceptance criteria.
-    - Update the `<!-- QUICK STATUS -->` block: increment `DONE`, decrement `PENDING`, set `NEXT` to the next eligible task (dependencies met, status `[ ]`). If no tasks remain, set `NEXT: DONE`. If all remaining are blocked, set `NEXT: BLOCKED`.
+12. Update `.windloop/SPEC/tasks.md`: change the task's `Status` from `[ ]` to `[x]` and check off completed acceptance criteria.
 
 // turbo
 13. Stage and commit the changes with a descriptive message: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description of what was implemented]"`

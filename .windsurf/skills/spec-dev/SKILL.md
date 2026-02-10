@@ -241,14 +241,6 @@ Omit diagram sections that don't apply. Use Mermaid syntax (renders in GitHub, V
 ```markdown
 # Tasks: [PROJECT NAME]
 
-<!-- QUICK STATUS (machine-readable, updated after each task)
-TOTAL: 4
-DONE: 0
-BLOCKED: 0
-PENDING: 4
-NEXT: T1
--->
-
 <!--
 STATUS: [ ] pending | [x] done | [!] blocked
 PRIORITY: P0 critical | P1 important | P2 nice-to-have
@@ -296,12 +288,6 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Requirements**: NF1
 - ...
 ```
-
-**QUICK STATUS block**: The `<!-- QUICK STATUS ... -->` comment at the top of tasks.md is a machine-readable summary. Agents MUST update it after each task completion:
-- Increment `DONE`, decrement `PENDING`
-- Set `NEXT` to the next eligible task (dependencies met, status `[ ]`)
-- If no tasks remain, set `NEXT: DONE`
-- If all remaining tasks are blocked, set `NEXT: BLOCKED`
 
 #### progress.txt template
 
