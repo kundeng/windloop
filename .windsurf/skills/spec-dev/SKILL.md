@@ -10,14 +10,14 @@ This skill powers the windloop framework. Specs live in `.windloop/<name>/` and 
 ### Spec Lifecycle
 
 ```
-idea → spec.md → design.md (with property tests) → tasks.md → [implement loop] → done
+idea → spec.md (requirements as user stories) → design.md (properties validate requirements) → tasks.md (trace to requirements + properties) → [implement loop] → done
 ```
 
-Each spec directory contains:
-- `spec.md` — requirements and constraints
-- `design.md` — architecture, interfaces, property tests
-- `tasks.md` — ordered work items with dependencies
-- `progress.txt` — auto-updated log
+The traceability chain ensures nothing is lost:
+- **spec.md** — numbered requirements as user stories (R1.1, R1.2, NF1, etc.)
+- **design.md** — properties (P1, P2) that validate requirements ("Validates: R1.1, R1.2")
+- **tasks.md** — tasks reference both requirements and properties they fulfill
+- **progress.txt** — auto-updated log
 
 ### Commands
 
@@ -98,11 +98,22 @@ tests/
 
 ## Requirements
 
-### Functional Requirements
-1. **FR-1**: [Description]
+<!-- Requirements are numbered hierarchically (R1, R1.1, R1.2, R2, etc.)
+     and framed as user stories where applicable. -->
 
-### Non-Functional Requirements
-1. **NFR-1**: [Description]
+### R1: [Feature area]
+
+**R1.1**: As a [role], I should be able to [action] so that [benefit].
+
+**R1.2**: As a [role], I should be able to [action] so that [benefit].
+
+### R2: [Feature area]
+
+**R2.1**: As a [role], I should be able to [action] so that [benefit].
+
+### Non-Functional
+
+**NF1**: [Performance / reliability / security requirement]
 
 ## Data Models
 <!-- Key data structures, schemas, interfaces -->
@@ -145,15 +156,17 @@ tests/
 
 ## Property Tests
 
-Properties that must hold true across the system. These guide implementation and serve as invariants for testing.
+Properties that must hold true. Each property validates one or more requirements from spec.md.
 
-### [Property 1]: [Name]
-- **Statement**: [formal or semi-formal property statement]
+### P1: [Property name]
+- **Statement**: *For any* [condition], when [action], then [expected outcome]
+- **Validates**: R1.1, R1.2
 - **Example**: [concrete example]
-- **Test approach**: [how to verify this property]
+- **Test approach**: [how to verify]
 
-### [Property 2]: [Name]
-- **Statement**: [property]
+### P2: [Property name]
+- **Statement**: *For any* [condition], when [action], then [expected outcome]
+- **Validates**: R2.1
 - **Example**: [example]
 - **Test approach**: [approach]
 
@@ -173,12 +186,16 @@ Properties that must hold true across the system. These guide implementation and
 STATUS: [ ] pending | [x] done | [!] blocked
 PRIORITY: P0 critical | P1 important | P2 nice-to-have
 DEPENDS: task IDs that must complete first
+REQUIREMENTS: requirement IDs from spec.md this task fulfills
+PROPERTIES: property IDs from design.md this task should satisfy
 -->
 
 ## Phase 1: Foundation
 
 ### T1: [Task title] `P0`
 - **Description**: [What to implement]
+- **Requirements**: R1.1, R1.2
+- **Properties**: P1
 - **Acceptance criteria**:
   - [ ] Criterion 1
   - [ ] Criterion 2
@@ -189,6 +206,8 @@ DEPENDS: task IDs that must complete first
 ### T2: [Task title] `P0`
 - **Description**: [What to implement]
 - **Depends**: T1
+- **Requirements**: R2.1
+- **Properties**: P2
 - **Acceptance criteria**:
   - [ ] Criterion 1
 - **Files**: `src/...`
@@ -199,12 +218,15 @@ DEPENDS: task IDs that must complete first
 
 ### T3: [Task title] `P1`
 - **Depends**: T1, T2
+- **Requirements**: R1.3, R2.2
+- **Properties**: P1, P2
 - ...
 
 ## Phase 3: Polish
 
 ### T4: [Task title] `P2`
 - **Depends**: T3
+- **Requirements**: NF1
 - ...
 ```
 

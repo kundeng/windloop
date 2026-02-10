@@ -21,61 +21,77 @@ If `.windloop/` directory does not exist, create it with:
 
 If the host project has an existing `AGENTS.md`, read it and check if it already contains a "Windloop" section. If not, append the AGENTS.md snippet from the spec-driven-dev skill. If no `AGENTS.md` exists, create one with just the windloop snippet.
 
-### 1. Gather requirements
+### 1. Scan existing project
+
+Before gathering requirements, understand what already exists:
+- Read `README.md`, `AGENTS.md`, `package.json`, `pyproject.toml`, `Cargo.toml`, or any manifest files
+- Scan the source directory structure (e.g. `src/`, `lib/`, `app/`)
+- Read key source files to understand existing patterns, conventions, and architecture
+- Note existing tests, linting config, CI setup
+
+The spec should **align with the existing codebase** — preserve conventions, tech stack, and patterns unless the user explicitly asks for a rewrite or drastic change.
+
+### 2. Gather requirements
 
 Ask the user to describe the project idea, goals, and constraints. If they already provided this in the prompt, proceed.
 
 For **Refine** mode: read the existing `.windloop/SPEC/spec.md` and ask what should change.
 
-### 2. Generate spec.md
+### 3. Generate spec.md
 
 Create `.windloop/SPEC/spec.md` using the spec.md template from the spec-driven-dev skill:
-- Fill in all sections based on the user's description
-- Make concrete tech stack decisions
+- If existing code was found, align tech stack, directory structure, and conventions with it
+- Frame requirements as **numbered user stories** (R1.1, R1.2, etc.): "As a [role], I should be able to [action] so that [benefit]"
+- Group requirements hierarchically by feature area (R1: Feature, R1.1, R1.2, R2: Feature, etc.)
+- Include non-functional requirements (NF1, NF2, etc.)
 - Define clear testing strategy with actual commands
 - List specific data models and interfaces
 
 Present the spec to the user for review. Ask if any changes are needed. Iterate until approved.
 
-### 3. Generate design.md
+### 4. Generate design.md
 
 Create `.windloop/SPEC/design.md` using the design.md template from the spec-driven-dev skill:
+- If existing code was found, reflect the actual architecture (don't redesign what works)
 - Define module architecture and interfaces
 - Specify data flow between components
-- Write **property tests** — invariants that must hold true (these guide implementation and testing)
+- Write **property tests** (P1, P2, etc.) — each property must **validate specific requirements** from spec.md (e.g. "Validates: R1.1, R1.2")
+- Every requirement should be covered by at least one property
 - Document error handling strategy and edge cases
 
 Present the design to the user for review. Iterate until approved.
 
-### 4. Generate tasks.md
+### 5. Generate tasks.md
 
 Create `.windloop/SPEC/tasks.md` using the tasks.md template from the spec-driven-dev skill:
 - Each task completable in a single Cascade session
+- Each task lists which **requirements** it fulfills (e.g. `Requirements: R1.1, R1.2`)
+- Each task lists which **properties** it should satisfy (e.g. `Properties: P1`)
 - Include clear acceptance criteria with checkable items
 - Specify exact files to create/modify
 - Include a verification command for each task
-- Reference relevant property tests from design.md
 - Set dependencies correctly (no circular deps)
 - Order by phase: Foundation → Core → Integration → Polish
+- Every requirement from spec.md should be covered by at least one task
 
-### 5. Create progress.txt
+### 6. Create progress.txt
 
 Create `.windloop/SPEC/progress.txt` using the progress.txt template from the skill.
 
-### 6. Register the spec
+### 7. Register the spec
 
 Add an entry for SPEC in `.windloop/index.md`.
 
 If cross-spec dependencies exist, add them to `.windloop/dependencies.md`.
 
 // turbo
-### 7. Commit
+### 8. Commit
 
 ```
 git add -A && git commit -m "spec(SPEC): create spec, design, and tasks"
 ```
 
-### 8. Report
+### 9. Report
 
 Print: "Spec **SPEC** is ready with [N] tasks across [M] phases."
 - Run `/spec-loop SPEC` for autonomous implementation
