@@ -5,7 +5,6 @@ This is the windloop framework itself — a spec-driven autonomous development t
 
 ## For Development on Windloop Itself
 - The framework code lives in `.windsurf/` (workflows, skills, hooks, mailbox)
-- `RESEARCH-cascaded-agent-loops.md` contains background research (not shipped)
 - `README.md` is the user-facing documentation
 
 ## Windloop (Spec-Driven Development)
