@@ -108,7 +108,18 @@ Templates are embedded in `SKILL.md` — no separate template files to copy.
 | Auto-Continue | **Enabled** | Windsurf Settings |
 | Worktree Mode | **On** | Cascade input toggle |
 
-## Multiple Specs
+## Parallel Work & Worktrees
+
+> **Rule #1: One Cascade session per working tree.** Sessions sharing a branch will overwrite each other's changes. Always use worktrees or branches for parallel work.
+
+### How to run parallel sessions
+
+1. Toggle **Worktree Mode** on in the Cascade input bar
+2. Each worktree Cascade gets its own isolated copy of the repo
+3. Assign tasks: `/spec-task myfeature T3` in one, `/spec-task myfeature T4` in another
+4. When done, merge back with `/spec-merge myfeature`
+
+### Multiple specs
 
 Break large efforts into independent specs:
 

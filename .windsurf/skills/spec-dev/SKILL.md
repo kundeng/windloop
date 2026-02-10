@@ -34,14 +34,15 @@ The traceability chain ensures nothing is lost:
 
 ### Rules
 
-1. Read `.windloop/index.md` first to find specs
-2. Read spec.md AND design.md before implementing
-3. Check task dependencies — never skip ahead
-4. **Write tests first**: implement the task's property tests and E2E tests before writing production code
-5. Run verify after implementation; fix up to 3 times before BLOCKED
-6. Commit per task: `feat(<spec>/T[N]): [description]`
-7. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
-8. Keep changes minimal and focused
+1. **One session per working tree**: never run multiple Cascade sessions on the same branch/worktree. Use worktrees or branches to isolate parallel work — sessions that share a working tree will conflict.
+2. Read `.windloop/index.md` first to find specs
+3. Read spec.md AND design.md before implementing
+4. Check task dependencies — never skip ahead
+5. **Write tests first**: implement the task's property tests and E2E tests before writing production code
+6. Run verify after implementation; fix up to 3 times before BLOCKED
+7. Commit per task: `feat(<spec>/T[N]): [description]`
+8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
+9. Keep changes minimal and focused
 
 ### Scaffolding
 

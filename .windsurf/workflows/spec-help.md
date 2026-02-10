@@ -31,8 +31,10 @@ Print the following guide:
 
 1. **New spec?** → `/spec-plan myfeature` — describe your idea, get spec + design + tasks
 2. **Ready to build?** → `/spec-loop myfeature` — autonomous implementation loop
-3. **Parallel work?** → Open worktree Cascades, each runs `/spec-task myfeature T[N]`
+3. **Parallel work?** → Open **worktree** Cascades, each runs `/spec-task myfeature T[N]`
 4. **Check progress?** → `/spec-status`
+
+> **Important**: Never run multiple Cascade sessions on the same branch. Use Windsurf's **Worktree Mode** (toggle in Cascade input) to give each session its own isolated copy. Sessions sharing a working tree will overwrite each other's changes.
 
 ### Installation
 
