@@ -21,7 +21,9 @@ Let SPEC be the resolved spec name.
 
 6. Read any existing source files that this task depends on or modifies to understand the current state.
 
-7. Implement the task following the acceptance criteria exactly:
+7. Implement the task (test-first):
+   - **Write tests first**: implement the property tests and E2E tests listed in the task's `Tests` field
+   - Then write the production code to make the tests pass
    - Create or modify only the files listed in the task's `Files` field
    - Add type hints where required
    - Follow existing code patterns and conventions

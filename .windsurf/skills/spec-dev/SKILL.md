@@ -37,10 +37,11 @@ The traceability chain ensures nothing is lost:
 1. Read `.windloop/index.md` first to find specs
 2. Read spec.md AND design.md before implementing
 3. Check task dependencies — never skip ahead
-4. Run verify after implementation; fix up to 3 times before BLOCKED
-5. Commit per task: `feat(<spec>/T[N]): [description]`
-6. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
-7. Keep changes minimal and focused
+4. **Write tests first**: implement the task's property tests and E2E tests before writing production code
+5. Run verify after implementation; fix up to 3 times before BLOCKED
+6. Commit per task: `feat(<spec>/T[N]): [description]`
+7. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
+8. Keep changes minimal and focused
 
 ### Scaffolding
 
@@ -119,6 +120,10 @@ tests/
 <!-- Key data structures, schemas, interfaces -->
 
 ## Testing Strategy
+
+- **Property tests**: Verify invariants from design.md (required per task)
+- **E2E tests**: Validate user stories end-to-end (required per task)
+- **Unit tests**: For complex internal logic only (optional, add when warranted)
 - **Test command**: `[command]`
 - **Lint command**: `[command]`
 - **Coverage target**: [percentage]
@@ -255,10 +260,13 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Description**: [What to implement]
 - **Requirements**: R1.1, R1.2
 - **Properties**: P1
+- **Tests**:
+  - [ ] Property test for P1: [what to assert]
+  - [ ] E2E test: [user story scenario to verify]
 - **Acceptance criteria**:
   - [ ] Criterion 1
   - [ ] Criterion 2
-- **Files**: `src/...`
+- **Files**: `src/...`, `tests/...`
 - **Verify**: `[command]`
 - **Status**: [ ]
 
@@ -267,9 +275,12 @@ PROPERTIES: property IDs from design.md this task should satisfy
 - **Depends**: T1
 - **Requirements**: R2.1
 - **Properties**: P2
+- **Tests**:
+  - [ ] Property test for P2: [what to assert]
+  - [ ] E2E test: [user story scenario to verify]
 - **Acceptance criteria**:
   - [ ] Criterion 1
-- **Files**: `src/...`
+- **Files**: `src/...`, `tests/...`
 - **Verify**: `[command]`
 - **Status**: [ ]
 

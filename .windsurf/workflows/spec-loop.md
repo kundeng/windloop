@@ -23,9 +23,10 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
 7. Read the task's acceptance criteria, files to modify, and verification command carefully.
 
-8. Implement the task:
+8. Implement the task (test-first):
    - Read any relevant existing code first to understand current patterns
-   - Make minimal, focused changes that satisfy the acceptance criteria
+   - **Write tests first**: implement the property tests and E2E tests listed in the task's `Tests` field
+   - Then write the production code to make the tests pass
    - Follow the coding conventions from `.windloop/SPEC/spec.md`
    - Add type hints where the spec requires them
 
