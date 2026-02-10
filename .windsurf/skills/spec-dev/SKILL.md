@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Guides spec-driven autonomous development. Use when planning a feature, designing architecture, breaking down requirements into tasks, implementing from a spec, building a new feature, creating a project plan, writing tests, running the development loop, or checking progress. Keywords: spec, plan, design, implement, build, feature, requirements, tasks, loop, progress, windloop.
+description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-verify (run tests/lint), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding). Keywords: spec, plan, design, implement, build, feature, requirements, tasks, loop, progress, windloop.
 ---
 
 ## Spec-Driven Development
