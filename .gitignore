@@ -29,7 +29,7 @@ Thumbs.db
 .env.development
 
 # Windloop runtime artifacts (auto-created by /spec-plan, not shipped)
-.windloop/
+# .windloop/  # uncomment to ignore during development
 AGENTS.md
 
 # Test spec artifacts (not part of windloop framework)
