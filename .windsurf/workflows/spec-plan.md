@@ -1,5 +1,5 @@
 ---
-description: Generate a spec and task breakdown from a project idea. Use this to bootstrap a new spec-driven project.
+description: Generate a spec and task breakdown from an idea. Use this to bootstrap a new spec.
 ---
 
 ## Plan a Spec
@@ -37,7 +37,7 @@ The spec should **align with the existing codebase** — preserve conventions, t
 
 #### 2. Gather requirements
 
-Ask the user to describe the project idea, goals, and constraints. If they already provided this in the prompt, proceed.
+Ask the user to describe the idea, goals, and constraints. If they already provided this in the prompt, proceed.
 
 #### 3. Generate spec.md
 

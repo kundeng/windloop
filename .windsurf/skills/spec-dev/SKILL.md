@@ -73,10 +73,10 @@ This project uses the `spec-driven-dev` skill for autonomous development. Run `/
 #### spec.md template
 
 ```markdown
-# Specification: [PROJECT NAME]
+# Specification: [SPEC NAME]
 
 ## Overview
-<!-- Brief description of what this project does and why -->
+<!-- Brief description of what this spec covers and why -->
 
 ## Goals
 - [ ] Goal 1
@@ -127,13 +127,13 @@ tests/
 <!-- Important decisions and constraints -->
 
 ## Out of Scope
-<!-- What this project explicitly does NOT do -->
+<!-- What this spec explicitly does NOT cover -->
 ```
 
 #### design.md template
 
 ```markdown
-# Design: [PROJECT NAME]
+# Design: [SPEC NAME]
 
 ## Architecture Overview
 
@@ -227,7 +227,7 @@ Properties that must hold true. Each property validates one or more requirements
 <!-- If applicable -->
 ```
 
-**Diagram guidance**: Include diagrams that match the project's complexity:
+**Diagram guidance**: Include diagrams that match the spec's complexity:
 - **Always**: Component diagram (architecture overview)
 - **Multi-actor systems**: Sequence diagram (swimming lanes)
 - **Stateful systems**: State diagram
@@ -239,7 +239,7 @@ Omit diagram sections that don't apply. Use Mermaid syntax (renders in GitHub, V
 #### tasks.md template
 
 ```markdown
-# Tasks: [PROJECT NAME]
+# Tasks: [SPEC NAME]
 
 <!--
 STATUS: [ ] pending | [x] done | [!] blocked
@@ -292,7 +292,7 @@ PROPERTIES: property IDs from design.md this task should satisfy
 #### progress.txt template
 
 ```
-# Progress Log: [PROJECT NAME]
+# Progress Log: [SPEC NAME]
 # Auto-updated by spec-loop workflow
 # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
 # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS

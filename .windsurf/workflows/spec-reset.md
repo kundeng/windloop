@@ -19,7 +19,7 @@ Let SPEC be the resolved spec name.
 
 4. Reset `.windloop/SPEC/progress.txt` to just the header:
    ```
-   # Progress Log: [PROJECT NAME]
+   # Progress Log: [SPEC NAME]
    # Auto-updated by spec-loop workflow
    # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
    # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS

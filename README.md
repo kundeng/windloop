@@ -19,8 +19,8 @@ idea → spec.md → design.md (with property tests) → tasks.md → [implement
 
 Windloop turns Windsurf's Cascade into an autonomous development loop:
 
-1. **`/spec-plan myproject`** — Describe your idea. Cascade generates a spec, design (with property tests), and task breakdown. Auto-scaffolds `.windloop/` and `AGENTS.md`.
-2. **`/spec-loop myproject`** — Cascade picks the next task, implements it, runs tests, commits, and repeats until done.
+1. **`/spec-plan myfeature`** — Describe your idea. Cascade generates a spec, design (with property tests), and task breakdown. Auto-scaffolds `.windloop/` and `AGENTS.md`.
+2. **`/spec-loop myfeature`** — Cascade picks the next task, implements it, runs tests, commits, and repeats until done.
 3. **`/spec-status`** — See progress across all specs and parallel sessions.
 
 ## Commands
@@ -110,7 +110,7 @@ Templates are embedded in `SKILL.md` — no separate template files to copy.
 
 ## Multiple Specs
 
-Break large projects into independent specs:
+Break large efforts into independent specs:
 
 ```
 .windloop/
@@ -140,12 +140,12 @@ Parallel Cascade sessions coordinate via `.windsurf/mailbox/`:
 
 Patterns: Lead-Worker, Claim Board, Pipeline. See `.windsurf/mailbox/README.md`.
 
-## Try It: Example Project
+## Try It: Example Spec
 
 Test the full loop end-to-end in any empty git repo:
 
 ```bash
-# 1. Create a test project
+# 1. Create a test repo
 mkdir test-project && cd test-project && git init
 
 # 2. Install windloop

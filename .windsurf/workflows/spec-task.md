@@ -9,7 +9,7 @@ If only one spec exists in `.windloop/index.md`, the spec name can be omitted (e
 
 Let SPEC be the resolved spec name.
 
-1. Read `.windloop/SPEC/spec.md` to understand the project scope and conventions.
+1. Read `.windloop/SPEC/spec.md` to understand the spec scope and conventions.
 
 2. Read `.windloop/SPEC/design.md` (if it exists) to understand architecture, interfaces, and property tests.
 

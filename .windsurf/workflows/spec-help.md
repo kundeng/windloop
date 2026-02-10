@@ -29,9 +29,9 @@ Print the following guide:
 
 ### Quick Start
 
-1. **New project?** → `/spec-plan myproject` — describe your idea, get spec + design + tasks
-2. **Ready to build?** → `/spec-loop myproject` — autonomous implementation loop
-3. **Parallel work?** → Open worktree Cascades, each runs `/spec-task myproject T[N]`
+1. **New spec?** → `/spec-plan myfeature` — describe your idea, get spec + design + tasks
+2. **Ready to build?** → `/spec-loop myfeature` — autonomous implementation loop
+3. **Parallel work?** → Open worktree Cascades, each runs `/spec-task myfeature T[N]`
 4. **Check progress?** → `/spec-status`
 
 ### Installation
@@ -45,7 +45,7 @@ Copy the `.windsurf/` directory into any project. Everything else is auto-create
 | File | Purpose |
 |------|---------|
 | `.windloop/index.md` | Registry of all specs |
-| `.windloop/<name>/spec.md` | Project specification |
+| `.windloop/<name>/spec.md` | Spec requirements and constraints |
 | `.windloop/<name>/design.md` | Architecture, interfaces, property tests |
 | `.windloop/<name>/tasks.md` | Ordered task list with dependencies |
 | `.windloop/<name>/progress.txt` | Auto-updated progress log |
@@ -59,4 +59,4 @@ Copy the `.windsurf/` directory into any project. Everything else is auto-create
 
 ---
 
-After printing, ask: "What would you like to do? You can `/spec-plan` a new project, `/spec-loop` an existing one, or `/spec-status` to see progress."
+After printing, ask: "What would you like to do? You can `/spec-plan` a new spec, `/spec-loop` an existing one, or `/spec-status` to see progress."

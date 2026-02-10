@@ -9,7 +9,7 @@ If omitted, check `.windloop/index.md` for available specs. If only one active s
 
 Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
-1. Read `.windloop/SPEC/spec.md` to understand the full project scope, tech stack, and testing strategy.
+1. Read `.windloop/SPEC/spec.md` to understand the full spec scope, tech stack, and testing strategy.
 
 2. Read `.windloop/SPEC/design.md` (if it exists) to understand architecture, interfaces, and property tests.
 
@@ -26,7 +26,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 8. Implement the task:
    - Read any relevant existing code first to understand current patterns
    - Make minimal, focused changes that satisfy the acceptance criteria
-   - Follow the project's coding conventions from `.windloop/SPEC/spec.md`
+   - Follow the coding conventions from `.windloop/SPEC/spec.md`
    - Add type hints where the spec requires them
 
 9. Run the task's specific verification command (from the task's `Verify` field).
@@ -34,7 +34,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 10. If verification fails, analyze the error output and fix the issue. Retry verification up to 3 times. If still failing after 3 retries, update `.windloop/SPEC/progress.txt` with a BLOCKED entry and the reason, then move to the next task by calling `/spec-loop SPEC`.
 
 // turbo
-11. Run the project-wide lint check if one is configured in `.windloop/SPEC/spec.md` (e.g. `ruff check src/ tests/`). Fix any lint issues found.
+11. Run the lint check if one is configured in `.windloop/SPEC/spec.md` (e.g. `ruff check src/ tests/`). Fix any lint issues found.
 
 12. Update `.windloop/SPEC/tasks.md`: change the task's `Status` from `[ ]` to `[x]` and check off completed acceptance criteria.
 
