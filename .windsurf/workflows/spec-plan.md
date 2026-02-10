@@ -95,10 +95,21 @@ git add -A && git commit -m "spec(SPEC): create spec, design, and tasks"
 
 #### 9. Report
 
-Print: "Spec **SPEC** is ready with [N] tasks across [M] phases."
-- Run `/spec-loop SPEC` for autonomous implementation
-- Run `/spec-task SPEC T1` to start with the first task
-- Run `/spec-status` to see the dashboard
+Print the task summary table:
+
+```
+Spec SPEC is ready with N tasks across M phases:
+
+  T1: [title]  [status]
+  T2: [title]  [status]  (depends: T1)
+  T3: [title]  [status]  (depends: T1, T2)
+  ...
+```
+
+Then suggest next steps:
+- `/spec-loop SPEC` for autonomous implementation
+- `/spec-task SPEC T1` to start with a specific task
+- `/spec-status` to see the dashboard
 
 ---
 
@@ -118,8 +129,10 @@ Use when rethinking requirements or design more broadly (e.g. "we need to change
    - Remove tasks only if their requirements were fully removed AND no code was written for them.
 7. Present a **change summary** showing: requirements changed → properties affected → tasks added/modified.
 
+8. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
+
 // turbo
-8. Commit: `git add -A && git commit -m "spec(SPEC): refine requirements and propagate to design/tasks"`
+9. Commit: `git add -A && git commit -m "spec(SPEC): refine requirements and propagate to design/tasks"`
 
 ---
 
@@ -146,5 +159,7 @@ Use for targeted adjustments discovered during implementation (e.g. "T3 revealed
 4. For completed tasks: do NOT uncheck. Add follow-up tasks if reconciliation is needed.
 5. Present a **change summary**: what changed at each level (spec → design → tasks).
 
+6. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
+
 // turbo
-6. Commit: `git add -A && git commit -m "spec(SPEC): update — [brief description of what changed]"`
+7. Commit: `git add -A && git commit -m "spec(SPEC): update — [brief description of what changed]"`
