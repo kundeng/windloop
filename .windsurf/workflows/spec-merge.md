@@ -1,5 +1,5 @@
 ---
-description: Review completed work and merge worktree changes. Use after parallel worktree Cascades finish their tasks.
+description: Review completed work and merge worktree changes. Use after parallel sessions finish, when you want to merge branches, review work, or combine completed tasks. Keywords: merge, review, combine, branches, worktree, parallel, done, finished, spec, windloop.
 ---
 
 ## Review and Merge

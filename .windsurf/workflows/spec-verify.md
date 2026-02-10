@@ -1,5 +1,5 @@
 ---
-description: Run all verification checks (tests + lint) and report results. Use after implementing tasks to confirm everything passes.
+description: Run all verification checks (tests + lint) and report results. Use when you want to run tests, check lint, verify the build, or confirm everything passes. Keywords: test, lint, verify, check, run tests, validate, coverage, spec, windloop.
 ---
 
 ## Verify All

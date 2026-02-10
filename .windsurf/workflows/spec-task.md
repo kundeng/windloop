@@ -1,5 +1,5 @@
 ---
-description: Implement a single task from .windloop/<name>/tasks.md by ID. Use this for parallel worktree execution where each Cascade handles one task.
+description: Implement a single task from .windloop/<name>/tasks.md by ID. Use for parallel worktree execution or when you want to work on a specific task, pick a task, or implement one item. Keywords: task, implement, specific, single, parallel, worktree, pick, work on, spec, windloop.
 ---
 
 ## Implement a Single Task

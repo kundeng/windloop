@@ -1,5 +1,5 @@
 ---
-description: Run a spec-driven autonomous development loop. Reads .windloop/<name>/tasks.md, picks the next task, implements it, verifies, commits, updates progress, and repeats.
+description: Run a spec-driven autonomous development loop. Picks the next task, implements it test-first, verifies, commits, and repeats. Use when you want to implement a feature, start coding, run the loop, build from the spec, or continue working on tasks. Keywords: implement, build, code, loop, run, start, continue, next task, autonomous, spec, windloop.
 ---
 
 ## Spec-Driven Development Loop

@@ -1,5 +1,5 @@
 ---
-description: Generate a spec and task breakdown from an idea. Use this to bootstrap a new spec.
+description: Generate a spec and task breakdown from an idea. Use when you want to plan a feature, design a system, create requirements, break down work into tasks, start a new project, or refine an existing spec. Keywords: plan, design, feature, idea, requirements, tasks, breakdown, create, build, new, refine, update, spec, windloop.
 ---
 
 ## Plan a Spec

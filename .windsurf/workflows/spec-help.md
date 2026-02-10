@@ -1,5 +1,5 @@
 ---
-description: Show onboarding help, available commands, and how to get started with windloop.
+description: Show onboarding help, available commands, and how to get started with windloop. Use when you need help, want to see commands, or are new to the project. Keywords: help, commands, getting started, onboarding, how to, what can, windloop.
 ---
 
 ## Windloop Help

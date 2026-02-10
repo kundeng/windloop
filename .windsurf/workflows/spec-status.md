@@ -1,5 +1,5 @@
 ---
-description: Dashboard showing progress across all specs, active sessions, and mailbox state. Use to monitor how sub-sessions are doing.
+description: Dashboard showing progress across all specs, active sessions, and mailbox state. Use when you want to check progress, see status, monitor tasks, or know what's done. Keywords: status, progress, dashboard, check, monitor, how far, what's done, tasks, sessions, spec, windloop.
 ---
 
 ## Spec Status Dashboard
