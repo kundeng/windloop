@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "post_setup_worktree": [
+      {
+        "command": "bash $ROOT_WORKSPACE_PATH/hooks/setup_worktree.sh",
+        "show_output": true
+      }
+    ],
+    "post_write_code": [
+      {
+        "command": "bash .windsurf/hooks/auto-format.sh",
+        "show_output": false
+      }
+    ],
+    "post_cascade_response": [
+      {
+        "command": "python3 .windsurf/hooks/log_cascade.py",
+        "show_output": false
+      }
+    ]
+  }
+}
