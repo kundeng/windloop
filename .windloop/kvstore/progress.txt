@@ -1,4 +1,0 @@
-# Progress Log: kvstore
-# Auto-updated by spec-loop workflow
-# Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
-# STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS

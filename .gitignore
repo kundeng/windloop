@@ -28,6 +28,10 @@ Thumbs.db
 .env.local
 .env.development
 
+# Windloop runtime artifacts (auto-created by /spec-plan, not shipped)
+.windloop/
+AGENTS.md
+
 # Windsurf runtime artifacts (keep hooks.json, hooks/, workflows, skills, mailbox structure)
 .windsurf/cascade_log.jsonl
 .windsurf/mailbox/inbox/*
