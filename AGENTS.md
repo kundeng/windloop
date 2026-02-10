@@ -1,60 +1,20 @@
 # Windloop Agent Instructions
 
-## Project Overview
-This is a spec-driven autonomous development framework for Windsurf. It uses workflows, skills, and hooks to enable near-intervention-free cascaded agent loops.
+## About This Repo
+This is the windloop framework itself — a spec-driven autonomous development toolkit for Windsurf. The `.windsurf/` directory is the distributable artifact that users copy into their projects.
 
-## Development Workflow
-1. Specs live in `.windloop/<name>/` — always read `.windloop/index.md` to find available specs
-2. Read `.windloop/<name>/spec.md` and `.windloop/<name>/tasks.md` before implementing anything
-3. Use `/spec-loop <name>` for autonomous task-by-task implementation
-4. Use `/spec-task <name> T[N]` for single-task execution (ideal for parallel worktrees)
-5. Use `/spec-verify <name>` to run the full test + lint suite
-6. Use `/spec-plan <name>` to bootstrap a new spec from requirements
-7. If only one spec exists, the name can be omitted
+## For Development on Windloop Itself
+- The framework code lives in `.windsurf/` (workflows, skills, hooks, mailbox)
+- `RESEARCH-cascaded-agent-loops.md` contains background research (not shipped)
+- `README.md` is the user-facing documentation
 
-## Conventions
-- Always check task dependencies before starting implementation
-- Run the task's verification command after every implementation
-- Commit after each completed task with message format: `feat(<spec>/T[N]): [description]`
-- Update both `.windloop/<name>/tasks.md` (status checkbox) and `.windloop/<name>/progress.txt` (log line) after each task
-- Keep changes minimal and focused — one task per commit
-- Follow the tech stack and patterns defined in `.windloop/<name>/spec.md`
+## Windloop (Spec-Driven Development)
 
-## Multi-Spec Structure
-```
-.windloop/
-  index.md                # Registry of all specs
-  dependencies.md         # Cross-spec dependency graph
-  templates/              # Reusable templates for new specs
-  <name>/                 # One directory per spec
-    spec.md               # Full project specification
-    tasks.md              # Ordered task list with dependencies
-    progress.txt          # Auto-updated progress log
-```
+This project uses windloop for spec-driven autonomous development.
 
-## File-Based Coordination (Mailbox Protocol)
-When running parallel Cascade sessions, use the mailbox for coordination:
-```
-.windsurf/mailbox/
-  board/status.json       # Shared state visible to all sessions
-  board/claims.json       # Task claim registry (prevents double-work)
-  inbox/<session>/        # Messages TO a session
-  outbox/<session>/       # Completion signals FROM a session
-```
-See `.windsurf/mailbox/README.md` for the full protocol.
-
-## File Structure
-```
-.windloop/                # Project specifications and progress
-.windsurf/
-  workflows/              # Cascade workflow definitions
-  skills/                 # Cascade skill bundles
-  hooks.json              # Lifecycle hook configuration
-  hooks/                  # Hook scripts (including worktree setup)
-  mailbox/                # File-based inter-session coordination
-```
-
-## Testing
-- Run tests: check `.windloop/<name>/spec.md` for the exact command (typically `python -m pytest tests/ -v`)
-- Run lint: check `.windloop/<name>/spec.md` for the lint command (typically `ruff check src/ tests/`)
-- Never skip verification after implementation
+- Specs live in `.windloop/<name>/` — read `.windloop/index.md` for the registry
+- Run `/spec-help` for available commands
+- Run `/spec-plan <name>` to create or refine a spec
+- Run `/spec-loop <name>` for autonomous implementation
+- Run `/spec-status` to check progress across all specs
+- Commit format: `feat(<spec>/T[N]): [description]`

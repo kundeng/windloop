@@ -1,113 +1,76 @@
 # Windloop
 
-A spec-driven autonomous development framework for [Windsurf](https://windsurf.com). Uses workflows, skills, hooks, git worktrees, and a file-based coordination protocol to enable near-intervention-free cascaded agent loops.
+A spec-driven autonomous development framework for [Windsurf](https://windsurf.com). Copy one directory into any project and get an AI-powered development loop that turns ideas into working code.
 
-## What Is This?
+## Install
 
-Windloop provides a reusable scaffold that turns Windsurf's Cascade into an autonomous development loop:
-
-```
-.windloop/<name>/spec.md → tasks.md → [pick task → implement → test → commit → update progress → repeat]
-```
-
-It leverages Windsurf's native features:
-- **Workflows** — unified `/spec-*` commands (`/spec-loop`, `/spec-task`, `/spec-plan`, etc.)
-- **Skills** — bundled knowledge for spec-driven development
-- **Hooks** — lifecycle scripts for worktree setup, auto-formatting, and audit logging
-- **Git Worktrees** — parallel isolated workspaces for concurrent Cascade sessions
-- **Turbo Mode + Auto-Continue** — minimal human intervention
-- **Mailbox Protocol** — file-based coordination between parallel Cascade sessions
-
-## Quick Start
-
-### 0. Get oriented
-
-```
-/spec-help
+```bash
+# Copy .windsurf/ into your project (that's it — everything else is auto-created)
+cp -r path/to/windloop/.windsurf/ your-project/.windsurf/
 ```
 
-### 1. Bootstrap a new spec from an idea
+Then open your project in Windsurf and type `/spec-help`.
+
+## What It Does
 
 ```
-/spec-plan myproject
+idea → spec.md → design.md (with property tests) → tasks.md → [implement → test → commit → repeat]
 ```
 
-Describe your project. Cascade generates `.windloop/myproject/spec.md` and `.windloop/myproject/tasks.md`.
+Windloop turns Windsurf's Cascade into an autonomous development loop:
 
-### 2. Run the autonomous loop
+1. **`/spec-plan myproject`** — Describe your idea. Cascade generates a spec, design (with property tests), and task breakdown. Auto-scaffolds `.windloop/` and `AGENTS.md`.
+2. **`/spec-loop myproject`** — Cascade picks the next task, implements it, runs tests, commits, and repeats until done.
+3. **`/spec-status`** — See progress across all specs and parallel sessions.
 
-```
-/spec-loop myproject
-```
-
-Cascade reads the spec, picks the next task, implements it, runs tests, commits, and repeats.
-
-### 3. Or implement a single task (great for parallel worktrees)
-
-```
-/spec-task myproject T3
-```
-
-Open multiple Cascade sessions in Worktree mode, each assigned a different task.
-
-### 4. Check progress
-
-```
-/spec-status
-```
-
-### 5. Verify everything
-
-```
-/spec-verify myproject
-```
-
-### 6. Review after parallel work
-
-```
-/spec-merge myproject
-```
-
-> **Note**: If only one spec exists, the spec name can be omitted from all commands.
-
-## All Commands
+## Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/spec-help` | Onboarding guide and available commands |
-| `/spec-plan <name>` | Generate spec + tasks from a project idea |
+| `/spec-help` | Onboarding guide |
+| `/spec-plan <name>` | Create or refine a spec (idea → spec → design → tasks) |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
-| `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
-| `/spec-verify <name>` | Run all tests + lint and report status |
-| `/spec-merge <name>` | Review completed work and merge worktree changes |
-| `/spec-status` | Dashboard: progress across all specs, sessions, and mailbox |
-| `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks, clear claims |
+| `/spec-task <name> T[N]` | Implement a single task (for parallel worktree use) |
+| `/spec-verify <name>` | Run all tests + lint |
+| `/spec-merge <name>` | Review and merge after parallel work |
+| `/spec-status` | Dashboard: progress, sessions, mailbox state |
+| `/spec-reset <name>` | Reset a spec for re-run |
 
-## Settings for Maximum Autonomy
+> If only one spec exists, the `<name>` can be omitted.
 
-| Setting | Value | Where |
-|---------|-------|-------|
-| Auto-Execution | **Turbo** | Windsurf Settings (bottom-right) |
-| Auto-Continue | **Enabled** | Windsurf Settings |
-| Worktree Mode | **On** | Cascade input (bottom-right toggle) |
+## Spec Lifecycle
 
-## Project Structure
+`/spec-plan` walks you through each stage interactively:
+
+1. **spec.md** — Requirements, tech stack, testing strategy, constraints
+2. **design.md** — Architecture, module interfaces, data flow, **property tests** (invariants that guide implementation)
+3. **tasks.md** — Ordered work items with dependencies, acceptance criteria, and verification commands
+4. **progress.txt** — Auto-updated log of completed tasks
+
+Each stage is reviewed with you before proceeding. You can re-run `/spec-plan` to refine any existing spec.
+
+## What Gets Created
+
+When you run `/spec-plan`, windloop auto-scaffolds:
 
 ```
-.windloop/                      # Specs, tasks, and progress (hidden dir)
+.windloop/                      # Auto-created (not shipped)
 ├── index.md                    # Registry of all specs
 ├── dependencies.md             # Cross-spec dependency graph
-├── templates/                  # Blank templates for new specs
-│   ├── spec-template.md
-│   ├── tasks-template.md
-│   └── progress-template.txt
 └── <name>/                     # One directory per spec
-    ├── spec.md                 # Full project specification
-    ├── tasks.md                # Ordered task list with dependencies
-    └── progress.txt            # Auto-updated progress log
+    ├── spec.md                 # Requirements
+    ├── design.md               # Architecture + property tests
+    ├── tasks.md                # Task breakdown
+    └── progress.txt            # Progress log
 
-.windsurf/                      # Windsurf configuration
-├── workflows/                  # All /spec-* workflow definitions
+AGENTS.md                       # Windloop snippet appended (or created)
+```
+
+## What You Ship (the `.windsurf/` directory)
+
+```
+.windsurf/
+├── workflows/                  # All /spec-* commands
 │   ├── spec-help.md
 │   ├── spec-plan.md
 │   ├── spec-loop.md
@@ -118,35 +81,32 @@ Open multiple Cascade sessions in Worktree mode, each assigned a different task.
 │   └── spec-reset.md
 ├── skills/
 │   └── spec-dev/
-│       └── SKILL.md            # Spec-driven dev skill (auto-invoked)
-├── hooks.json                  # Hook configuration
+│       └── SKILL.md            # Embedded templates + rules
+├── hooks.json                  # Lifecycle hooks
 ├── hooks/
-│   ├── setup_worktree.sh       # Worktree initialization
-│   ├── auto-format.sh          # Auto-format after edits
-│   └── log_cascade.py          # Audit log of Cascade responses
-└── mailbox/                    # File-based inter-session coordination
-    ├── README.md               # Full protocol documentation
+│   ├── setup_worktree.sh       # Worktree init
+│   ├── auto-format.sh          # Auto-format on save
+│   └── log_cascade.py          # Audit log
+└── mailbox/                    # Inter-session coordination
+    ├── README.md
     ├── board/
-    │   ├── status.json         # Shared state
-    │   └── claims.json         # Task claim registry
-    ├── inbox/                  # Messages TO sessions
-    └── outbox/                 # Completion signals FROM sessions
-
-AGENTS.md                       # Agent instructions (auto-discovered by Cascade)
+    │   ├── status.json
+    │   └── claims.json
+    ├── inbox/
+    └── outbox/
 ```
 
-## How It Works
+Templates are embedded in `SKILL.md` — no separate template files to copy.
 
-### The Loop
+## Settings for Maximum Autonomy
 
-1. `/spec-loop <name>` reads `.windloop/<name>/tasks.md` and finds the next uncompleted task with all dependencies met
-2. Implements the task following acceptance criteria
-3. Runs the task's verification command
-4. On failure: retries up to 3 times, then marks BLOCKED and moves on
-5. On success: commits, updates progress, calls `/spec-loop <name>` again
-6. Stops when all tasks are done
+| Setting | Value | Where |
+|---------|-------|-------|
+| Auto-Execution | **Turbo** | Windsurf Settings |
+| Auto-Continue | **Enabled** | Windsurf Settings |
+| Worktree Mode | **On** | Cascade input toggle |
 
-### Multiple Specs
+## Multiple Specs
 
 Break large projects into independent specs:
 
@@ -154,83 +114,78 @@ Break large projects into independent specs:
 .windloop/
 ├── auth/        # Authentication module
 ├── api/         # REST API endpoints
-├── dashboard/   # Frontend dashboard
-└── infra/       # Infrastructure & deployment
+└── dashboard/   # Frontend dashboard
 ```
 
-Each spec has its own task list, progress log, and can be implemented independently — even in parallel by different Cascade sessions. Cross-spec dependencies are declared in `.windloop/dependencies.md`.
-
-### Parallel Execution
-
-For independent tasks (no overlapping files or dependencies):
-
-1. Open Cascade #1 in Worktree mode → `/spec-task myproject T3`
-2. Open Cascade #2 in Worktree mode → `/spec-task myproject T4`
-3. Both run in isolated git worktrees
-4. Merge each back when done
-5. Run `/spec-merge myproject` to validate
-
-For independent specs, run entire loops in parallel:
-
-1. Cascade #1 (worktree) → `/spec-loop auth`
-2. Cascade #2 (worktree) → `/spec-loop api`
-3. Cascade #3 (worktree) → `/spec-loop dashboard`
-
-Use `/spec-status` to monitor all sessions from the lead Cascade.
-
-### File-Based Coordination (Mailbox Protocol)
-
-Parallel Cascade sessions can't communicate directly. The mailbox protocol uses the shared filesystem as a message bus:
+Each spec has its own lifecycle. Run them in parallel with worktree Cascades:
 
 ```
-.windsurf/mailbox/
-├── board/claims.json    # Claim tasks to prevent double-work
-├── board/status.json    # Shared state visible to all sessions
-├── inbox/<session>/     # Messages TO a session
-└── outbox/<session>/    # Completion signals FROM a session
+Cascade #1 (worktree) → /spec-loop auth
+Cascade #2 (worktree) → /spec-loop api
+Cascade #3 (worktree) → /spec-loop dashboard
 ```
 
-**Patterns supported**:
-- **Lead-Worker** — one session orchestrates, others implement
-- **Claim Board** — self-organizing: sessions claim tasks from a shared board
-- **Pipeline** — sequential handoff between sessions
+Cross-spec dependencies are declared in `.windloop/dependencies.md`. Use `/spec-status` to monitor everything.
 
-See `.windsurf/mailbox/README.md` for the full protocol.
+## Parallel Coordination (Mailbox Protocol)
 
-### Hooks
+Parallel Cascade sessions coordinate via `.windsurf/mailbox/`:
 
-All hooks live in `.windsurf/hooks/`:
+- **`board/claims.json`** — claim tasks to prevent double-work
+- **`board/status.json`** — shared state visible to all sessions
+- **`inbox/<session>/`** — messages TO a session
+- **`outbox/<session>/`** — completion signals FROM a session
 
-- **`post_setup_worktree`** — Copies `.env` files, installs dependencies in new worktrees
-- **`post_write_code`** — Auto-formats edited files (ruff for Python, prettier for JS/TS)
-- **`post_cascade_response`** — Logs Cascade responses to `.windsurf/cascade_log.jsonl`
+Patterns: Lead-Worker, Claim Board, Pipeline. See `.windsurf/mailbox/README.md`.
 
-## Using Templates for New Projects
+## Try It: Example Project
 
-The `.windloop/templates/` directory contains blank templates. To start a fresh project:
+Test the full loop end-to-end in any empty git repo:
 
-1. Copy this repo's `.windsurf/`, `.windloop/templates/`, and `AGENTS.md` into your project
-2. Run `/spec-plan myfeature` and describe your project
-3. Run `/spec-loop myfeature` to build it
+```bash
+# 1. Create a test project
+mkdir test-project && cd test-project && git init
 
-## Testing This Repo
+# 2. Install windloop
+cp -r path/to/windloop/.windsurf/ .windsurf/
 
-This repo includes a test spec (`taskrunner` — a simple Python CLI) in `.windloop/taskrunner/`. To test the full loop:
+# 3. Open in Windsurf
+windsurf .
+```
 
-1. Open a Cascade session
-2. Type `/spec-loop taskrunner`
-3. Watch it implement T1 through T7 autonomously
-4. Check `.windloop/taskrunner/progress.txt` for the log
-5. Run `/spec-status` to see the dashboard
+Then in Cascade:
 
-## Windsurf CLI & API Status
+```
+/spec-plan calculator
+```
 
-Windsurf has a basic CLI (`windsurf .` to open a folder) but **no headless/programmatic API** for driving Cascade sessions externally. This means:
-- You cannot spawn Cascade sessions from a script
-- You cannot inject prompts programmatically
-- The mailbox protocol is the best available workaround for inter-session coordination
+Describe something simple like: *"A Python CLI calculator that supports add, subtract, multiply, divide. Use pytest for testing."*
 
-If Windsurf adds a CLI/API for Cascade in the future, this framework can be extended with a true outer-loop orchestrator (similar to Claude Code's agent teams).
+Cascade will:
+1. Create `.windloop/calculator/spec.md` — review and approve
+2. Create `.windloop/calculator/design.md` — review and approve
+3. Create `.windloop/calculator/tasks.md` — review and approve
+4. Auto-scaffold `.windloop/index.md`, `AGENTS.md`, etc.
+
+Then:
+
+```
+/spec-loop calculator
+```
+
+Watch Cascade implement each task autonomously: create files, write tests, run verification, commit, and move to the next task.
+
+Check progress anytime:
+
+```
+/spec-status
+```
+
+## Hooks
+
+- **`post_setup_worktree`** — copies `.env`, installs deps in new worktrees
+- **`post_write_code`** — auto-formats (ruff for Python, prettier for JS/TS)
+- **`post_cascade_response`** — logs responses to `.windsurf/cascade_log.jsonl`
 
 ## License
 

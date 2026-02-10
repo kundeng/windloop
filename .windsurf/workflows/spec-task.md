@@ -11,33 +11,35 @@ Let SPEC be the resolved spec name.
 
 1. Read `.windloop/SPEC/spec.md` to understand the project scope and conventions.
 
-2. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
+2. Read `.windloop/SPEC/design.md` (if it exists) to understand architecture, interfaces, and property tests.
 
-3. Verify that all dependencies for this task are marked as done (`[x]`). If not, report which dependencies are missing and STOP.
+3. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
 
-4. If `.windsurf/mailbox/board/claims.json` exists, check that this task is not already claimed by another session. If unclaimed, write your claim (use your trajectory ID or session name as the claimant).
+4. Verify that all dependencies for this task are marked as done (`[x]`). If not, report which dependencies are missing and STOP.
 
-5. Read any existing source files that this task depends on or modifies to understand the current state.
+5. If `.windsurf/mailbox/board/claims.json` exists, check that this task is not already claimed by another session. If unclaimed, write your claim (use your trajectory ID or session name as the claimant).
 
-6. Implement the task following the acceptance criteria exactly:
+6. Read any existing source files that this task depends on or modifies to understand the current state.
+
+7. Implement the task following the acceptance criteria exactly:
    - Create or modify only the files listed in the task's `Files` field
    - Add type hints where required
    - Follow existing code patterns and conventions
 
-7. Run the task's verification command (from the `Verify` field).
+8. Run the task's verification command (from the `Verify` field).
 
-8. If verification fails, analyze and fix. Retry up to 3 times.
-
-// turbo
-9. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
-
-10. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
+9. If verification fails, analyze and fix. Retry up to 3 times.
 
 // turbo
-11. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
+10. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
 
-12. Append to `.windloop/SPEC/progress.txt`: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
+11. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
 
-13. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
+// turbo
+12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
 
-14. Report completion and list any issues encountered.
+13. Append to `.windloop/SPEC/progress.txt`: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
+
+14. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
+
+15. Report completion and list any issues encountered.
