@@ -29,6 +29,7 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 |---------|---------|
 | `/spec-help` | Onboarding guide |
 | `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected) |
+| `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task (for parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint |

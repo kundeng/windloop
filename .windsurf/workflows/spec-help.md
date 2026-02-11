@@ -18,6 +18,7 @@ Print the following guide:
 |---------|---------|
 | `/spec-help` | Show this help guide |
 | `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected if omitted) |
+| `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint and report status |

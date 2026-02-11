@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-verify (run tests/lint), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding). Keywords: spec, plan, design, implement, build, feature, requirements, tasks, loop, progress, windloop.
+description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-audit (validate consistency/traceability/drift), spec-verify (run tests/lint), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding). Keywords: spec, plan, design, implement, build, feature, requirements, tasks, loop, progress, audit, validate, windloop.
 ---
 
 ## Spec-Driven Development
@@ -25,6 +25,7 @@ The traceability chain ensures nothing is lost:
 |---------|---------|
 | `/spec-help` | Onboarding guide |
 | `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected if omitted) |
+| `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift, staleness |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement single task (parallel worktree use) |
 | `/spec-verify <name>` | Run all tests + lint |
@@ -69,6 +70,28 @@ When creating or updating AGENTS.md for a host project, append this block:
 
 This project uses the `spec-driven-dev` skill for autonomous development. Run `/spec-help` to get started.
 ```
+
+### Spec Refinement Principles
+
+When running `/spec-plan <name> refine`, follow these principles to simplify while keeping completeness:
+
+1. **Merge redundant requirements**: If two requirements describe the same behavior in different sections, merge them into the earlier/more natural location and delete the duplicate.
+2. **Separate what from how**: Move implementation details (specific file contents, build instructions, config snippets) from Requirements to Constraints. Requirements describe *what the user can do*; constraints describe *how it must be built*.
+3. **Collapse over-specified sub-requirements**: If multiple sub-requirements describe individual assertions inside a single feature, collapse them into one requirement. The individual checks become acceptance criteria on the implementing task, not separate requirements.
+4. **Demote aspirational items**: If a requirement describes a *supported pattern* rather than a *tested feature*, demote it to a Note under the parent requirement section. Requirements must be testable.
+5. **Merge overlapping properties**: If one property is a strict subset of another, merge the smaller into the larger and renumber.
+6. **Cascade renumbering**: After merging or removing requirements/properties, update ALL references in:
+   - `design.md` — property `Validates:` lines
+   - `tasks.md` — task `Requirements:`, `Properties:`, and `Tests:` lines
+   - Verify no orphan references remain
+7. **Validate traceability**: After refactoring, check:
+   - Every R maps to ≥1 P in design.md
+   - Every P maps to ≥1 T in tasks.md
+   - No T references a nonexistent R or P
+   - Flag orphans in the change summary
+8. **Present tense for done work**: Rewrite completed requirements in present tense ("X does Y") not future tense ("X should do Y", "currently missing"). The spec describes the system as it is, plus pending goals.
+9. **Sync derived documents**: If spec changes affect project documentation files (e.g., README, architecture docs, agent docs), update them. The spec is the source of truth.
+10. **Align spec with disk**: Verify the directory structure in the spec matches the actual repo layout. Fix stale paths, add missing entries, remove entries for deleted files.
 
 ### Embedded Templates
 

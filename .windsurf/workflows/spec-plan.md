@@ -118,24 +118,40 @@ Then suggest next steps:
 
 ### Mode: Refine
 
-Use when rethinking requirements or design more broadly (e.g. "we need to change the approach to auth").
+Use when simplifying, consolidating, or rethinking requirements or design. This is the mode for making the spec *simpler yet complete*.
+
+**Recommended**: Run `/spec-audit SPEC` first to get a findings report, then use this mode to act on it.
 
 1. Read all existing spec artifacts: `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`, `progress.txt`
-2. Ask the user what should change. If they already described changes in the prompt, proceed.
-3. Identify which **requirements** (R-numbers) are affected.
-4. Update `spec.md` — add, modify, or remove requirements. Preserve unchanged requirements and their numbering.
-5. Update `design.md` — adjust affected modules and properties. For each changed requirement, check that its validating properties (P-numbers) still hold. Add/update properties as needed.
-6. Update `tasks.md`:
-   - For **completed tasks** (`[x]`): do NOT uncheck them. If their requirements changed, add a new follow-up task to reconcile.
-   - For **pending tasks** (`[ ]`): update requirements, properties, acceptance criteria, and files as needed.
+2. Scan the actual repo structure to detect spec↔disk drift.
+3. Ask the user what should change. If they already described changes in the prompt, proceed. If `/spec-audit` findings are available, use those as input.
+4. Apply the **Spec Refinement Principles** from the skill (merge redundancies, separate what/how, collapse over-specified requirements, cascade renumbering, validate traceability, present tense, sync docs, align with disk).
+5. Update `spec.md`:
+   - Merge, remove, or rewrite requirements per the principles
+   - Move implementation details to Constraints
+   - Update directory structure to match actual repo
+   - Update Data Models to match actual files
+   - Rewrite completed items in present tense
+6. Update `design.md`:
+   - Merge overlapping properties, renumber as needed
+   - Update `Validates:` references to match new requirement IDs
+   - Remove properties for removed requirements
+7. Update `tasks.md`:
+   - For **completed tasks** (`[x]`): update requirement/property references to new IDs but do NOT uncheck them.
+   - For **pending tasks** (`[ ]`): update requirements, properties, acceptance criteria as needed.
    - Add new tasks if new requirements were introduced.
-   - Remove tasks only if their requirements were fully removed AND no code was written for them.
-7. Present a **change summary** showing: requirements changed → properties affected → tasks added/modified.
-
-8. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
+   - Remove tasks only if their requirements were fully removed AND no code was written.
+8. Validate traceability: every R → ≥1 P → ≥1 T. Flag any gaps.
+9. Update project documentation files if affected by spec changes.
+10. Present a **change summary**:
+    - Requirements: added / merged / removed / moved-to-constraints
+    - Properties: added / merged / renumbered
+    - Tasks: updated / added / removed
+    - Traceability: any remaining gaps
+11. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
 
 // turbo
-9. Commit: `git add -A && git commit -m "spec(SPEC): refine requirements and propagate to design/tasks"`
+12. Commit: `git add -A && git commit -m "spec(SPEC): refine — [brief description]"`
 
 ---
 
