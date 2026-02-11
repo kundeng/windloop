@@ -10,7 +10,7 @@ Print the following guide:
 
 ### Windloop — Spec-Driven Autonomous Development
 
-**Lifecycle**: idea → `spec.md` → `design.md` (with property tests) → `tasks.md` → autonomous implementation loop
+**Lifecycle**: idea → `spec.md` (why) → `design.md` (what + how) → `tasks.md` (steps) → autonomous implementation loop
 
 **Available commands** (all accept an optional `<spec>` name):
 

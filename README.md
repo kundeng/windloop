@@ -14,7 +14,7 @@ Then open your project in Windsurf and type `/spec-help`.
 ## What It Does
 
 ```
-idea → spec.md → design.md (with property tests) → tasks.md → [implement → test → commit → repeat]
+idea → spec.md (why) → design.md (what + how) → tasks.md (steps) → [implement → test → commit → repeat]
 ```
 
 Windloop turns Windsurf's Cascade into an autonomous development loop:
@@ -43,8 +43,8 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 
 `/spec-plan` walks you through each stage interactively:
 
-1. **spec.md** — Requirements as numbered user stories (R1.1, R1.2, NF1), tech stack, testing strategy
-2. **design.md** — Architecture, module interfaces, **property tests** that validate requirements ("P1 validates R1.1, R1.2")
+1. **spec.md** — The *why*: requirements as numbered user stories (R1.1, R1.2, NF1)
+2. **design.md** — The *what + how*: architecture, tech stack, constraints, testing strategy, **property tests** that validate requirements ("P1 validates R1.1, R1.2")
 3. **tasks.md** — Tasks reference requirements + properties they fulfill (`Requirements: R1.1` / `Properties: P1`)
 4. **progress.txt** — Auto-updated log
 
@@ -61,8 +61,8 @@ When you run `/spec-plan`, windloop auto-scaffolds:
 ├── index.md                    # Registry of all specs
 ├── dependencies.md             # Cross-spec dependency graph
 └── <name>/                     # One directory per spec
-    ├── spec.md                 # Requirements
-    ├── design.md               # Architecture + property tests
+    ├── spec.md                 # Requirements (why)
+    ├── design.md               # Architecture, tech stack, constraints, properties (what + how)
     ├── tasks.md                # Task breakdown
     └── progress.txt            # Progress log
 

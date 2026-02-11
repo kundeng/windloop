@@ -9,9 +9,9 @@ If only one spec exists in `.windloop/index.md`, the spec name can be omitted (e
 
 Let SPEC be the resolved spec name.
 
-1. Read `.windloop/SPEC/spec.md` to understand the spec scope and conventions.
+1. Read `.windloop/SPEC/spec.md` to understand the requirements and scope.
 
-2. Read `.windloop/SPEC/design.md` (if it exists) to understand architecture, interfaces, and property tests.
+2. Read `.windloop/SPEC/design.md` to understand architecture, tech stack, testing strategy, and property tests.
 
 3. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
 
@@ -34,7 +34,7 @@ Let SPEC be the resolved spec name.
 9. If verification fails, analyze and fix. Retry up to 3 times.
 
 // turbo
-10. Run lint if configured: check `.windloop/SPEC/spec.md` for the lint command.
+10. Run lint if configured: check `.windloop/SPEC/design.md` for the lint command.
 
 11. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
 

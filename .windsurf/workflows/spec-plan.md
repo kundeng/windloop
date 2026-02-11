@@ -41,22 +41,25 @@ Ask the user to describe the idea, goals, and constraints. If they already provi
 
 #### 3. Generate spec.md
 
-Create `.windloop/SPEC/spec.md` using the spec.md template from the spec-driven-dev skill:
-- If existing code was found, align tech stack, directory structure, and conventions with it
+Create `.windloop/SPEC/spec.md` using the spec.md template from the spec-driven-dev skill.
+spec.md is the *why* — requirements only:
 - Frame requirements as **numbered user stories** (R1.1, R1.2, etc.): "As a [role], I should be able to [action] so that [benefit]"
 - Group requirements hierarchically by feature area (R1: Feature, R1.1, R1.2, R2: Feature, etc.)
 - Include non-functional requirements (NF1, NF2, etc.)
-- Define clear testing strategy with actual commands
-- List specific data models and interfaces
+- Define what is out of scope
 
 Present the spec to the user for review. Iterate until approved.
 
 #### 4. Generate design.md
 
-Create `.windloop/SPEC/design.md` using the design.md template from the spec-driven-dev skill:
-- If existing code was found, reflect the actual architecture (don't redesign what works)
+Create `.windloop/SPEC/design.md` using the design.md template from the spec-driven-dev skill.
+design.md is the *what + how* — architecture, tech stack, constraints, testing strategy:
+- If existing code was found, align tech stack, directory structure, and conventions with it
+- Define tech stack, directory structure, and constraints
 - Define module architecture and interfaces
 - Specify data flow between components
+- Define testing strategy with actual commands (test, lint, coverage)
+- List data models and interfaces
 - Write **property tests** (P1, P2, etc.) — each property must **validate specific requirements** from spec.md (e.g. "Validates: R1.1, R1.2")
 - Every requirement should be covered by at least one property
 - Document error handling strategy and edge cases

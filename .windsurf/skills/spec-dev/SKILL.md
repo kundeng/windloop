@@ -10,13 +10,13 @@ This skill powers the windloop framework. Specs live in `.windloop/<name>/` and 
 ### Spec Lifecycle
 
 ```
-idea → spec.md (requirements as user stories) → design.md (properties validate requirements) → tasks.md (trace to requirements + properties) → [implement loop] → done
+idea → spec.md (why) → design.md (what + how) → tasks.md (steps) → [implement loop] → done
 ```
 
 The traceability chain ensures nothing is lost:
-- **spec.md** — numbered requirements as user stories (R1.1, R1.2, NF1, etc.)
-- **design.md** — properties (P1, P2) that validate requirements ("Validates: R1.1, R1.2")
-- **tasks.md** — tasks reference both requirements and properties they fulfill
+- **spec.md** — requirements as user stories (R1.1, R1.2, NF1) — the *why*
+- **design.md** — architecture, tech stack, constraints, testing strategy, properties (P1, P2 validate R-numbers) — the *what + how*
+- **tasks.md** — tasks reference both requirements and properties they fulfill — the *steps*
 - **progress.txt** — auto-updated log
 
 ### Commands
@@ -107,24 +107,11 @@ When running `/spec-plan <name> refine`, follow these principles to simplify whi
 - [ ] Goal 1
 - [ ] Goal 2
 
-## Architecture
-
-### Tech Stack
-- **Language**:
-- **Framework**:
-- **Testing**:
-- **Linter**:
-
-### Directory Structure
-\```
-src/
-tests/
-\```
-
 ## Requirements
 
 <!-- Requirements are numbered hierarchically (R1, R1.1, R1.2, R2, etc.)
-     and framed as user stories where applicable. -->
+     and framed as user stories where applicable.
+     Requirements describe WHY — what the user needs and why. -->
 
 ### R1: [Feature area]
 
@@ -140,21 +127,6 @@ tests/
 
 **NF1**: [Performance / reliability / security requirement]
 
-## Data Models
-<!-- Key data structures, schemas, interfaces -->
-
-## Testing Strategy
-
-- **Property tests**: Verify design invariants, inline with implementation tasks (required)
-- **E2E tests**: Validate user stories end-to-end, as separate tasks (required)
-- **Unit tests**: For complex internal logic only (optional, add when warranted)
-- **Test command**: `[command]`
-- **Lint command**: `[command]`
-- **Coverage target**: [percentage]
-
-## Constraints
-<!-- Important decisions and constraints -->
-
 ## Out of Scope
 <!-- What this spec explicitly does NOT cover -->
 ```
@@ -163,6 +135,18 @@ tests/
 
 ```markdown
 # Design: [SPEC NAME]
+
+## Tech Stack
+- **Language**:
+- **Framework**:
+- **Testing**:
+- **Linter**:
+
+## Directory Structure
+\```
+src/
+tests/
+\```
 
 ## Architecture Overview
 
@@ -233,6 +217,18 @@ erDiagram
 ## Error Handling Strategy
 <!-- How errors are propagated and handled -->
 
+## Testing Strategy
+
+- **Property tests**: Verify design invariants, inline with implementation tasks (required)
+- **E2E tests**: Validate user stories end-to-end, as separate tasks (required)
+- **Unit tests**: For complex internal logic only (optional, add when warranted)
+- **Test command**: `[command]`
+- **Lint command**: `[command]`
+- **Coverage target**: [percentage]
+
+## Constraints
+<!-- Important decisions and constraints -->
+
 ## Property Tests
 
 Properties that must hold true. Each property validates one or more requirements from spec.md.
@@ -251,6 +247,9 @@ Properties that must hold true. Each property validates one or more requirements
 
 ## Edge Cases
 <!-- Known edge cases and how they should be handled -->
+
+## Decisions
+<!-- Key design decisions and rationale -->
 
 ## Security Considerations
 <!-- If applicable -->
