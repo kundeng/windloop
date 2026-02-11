@@ -1,5 +1,5 @@
 ---
-description: Show onboarding help, available commands, and how to get started with windloop. Use when you need help, want to see commands, or are new to the project. Keywords: help, commands, getting started, onboarding, how to, what can, windloop.
+description: Show onboarding help, available commands, and how to get started with windloop.
 ---
 
 ## Windloop Help
@@ -21,7 +21,6 @@ Print the following guide:
 | `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
-| `/spec-verify <name>` | Run all tests + lint and report status |
 | `/spec-merge <name>` | Review completed work and merge worktree changes |
 | `/spec-status` | Dashboard: show progress across all specs and sessions |
 | `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks, clear claims |

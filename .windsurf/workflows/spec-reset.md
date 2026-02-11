@@ -1,5 +1,5 @@
 ---
-description: Reset a spec by clearing progress, unchecking all tasks, and clearing mailbox claims. Use when you want to start over, re-run from scratch, clear progress, or reset tasks. Keywords: reset, clear, start over, redo, fresh, scratch, undo, spec, windloop.
+description: Reset a spec by clearing progress, unchecking all tasks, and clearing mailbox claims. Use to re-run from scratch.
 ---
 
 ## Reset a Spec

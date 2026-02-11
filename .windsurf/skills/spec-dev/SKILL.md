@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-audit (validate consistency/traceability/drift), spec-verify (run tests/lint), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding). Keywords: spec, plan, design, implement, build, feature, requirements, tasks, loop, progress, audit, validate, windloop.
+description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-audit (validate consistency/traceability/drift), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding).
 ---
 
 ## Spec-Driven Development
@@ -28,7 +28,6 @@ The traceability chain ensures nothing is lost:
 | `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift, staleness |
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement single task (parallel worktree use) |
-| `/spec-verify <name>` | Run all tests + lint |
 | `/spec-merge <name>` | Review and validate after merges |
 | `/spec-status` | Dashboard: progress, sessions, mailbox |
 | `/spec-reset <name>` | Clear progress for re-run |
