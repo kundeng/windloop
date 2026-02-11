@@ -22,11 +22,7 @@ Let SPEC be the resolved spec name.
    # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS
    ```
 
-5. If `.windsurf/mailbox/board/claims.json` has claims for this spec, remove them.
-
-6. If `.windsurf/mailbox/outbox/` has completion signals for this spec's tasks, remove them.
-
 // turbo
-7. Commit: `git add -A && git commit -m "chore(SPEC): reset progress for re-run"`
+5. Commit: `git add -A && git commit -m "chore(SPEC): reset progress for re-run"`
 
-8. Report: "Spec **SPEC** has been reset. Run `/spec-loop SPEC` to start fresh."
+6. Report: "Spec **SPEC** has been reset. Run `/spec-loop SPEC` to start fresh."

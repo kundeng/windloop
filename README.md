@@ -33,7 +33,7 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task (for parallel worktree use) |
 | `/spec-merge <name>` | Review and merge after parallel work |
-| `/spec-status` | Dashboard: progress, sessions, mailbox state |
+| `/spec-status` | Dashboard: progress across all specs |
 | `/spec-reset <name>` | Reset a spec for re-run |
 
 > If only one spec exists, the `<name>` can be omitted.
@@ -93,18 +93,9 @@ AGENTS.md                       # Windloop snippet appended (or created)
 │   ├── spec-status.md
 │   ├── spec-reset.md
 │   └── spec-help.md
-├── hooks.json                  # Lifecycle hooks
-├── hooks/
-│   ├── setup_worktree.sh       # Worktree init
-│   ├── auto-format.sh          # Auto-format on save
-│   └── log_cascade.py          # Audit log
-└── mailbox/                    # Inter-session coordination
-    ├── README.md
-    ├── board/
-    │   ├── status.json
-    │   └── claims.json
-    ├── inbox/
-    └── outbox/
+├── hooks.json                  # Lifecycle hooks config
+└── hooks/
+    └── setup_worktree.sh       # Worktree init (copies .env, installs deps)
 ```
 
 Templates are embedded in `SKILL.md` — no separate template files to copy.
@@ -164,17 +155,6 @@ Cascade #3 (worktree) → /spec-loop dashboard
 ```
 
 Cross-spec dependencies are declared in `.windloop/dependencies.md`. Use `/spec-status` to monitor everything.
-
-## Parallel Coordination (Mailbox Protocol)
-
-Parallel Cascade sessions coordinate via `.windsurf/mailbox/`:
-
-- **`board/claims.json`** — claim tasks to prevent double-work
-- **`board/status.json`** — shared state visible to all sessions
-- **`inbox/<session>/`** — messages TO a session
-- **`outbox/<session>/`** — completion signals FROM a session
-
-Patterns: Lead-Worker, Claim Board, Pipeline. See `.windsurf/mailbox/README.md`.
 
 ## Try It: Example Spec
 

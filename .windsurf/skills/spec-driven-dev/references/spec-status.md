@@ -16,15 +16,7 @@
 
 3. Read `.windloop/dependencies.md` if it exists. Check if any spec's prerequisites are incomplete.
 
-4. Read `.windsurf/mailbox/board/claims.json` to see which tasks are currently claimed by sessions.
-
-5. Read `.windsurf/mailbox/board/status.json` for any shared state.
-
-6. Check `.windsurf/mailbox/outbox/` for any unprocessed completion signals.
-
-7. Check `.windsurf/mailbox/inbox/` for any unread messages.
-
-8. Print a dashboard:
+4. Print a dashboard:
 
 ```
 ╔══════════════════════════════════════════════════╗
@@ -43,17 +35,9 @@ Spec: auth
   Blocked:  none
   Depends:  (none)
 
-Active Sessions:
-  worker-1: claimed taskrunner/T6 (in progress)
-  worker-2: claimed auth/T2 (in progress)
-
-Mailbox:
-  Unread messages: 0
-  Pending signals: 0
-
 ╚══════════════════════════════════════════════════╝
 ```
 
-9. If any specs have unmet dependencies (from `dependencies.md`), flag them.
+5. If any specs have unmet dependencies (from `dependencies.md`), flag them.
 
-10. Suggest next actions based on the current state.
+6. Suggest next actions based on the current state.

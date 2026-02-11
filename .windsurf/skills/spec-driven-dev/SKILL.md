@@ -389,12 +389,3 @@ For independent tasks, use worktree mode:
 2. Run `/spec-task <name> T[N]`
 3. Merge back when done
 
-### Mailbox Protocol
-
-For parallel session coordination via `.windsurf/mailbox/`:
-- `board/claims.json` — task claims (prevents double-work)
-- `board/status.json` — shared state
-- `inbox/<session>/` — messages TO a session
-- `outbox/<session>/` — completion signals FROM a session
-
-See `.windsurf/mailbox/README.md` for details.

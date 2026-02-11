@@ -14,9 +14,7 @@ Let SPEC be the resolved spec name.
 
 4. Verify that all dependencies for this task are satisfied (`[x]` or `[~]`). If not, report which dependencies are missing and STOP.
 
-5. If `.windsurf/mailbox/board/claims.json` exists, check that this task is not already claimed by another session. If unclaimed, write your claim (use your trajectory ID or session name as the claimant).
-
-6. Read any existing source files that this task depends on or modifies to understand the current state.
+5. Read any existing source files that this task depends on or modifies to understand the current state.
 
 7. Implement the task (test-first):
    - **Write tests first**: if the task has a `Tests` field, implement those property tests before production code
@@ -44,6 +42,4 @@ Let SPEC be the resolved spec name.
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
     - Update the `# SUMMARY:` line to reflect current counts and next task.
 
-15. If using the mailbox protocol, write a completion signal to `.windsurf/mailbox/outbox/<session>/done-[TASK_ID].json`.
-
-16. Report completion and list any issues encountered.
+15. Report completion and list any issues encountered.

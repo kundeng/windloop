@@ -18,8 +18,8 @@ Print the following guide:
 | `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
 | `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
 | `/spec-merge <name>` | Review completed work and merge worktree changes |
-| `/spec-status` | Dashboard: show progress across all specs and sessions |
-| `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks, clear claims |
+| `/spec-status` | Dashboard: show progress across all specs |
+| `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks |
 
 > If only one spec exists, the `<name>` can be omitted.
 
