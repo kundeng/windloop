@@ -1,5 +1,5 @@
 ---
-description: Review completed work and merge worktree changes. Use after parallel sessions finish.
+description: Merge parallel branches/worktrees back into main, resolve conflicts, verify tests, and clean up.
 ---
 
 Read and follow the instructions in `.windsurf/skills/spec-driven-dev/references/spec-merge.md`.
