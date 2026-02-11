@@ -19,18 +19,22 @@ The traceability chain ensures nothing is lost:
 - **tasks.md** — tasks reference both requirements and properties they fulfill — the *steps*
 - **progress.txt** — auto-updated log
 
+### Workflow References
+
+Detailed instructions for each command live in `references/` alongside this file. When a command is invoked, read the corresponding reference document.
+
 ### Commands
 
-| Command | Purpose |
-|---------|---------|
-| `/spec-help` | Onboarding guide |
-| `/spec-plan <name> [create\|refine\|update]` | Create, refine, or update a spec (auto-detected if omitted) |
-| `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift, staleness |
-| `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat |
-| `/spec-task <name> T[N]` | Implement single task (parallel worktree use) |
-| `/spec-merge <name>` | Review and validate after merges |
-| `/spec-status` | Dashboard: progress, sessions, mailbox |
-| `/spec-reset <name>` | Clear progress for re-run |
+| Command | Reference | Purpose |
+|---------|-----------|---------|
+| `/spec-help` | [spec-help.md](references/spec-help.md) | Onboarding guide |
+| `/spec-plan <name> [create\|refine\|update]` | [spec-plan.md](references/spec-plan.md) | Create, refine, or update a spec |
+| `/spec-audit <name>` | [spec-audit.md](references/spec-audit.md) | Validate spec consistency |
+| `/spec-loop <name>` | [spec-loop.md](references/spec-loop.md) | Autonomous implement loop |
+| `/spec-task <name> T[N]` | [spec-task.md](references/spec-task.md) | Implement single task |
+| `/spec-merge <name>` | [spec-merge.md](references/spec-merge.md) | Review and merge parallel work |
+| `/spec-status` | [spec-status.md](references/spec-status.md) | Progress dashboard |
+| `/spec-reset <name>` | [spec-reset.md](references/spec-reset.md) | Clear progress for re-run |
 
 ### Rules
 

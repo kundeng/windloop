@@ -72,18 +72,27 @@ AGENTS.md                       # Windloop snippet appended (or created)
 
 ```
 .windsurf/
-├── workflows/                  # All /spec-* commands
-│   ├── spec-help.md
-│   ├── spec-plan.md
+├── skills/
+│   └── spec-driven-dev/            # Portable skill (agentskills.io compatible)
+│       ├── SKILL.md                # Core: rules, lifecycle, templates
+│       └── references/             # Detailed workflow instructions
+│           ├── spec-plan.md
+│           ├── spec-audit.md
+│           ├── spec-loop.md
+│           ├── spec-task.md
+│           ├── spec-merge.md
+│           ├── spec-status.md
+│           ├── spec-reset.md
+│           └── spec-help.md
+├── workflows/                      # Thin wrappers for Windsurf slash commands
+│   ├── spec-plan.md                # → references/spec-plan.md
 │   ├── spec-audit.md
 │   ├── spec-loop.md
 │   ├── spec-task.md
 │   ├── spec-merge.md
 │   ├── spec-status.md
-│   └── spec-reset.md
-├── skills/
-│   └── spec-dev/
-│       └── SKILL.md            # Embedded templates + rules
+│   ├── spec-reset.md
+│   └── spec-help.md
 ├── hooks.json                  # Lifecycle hooks
 ├── hooks/
 │   ├── setup_worktree.sh       # Worktree init
