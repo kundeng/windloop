@@ -30,7 +30,38 @@ Print the following guide:
 3. **Parallel work?** → Open **worktree** Cascades, each runs `/spec-task myfeature T[N]`
 4. **Check progress?** → `/spec-status`
 
-> **Important**: Never run multiple Cascade sessions on the same branch. Use Windsurf's **Worktree Mode** (toggle in Cascade input) to give each session its own isolated copy. Sessions sharing a working tree will overwrite each other's changes.
+> **Important**: Never run multiple Cascade sessions on the same branch. Sessions sharing a working tree will overwrite each other's changes.
+
+### Parallel Sessions (Worktrees)
+
+**Option A — Windsurf Worktree Mode** (if available):
+Toggle **Worktree Mode** in the Cascade input bar. Windsurf creates an isolated worktree automatically.
+
+**Option B — Manual worktrees** (always works):
+```bash
+# From your repo root, create a worktree per task
+git worktree add ../myproject-T2 main
+git worktree add ../myproject-T3 main
+
+# Open each worktree in a separate Windsurf window
+# In window 1: /spec-task myfeature T2
+# In window 2: /spec-task myfeature T3
+
+# When done, merge back
+cd /path/to/main/repo
+git merge ../myproject-T2
+git merge ../myproject-T3
+git worktree remove ../myproject-T2
+git worktree remove ../myproject-T3
+```
+
+**Option C — Feature branches** (simplest):
+```bash
+git checkout -b task/T2 main
+# Open in Windsurf, run /spec-task myfeature T2
+# Repeat for T3 on another branch in another window
+# Merge branches when done
+```
 
 ### Installation
 

@@ -123,10 +123,26 @@ Templates are embedded in `SKILL.md` — no separate template files to copy.
 
 ### How to run parallel sessions
 
-1. Toggle **Worktree Mode** on in the Cascade input bar
+**Option A — Windsurf Worktree Mode** (if available):
+1. Toggle **Worktree Mode** in the Cascade input bar
 2. Each worktree Cascade gets its own isolated copy of the repo
 3. Assign tasks: `/spec-task myfeature T3` in one, `/spec-task myfeature T4` in another
 4. When done, merge back with `/spec-merge myfeature`
+
+**Option B — Manual worktrees** (always works):
+```bash
+git worktree add ../myproject-T2 main
+git worktree add ../myproject-T3 main
+# Open each in a separate Windsurf window, run /spec-task in each
+# Merge back when done, then: git worktree remove ../myproject-T2
+```
+
+**Option C — Feature branches** (simplest):
+```bash
+git checkout -b task/T2 main   # open in Windsurf window 1
+git checkout -b task/T3 main   # open in Windsurf window 2
+# Merge branches when done
+```
 
 ### Multiple specs
 
