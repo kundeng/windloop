@@ -93,9 +93,6 @@ AGENTS.md                       # Windloop snippet appended (or created)
 │   ├── spec-status.md
 │   ├── spec-reset.md
 │   └── spec-help.md
-├── hooks.json                  # Lifecycle hooks config
-└── hooks/
-    └── setup_worktree.sh       # Worktree init (copies .env, installs deps)
 ```
 
 Templates are embedded in `SKILL.md` — no separate template files to copy.
