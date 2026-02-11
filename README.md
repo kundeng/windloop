@@ -75,9 +75,9 @@ AGENTS.md                       # Windloop snippet appended (or created)
 ├── workflows/                  # All /spec-* commands
 │   ├── spec-help.md
 │   ├── spec-plan.md
+│   ├── spec-audit.md
 │   ├── spec-loop.md
 │   ├── spec-task.md
-│   ├── spec-verify.md
 │   ├── spec-merge.md
 │   ├── spec-status.md
 │   └── spec-reset.md
