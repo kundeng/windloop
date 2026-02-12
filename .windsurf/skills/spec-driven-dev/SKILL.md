@@ -28,7 +28,7 @@ Detailed instructions for each command live in `references/` alongside this file
 | Command | Reference | Purpose |
 |---------|-----------|---------|
 | `/spec-help` | [spec-help.md](references/spec-help.md) | Onboarding guide |
-| `/spec-plan <name> [create\|refine\|update]` | [spec-plan.md](references/spec-plan.md) | Create, refine, or update a spec |
+| `/spec-plan <name> [create\|refine]` | [spec-plan.md](references/spec-plan.md) | Create or refine a spec |
 | `/spec-audit <name>` | [spec-audit.md](references/spec-audit.md) | Validate spec consistency |
 | `/spec-loop <name>` | [spec-loop.md](references/spec-loop.md) | Autonomous implement loop |
 | `/spec-task <name> T[N]` | [spec-task.md](references/spec-task.md) | Implement single task |
@@ -71,7 +71,22 @@ When creating or updating AGENTS.md for a host project, append this block:
 ```markdown
 ## Windloop
 
-This project uses the `spec-driven-dev` skill for autonomous development. Run `/spec-help` to get started.
+This project uses spec-driven development. Specs live in `.windloop/`.
+
+**Always do this at the start of every session:**
+1. Read `.windloop/index.md` to see active specs
+2. For the relevant spec, read `spec.md`, `design.md`, and `tasks.md`
+3. Check `progress.txt` for what's already done
+4. If there are uncompleted tasks, resume implementation — follow the spec-loop workflow in `.windsurf/skills/spec-driven-dev/references/spec-loop.md`
+
+**Rules (always in effect):**
+- Follow the spec. Don't invent requirements or skip tasks.
+- Check task dependencies before starting — never skip ahead.
+- Write tests first, then production code.
+- Commit per task: `feat(<spec>/T[N]): [description]`
+- Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
+
+Run `/spec-help` for the full command list.
 ```
 
 ### Spec Refinement Principles

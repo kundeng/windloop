@@ -1,12 +1,11 @@
 
 ## Plan a Spec
 
-Usage: `/spec-plan <name> [create|refine|update]`
+Usage: `/spec-plan <name> [create|refine]`
 
 Modes (auto-detected if not specified):
 - **Create**: `.windloop/SPEC/` doesn't exist → build from scratch
-- **Refine**: spec exists, user wants to rethink requirements or design (broader changes)
-- **Update**: spec exists, user wants to adjust specific items discovered during implementation (targeted back-propagation)
+- **Refine**: spec exists → update requirements, design, or tasks (handles both broad rethinks and targeted fixes discovered during implementation)
 
 Let SPEC be the spec name.
 
@@ -116,66 +115,47 @@ Then suggest next steps:
 
 ### Mode: Refine
 
-Use when simplifying, consolidating, or rethinking requirements or design. This is the mode for making the spec *simpler yet complete*.
-
-**Recommended**: Run `/spec-audit SPEC` first to get a findings report, then use this mode to act on it.
+Use when anything in the spec needs to change — whether it's a broad rethink, a targeted fix discovered during implementation, or acting on `/spec-audit` findings.
 
 1. Read all existing spec artifacts: `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`, `progress.txt`
 2. Scan the actual repo structure to detect spec↔disk drift.
 3. Ask the user what should change. If they already described changes in the prompt, proceed. If `/spec-audit` findings are available, use those as input.
 4. Apply the **Spec Refinement Principles** from the skill (merge redundancies, separate what/how, collapse over-specified requirements, cascade renumbering, validate traceability, present tense, sync docs, align with disk).
-5. Update `spec.md`:
+5. Trace changes through the full chain — changes propagate in both directions:
+
+   **Top-down** (requirement changed → update design → update tasks):
+   - Update `spec.md` with new/modified/removed requirements
+   - Propagate to `design.md` — adjust properties, update `Validates:` references
+   - Propagate to `tasks.md` — update affected tasks, add new tasks if needed
+
+   **Bottom-up** (implementation revealed something → update tasks → update design → update spec):
+   - Identify which requirements the discovery affects
+   - Update `spec.md` with new/modified requirements (e.g. add R1.3)
+   - Update `design.md` — adjust properties, add `Validates:` references
+   - Update task acceptance criteria and any dependent tasks
+
+6. Update `spec.md`:
    - Merge, remove, or rewrite requirements per the principles
    - Move implementation details to Constraints
-   - Update directory structure to match actual repo
-   - Update Data Models to match actual files
    - Rewrite completed items in present tense
-6. Update `design.md`:
+7. Update `design.md`:
    - Merge overlapping properties, renumber as needed
    - Update `Validates:` references to match new requirement IDs
    - Remove properties for removed requirements
-7. Update `tasks.md`:
-   - For **completed tasks** (`[x]`): update requirement/property references to new IDs but do NOT uncheck them.
+   - Update directory structure and data models to match actual repo
+8. Update `tasks.md`:
+   - For **completed tasks** (`[x]`): update requirement/property references to new IDs but do NOT uncheck them. Add follow-up tasks if reconciliation is needed.
    - For **pending tasks** (`[ ]`): update requirements, properties, acceptance criteria as needed.
    - Add new tasks if new requirements were introduced.
    - Remove tasks only if their requirements were fully removed AND no code was written.
-8. Validate traceability: every R → ≥1 P → ≥1 T. Flag any gaps.
-9. Update project documentation files if affected by spec changes.
-10. Present a **change summary**:
+9. Validate traceability: every R → ≥1 P → ≥1 T. Flag any gaps.
+10. Update project documentation files if affected by spec changes.
+11. Present a **change summary**:
     - Requirements: added / merged / removed / moved-to-constraints
     - Properties: added / merged / renumbered
     - Tasks: updated / added / removed
     - Traceability: any remaining gaps
-11. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
+12. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
 
 // turbo
-12. Commit: `git add -A && git commit -m "spec(SPEC): refine — [brief description]"`
-
-
-### Mode: Update
-
-Use for targeted adjustments discovered during implementation (e.g. "T3 revealed we need an extra API endpoint" or "the data model needs a new field").
-
-1. Read all existing spec artifacts: `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`, `progress.txt`
-2. Ask the user what was discovered. If they already described it in the prompt, proceed.
-3. Trace the change through the chain:
-
-   **If the change starts from a task** (bottom-up):
-   - Identify which requirements the task references
-   - Determine if the requirement needs updating or a new sub-requirement (e.g. R1.3)
-   - Update `spec.md` with the new/modified requirement
-   - Update `design.md` — adjust the relevant property or add a new one, with `Validates:` reference
-   - Update the task's acceptance criteria and any dependent tasks
-
-   **If the change starts from a requirement** (top-down):
-   - Update `spec.md`
-   - Propagate to `design.md` (properties)
-   - Propagate to `tasks.md` (affected tasks)
-
-4. For completed tasks: do NOT uncheck. Add follow-up tasks if reconciliation is needed.
-5. Present a **change summary**: what changed at each level (spec → design → tasks).
-
-6. Print the updated task summary table (all tasks with IDs, titles, status, and dependencies).
-
-// turbo
-7. Commit: `git add -A && git commit -m "spec(SPEC): update — [brief description of what changed]"`
+13. Commit: `git add -A && git commit -m "spec(SPEC): refine — [brief description]"`
