@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: "IMPORTANT: Files in .windloop/ are spec-driven artifacts. NEVER edit spec.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-loop workflow to implement it. Commands: spec-plan (create/refine specs), spec-loop (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
+description: "IMPORTANT: Files in .windloop/ are spec-driven artifacts. NEVER edit spec.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
 ## Spec-Driven Development
@@ -30,7 +30,7 @@ Detailed instructions for each command live in `references/` alongside this file
 | `/spec-help` | [spec-help.md](references/spec-help.md) | Onboarding guide |
 | `/spec-plan <name> [create\|refine]` | [spec-plan.md](references/spec-plan.md) | Create or refine a spec |
 | `/spec-audit <name>` | [spec-audit.md](references/spec-audit.md) | Validate spec consistency |
-| `/spec-loop <name>` | [spec-loop.md](references/spec-loop.md) | Autonomous implement loop |
+| `/spec-go <name>` | [spec-go.md](references/spec-go.md) | Autonomous implement loop |
 | `/spec-task <name> T[N]` | [spec-task.md](references/spec-task.md) | Implement single task |
 | `/spec-merge <name>` | [spec-merge.md](references/spec-merge.md) | Merge parallel branches, resolve conflicts, verify |
 | `/spec-status` | [spec-status.md](references/spec-status.md) | Progress dashboard |
@@ -353,7 +353,7 @@ PROPERTIES: property IDs from design.md this task should satisfy
 
 ```
 # Progress Log: [SPEC NAME]
-# Auto-updated by spec-loop workflow
+# Auto-updated by spec-go workflow
 # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
 # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS
 # SUMMARY: 0/N done | next: T1

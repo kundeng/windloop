@@ -20,7 +20,7 @@ idea → spec.md (why) → design.md (what + how) → tasks.md (steps) → [impl
 Windloop turns Windsurf's Cascade into an autonomous development loop:
 
 1. **`/spec-plan myfeature`** — Describe your idea. Cascade generates a spec, design (with property tests), and task breakdown. Auto-scaffolds `.windloop/` and `AGENTS.md`.
-2. **`/spec-loop myfeature`** — Cascade picks the next task, implements it, runs tests, commits, and repeats until done.
+2. **`/spec-go myfeature`** — Cascade picks the next task, implements it, runs tests, commits, and repeats until done.
 3. **`/spec-status`** — See progress across all specs and parallel sessions.
 
 ## Commands
@@ -30,7 +30,7 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 | `/spec-help` | Onboarding guide |
 | `/spec-plan <name> [create\|refine]` | Create or refine a spec (auto-detected) |
 | `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
-| `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat. Also resumes work. |
+| `/spec-go <name>` | Autonomous loop: pick task → implement → test → commit → repeat. Also resumes work. |
 | `/spec-task <name> T[N]` | Implement a single task (for parallel worktree use) |
 | `/spec-merge <name>` | Merge parallel branches/worktrees, resolve conflicts, verify |
 | `/spec-status` | Dashboard: progress across all specs |
@@ -78,7 +78,7 @@ AGENTS.md                       # Windloop snippet appended (or created)
 │       └── references/             # Detailed workflow instructions
 │           ├── spec-plan.md
 │           ├── spec-audit.md
-│           ├── spec-loop.md
+│           ├── spec-go.md
 │           ├── spec-task.md
 │           ├── spec-merge.md
 │           ├── spec-status.md
@@ -87,7 +87,7 @@ AGENTS.md                       # Windloop snippet appended (or created)
 ├── workflows/                      # Thin wrappers for Windsurf slash commands
 │   ├── spec-plan.md                # → references/spec-plan.md
 │   ├── spec-audit.md
-│   ├── spec-loop.md
+│   ├── spec-go.md
 │   ├── spec-task.md
 │   ├── spec-merge.md
 │   ├── spec-status.md
@@ -146,9 +146,9 @@ Break large efforts into independent specs:
 Each spec has its own lifecycle. Run them in parallel with worktree Cascades:
 
 ```
-Cascade #1 (worktree) → /spec-loop auth
-Cascade #2 (worktree) → /spec-loop api
-Cascade #3 (worktree) → /spec-loop dashboard
+Cascade #1 (worktree) → /spec-go auth
+Cascade #2 (worktree) → /spec-go api
+Cascade #3 (worktree) → /spec-go dashboard
 ```
 
 Cross-spec dependencies are declared in `.windloop/dependencies.md`. Use `/spec-status` to monitor everything.
@@ -185,7 +185,7 @@ Cascade will:
 Then:
 
 ```
-/spec-loop calculator
+/spec-go calculator
 ```
 
 Watch Cascade implement each task autonomously: create files, write tests, run verification, commit, and move to the next task.

@@ -17,7 +17,7 @@ Let SPEC be the resolved spec name.
 4. Reset `.windloop/SPEC/progress.txt` to just the header:
    ```
    # Progress Log: [SPEC NAME]
-   # Auto-updated by spec-loop workflow
+   # Auto-updated by spec-go workflow
    # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
    # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS
    ```
@@ -25,4 +25,4 @@ Let SPEC be the resolved spec name.
 // turbo
 5. Commit: `git add -A && git commit -m "chore(SPEC): reset progress for re-run"`
 
-6. Report: "Spec **SPEC** has been reset. Run `/spec-loop SPEC` to start fresh."
+6. Report: "Spec **SPEC** has been reset. Run `/spec-go SPEC` to start fresh."

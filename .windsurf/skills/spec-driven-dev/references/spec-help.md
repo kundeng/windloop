@@ -15,7 +15,7 @@ Print the following guide:
 | `/spec-help` | Show this help guide |
 | `/spec-plan <name> [create\|refine]` | Create or refine a spec (auto-detected) |
 | `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
-| `/spec-loop <name>` | Autonomous loop: pick task → implement → test → commit → repeat. Also resumes work. |
+| `/spec-go <name>` | Autonomous loop: pick task → implement → test → commit → repeat. Also resumes work. |
 | `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
 | `/spec-merge <name>` | Merge parallel branches/worktrees, resolve conflicts, verify |
 | `/spec-status` | Dashboard: show progress across all specs |
@@ -26,7 +26,7 @@ Print the following guide:
 ### Quick Start
 
 1. **New spec?** → `/spec-plan myfeature` — describe your idea, get spec + design + tasks
-2. **Ready to build?** → `/spec-loop myfeature` — autonomous implementation loop
+2. **Ready to build?** → `/spec-go myfeature` — autonomous implementation loop
 3. **Parallel work?** → Open **worktree** Cascades, each runs `/spec-task myfeature T[N]`
 4. **Check progress?** → `/spec-status`
 
@@ -87,4 +87,4 @@ Copy the `.windsurf/` directory into any project. Everything else is auto-create
 - **Worktree Mode** → On (Cascade input toggle)
 
 
-After printing, ask: "What would you like to do? You can `/spec-plan` a new spec, `/spec-loop` an existing one, or `/spec-status` to see progress."
+After printing, ask: "What would you like to do? You can `/spec-plan` a new spec, `/spec-go` an existing one, or `/spec-status` to see progress."

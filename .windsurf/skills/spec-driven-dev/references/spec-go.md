@@ -1,7 +1,8 @@
 
-## Spec-Driven Development Loop
+## Spec Go — Autonomous Implementation
 
-This workflow supports multiple specs. Pass the spec name in your message (e.g. `/spec-loop taskrunner`).
+This workflow supports multiple specs. Pass the spec name in your message (e.g. `/spec-go taskrunner`).
+Optionally specify a task count (e.g. `/spec-go taskrunner 5` or "implement next 3 tasks"). If a count is given, stop after that many tasks instead of looping until done.
 If omitted, check `.windloop/index.md` for available specs. If only one active spec exists, use it.
 
 Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
@@ -30,7 +31,7 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
 
 9. Run the task's specific verification command (from the task's `Verify` field).
 
-10. If verification fails, analyze the error output and fix the issue. Retry verification up to 3 times. If still failing after 3 retries, update `.windloop/SPEC/progress.txt` with a BLOCKED entry and the reason, then move to the next task by calling `/spec-loop SPEC`.
+10. If verification fails, analyze the error output and fix the issue. Retry verification up to 3 times. If still failing after 3 retries, update `.windloop/SPEC/progress.txt` with a BLOCKED entry and the reason, then move to the next task.
 
 // turbo
 11. Run the lint check if one is configured in `.windloop/SPEC/design.md` (e.g. `ruff check src/ tests/`). Fix any lint issues found.
@@ -46,4 +47,4 @@ Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
     - Append a line: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
     - Update the `# SUMMARY:` line to reflect current counts and next task.
 
-16. Call `/spec-loop SPEC` to continue with the next task.
+16. If a task count was specified and you've completed that many tasks, print a summary and STOP. Otherwise, go back to step 5 to continue with the next task.

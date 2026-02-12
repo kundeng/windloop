@@ -108,7 +108,7 @@ Spec SPEC is ready with N tasks across M phases:
 ```
 
 Then suggest next steps:
-- `/spec-loop SPEC` for autonomous implementation
+- `/spec-go SPEC` for autonomous implementation
 - `/spec-task SPEC T1` to start with a specific task
 - `/spec-status` to see the dashboard
 
