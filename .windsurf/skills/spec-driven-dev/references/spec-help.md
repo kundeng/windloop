@@ -70,6 +70,7 @@ Copy the `.windsurf/` directory into any project. Everything else is auto-create
 | `design.md` | Architecture, interfaces, correctness properties |
 | `tasks.md` | Task list with dependencies, files, verify commands |
 | `progress.txt` | Auto-updated progress log |
+| `steering/` *(optional)* | Project-level context: `product.md`, `structure.md`, `tech.md` |
 
 ### Settings for Maximum Autonomy
 

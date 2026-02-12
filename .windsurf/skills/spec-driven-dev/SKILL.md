@@ -18,6 +18,7 @@ The traceability chain:
 - **design.md** — architecture, tech stack, constraints, testing strategy, correctness properties — the *what + how*
 - **tasks.md** — implementation tasks referencing requirements and properties — the *steps*
 - **progress.txt** — auto-updated log
+- **steering/** *(optional)* — project-level context: product vision, repo structure, tech decisions. Read-only priors that inform all spec work.
 
 ### Workflow References
 
@@ -52,7 +53,7 @@ Let **SPEC_DIR** be the resolved directory.
 
 1. **One session per working tree**: use worktrees or branches to isolate parallel work.
 2. **Resolve the spec** using the Spec Resolution rules above.
-3. Read `requirements.md` AND `design.md` before implementing.
+3. Read `requirements.md` AND `design.md` before implementing. If `steering/` exists, read it too.
 4. Check task dependencies — never skip ahead.
 5. **Write tests first**: implement the task's property tests before production code. E2E tests are separate tasks.
 6. Run verify after implementation; fix up to 3 times before BLOCKED.
@@ -74,6 +75,24 @@ When `/spec-plan` creates a new spec:
   tasks.md
   progress.txt
 ```
+
+### Steering Docs (optional)
+
+Steering docs provide project-level context that applies across all specs. They live at the root of the spec area:
+
+- `.windloop/steering/` or `.kiro/steering/`
+
+| File | Purpose |
+|------|--------|
+| `product.md` | Product vision, target users, key goals |
+| `structure.md` | Repo layout, module boundaries, naming conventions |
+| `tech.md` | Tech stack decisions, version constraints, deployment targets |
+
+**Rules:**
+- Steering docs are **read-only context** — never modify them during task execution.
+- When they exist, **always** read them during planning (`spec-plan`) and before implementing (`spec-go`, `spec-task`).
+- They are not scaffolded automatically — the user creates them when ready.
+- They inform requirements, design decisions, and coding conventions but are not part of the traceability chain.
 
 If the host project has an `AGENTS.md`, append the windloop snippet (see below). If not, create it.
 

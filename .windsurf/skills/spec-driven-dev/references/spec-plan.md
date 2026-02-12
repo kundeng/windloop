@@ -26,7 +26,7 @@ Before gathering requirements, understand what already exists:
 - Scan the source directory structure (e.g. `src/`, `lib/`, `app/`)
 - Read key source files to understand existing patterns, conventions, and architecture
 - Note existing tests, linting config, CI setup
-- If `.kiro/steering/` exists, read `product.md`, `structure.md`, and `tech.md` for project context
+- If `steering/` exists (`.windloop/steering/` or `.kiro/steering/`), read `product.md`, `structure.md`, and `tech.md` for project context
 
 The spec should **align with the existing codebase** — preserve conventions, tech stack, and patterns unless the user explicitly asks for a rewrite.
 

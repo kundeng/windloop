@@ -6,7 +6,7 @@ If only one spec exists, the name can be omitted (e.g. `/spec-task 1.3`).
 
 Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
 
-1. Read `SPEC_DIR/requirements.md` to understand the requirements and scope.
+1. Read `SPEC_DIR/requirements.md` to understand the requirements and scope. If `steering/` exists (`.windloop/steering/` or `.kiro/steering/`), read it for project-level context.
 
 2. Read `SPEC_DIR/design.md` to understand architecture, tech stack, testing strategy, and correctness properties.
 
