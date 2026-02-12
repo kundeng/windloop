@@ -19,31 +19,26 @@ Let SPEC be the resolved spec name and SPEC_DIR be the resolved directory.
 
 6. Announce: "Starting task [TASK_ID]: [TASK_TITLE] (spec: SPEC)"
 
-7. Read the task's description, files to modify, and verification command.
+7. Read the task's description and dependencies.
 
-8. Implement the task (test-first):
+8. Implement the task:
    - Read any relevant existing code first
-   - **Write tests first**: if the task has a Tests field, implement those property tests before production code
-   - Then write the production code to make the tests pass
-   - For E2E test tasks: implement the test, run it, verify it passes
+   - If this is a test task, write the tests and verify they pass
+   - If this is an implementation task, write the code and run existing tests to confirm nothing breaks
    - Follow the coding conventions from `SPEC_DIR/design.md`
 
-9. Run the task's verification command (from the Verify field).
-
-10. If verification fails, analyze and fix. Retry up to 3 times. If still failing, update `SPEC_DIR/progress.txt` with a BLOCKED entry and move to the next task.
+9. Run relevant tests. If failures, analyze and fix. Retry up to 3 times. If still failing, update `SPEC_DIR/progress.txt` with a BLOCKED entry and move to the next task.
 
 // turbo
-11. Run the lint check if one is configured in `SPEC_DIR/design.md`. Fix any lint issues.
+10. Run the lint check if one is configured in `SPEC_DIR/design.md`. Fix any lint issues.
 
-12. Update `SPEC_DIR/tasks.md`: change the task's checkbox from `[ ]` to `[x]`.
+11. Update `SPEC_DIR/tasks.md`: change the task's checkbox from `[ ]` to `[x]`.
 
 // turbo
-13. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description]"`
+12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description]"`
 
-14. **Post-commit tracking guard**: For each file in the task's Files field, run `git ls-files <file>`. If any file is untracked (likely gitignored), `git add -f <file>` then `git commit --amend --no-edit`.
-
-15. Update `SPEC_DIR/progress.txt`:
+13. Update `SPEC_DIR/progress.txt`:
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
     - Update the `# SUMMARY:` line.
 
-16. If a task count was specified and reached, print a summary and STOP. Otherwise, go back to step 5.
+14. If a task count was specified and reached, print a summary and STOP. Otherwise, go back to step 5.

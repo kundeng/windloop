@@ -62,13 +62,11 @@ Present to the user for review. Iterate until approved.
 
 Create `SPEC_DIR/tasks.md` using the template from SKILL.md:
 - Each task completable in a single Cascade session
-- Each task lists **Requirements** and **Properties** it fulfills
-- Include **Depends**, **Files**, and **Verify** for each task
+- Each task lists **Depends**, **Requirements**, and **Properties**
 - **Minimize dependencies**: only depend on tasks that produce something this task directly needs
 - No circular deps
 - Order by phase: Foundation → Core → E2E Tests → Polish
-- **Property tests** go inline with implementation tasks (in the Tests field)
-- **E2E tests** are separate tasks in their own phase
+- **Property tests** and **E2E tests** are separate sub-tasks, not embedded in implementation tasks
 - Every requirement should be covered by at least one task
 
 #### 6. Create progress.txt

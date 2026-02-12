@@ -68,7 +68,7 @@ Copy the `.windsurf/` directory into any project. Everything else is auto-create
 |------|---------|
 | `requirements.md` | Requirements with user stories and WHEN/SHALL criteria |
 | `design.md` | Architecture, interfaces, correctness properties |
-| `tasks.md` | Task list with dependencies, files, verify commands |
+| `tasks.md` | Task list with dependencies and requirement traceability |
 | `progress.txt` | Auto-updated progress log |
 | `steering/` *(optional)* | Project-level context: `product.md`, `structure.md`, `tech.md` |
 

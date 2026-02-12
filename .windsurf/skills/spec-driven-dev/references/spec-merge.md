@@ -38,7 +38,7 @@ For each merged branch:
 
 a. Read `SPEC_DIR/tasks.md` — count done vs remaining.
 
-b. **File-tracking audit**: check all files from completed tasks' Files fields with `git ls-files`.
+b. Run `git status` to check for untracked or uncommitted files.
 
 // turbo
 c. Run the test suite (from `SPEC_DIR/design.md`).

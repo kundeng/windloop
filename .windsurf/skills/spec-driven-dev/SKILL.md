@@ -55,8 +55,8 @@ Let **SPEC_DIR** be the resolved directory.
 2. **Resolve the spec** using the Spec Resolution rules above.
 3. Read `requirements.md` AND `design.md` before implementing. If `steering/` exists, read it too.
 4. Check task dependencies — never skip ahead.
-5. **Write tests first**: implement the task's property tests before production code. E2E tests are separate tasks.
-6. Run verify after implementation; fix up to 3 times before BLOCKED.
+5. **Tests are separate tasks**: property tests and E2E tests each get their own task. Don't embed test work inside implementation tasks.
+6. Run tests after implementation; fix up to 3 times before BLOCKED.
 7. Commit per task: `feat(<spec>/<task>): [description]`
 8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
 9. Keep changes minimal and focused.
@@ -287,24 +287,21 @@ Omit sections that don't apply. Use Mermaid syntax.
     - **Depends**: —
     - **Requirements**: 1.1, 1.2
     - **Properties**: 1
-    - **Tests**: Property 1 (validates 1.1, 1.2)
-    - **Files**: `src/...`, `tests/...`
-    - **Verify**: `[command]`
 
   - [ ] 1.2 [Task title]
     - [What to implement]
     - **Depends**: 1.1
     - **Requirements**: 2.1
     - **Properties**: 2
-    - **Tests**: Property 2 (validates 2.1)
-    - **Files**: `src/...`, `tests/...`
-    - **Verify**: `[command]`
 
-  - [ ]* 1.3 [Optional task title]
+  - [ ] 1.3 Write property test for [property name]
+    - Property 1 (validates 1.1, 1.2)
+    - **Depends**: 1.1
+    - **Properties**: 1
+
+  - [ ]* 1.4 [Optional task title]
     - [What to implement]
     - **Depends**: 1.1
-    - **Files**: `tests/...`
-    - **Verify**: `[command]`
 
 - [ ] 2. [Phase or group title]
   - [ ] 2.1 [Task title]
@@ -312,16 +309,12 @@ Omit sections that don't apply. Use Mermaid syntax.
     - **Depends**: 1.1, 1.2
     - **Requirements**: 1.3, 2.2
     - **Properties**: 1, 2
-    - **Files**: `src/...`
-    - **Verify**: `[command]`
 
 - [ ] 3. E2E Tests
   - [ ] 3.1 E2E — [User story scenario]
     - End-to-end test validating [user story]
     - **Depends**: 1.1, 1.2
     - **Requirements**: 1.1, 1.2, 2.1
-    - **Files**: `tests/...`
-    - **Verify**: `[command]`
 
 ## Notes
 <!-- Implementation notes, known issues, etc. -->
@@ -332,7 +325,8 @@ Omit sections that don't apply. Use Mermaid syntax.
 - Parent items (`1.`, `2.`) are phase/group headers — their checkbox tracks phase completion. **Always include a descriptive title** (e.g. `- [ ] 1. Set up project infrastructure`).
 - `[ ]*` marks optional tasks.
 - `[~]` = partial/skipped, `[!]` = blocked.
-- **Depends**, **Files**, **Verify** are windloop enhancements that Kiro tasks don't have — always include them.
+- **Depends** is the only required metadata field. **Requirements** and **Properties** for traceability.
+- When a task needs testing, create a **separate sub-task** for writing the test (e.g. `1.3 Write property test for X`). Don't embed test specs inside implementation tasks.
 
 #### progress.txt template
 
