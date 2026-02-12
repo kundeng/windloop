@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Guides spec-driven autonomous development. Workflows: spec-plan (plan/design/create a feature), spec-loop (autonomous implement/build/code loop), spec-task (implement a single task), spec-audit (validate consistency/traceability/drift), spec-status (check progress/dashboard), spec-merge (merge parallel work), spec-reset (start over), spec-help (onboarding).
+description: "IMPORTANT: Files in .windloop/ are spec-driven artifacts. NEVER edit spec.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-loop workflow to implement it. Commands: spec-plan (create/refine specs), spec-loop (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
 ## Spec-Driven Development
@@ -72,20 +72,7 @@ When creating or updating AGENTS.md for a host project, append this block:
 ## Windloop
 
 This project uses spec-driven development. Specs live in `.windloop/`.
-
-**Always do this at the start of every session:**
-1. Read `.windloop/index.md` to see active specs
-2. For the relevant spec, read `spec.md`, `design.md`, and `tasks.md`
-3. Check `progress.txt` for what's already done
-4. If there are uncompleted tasks, resume implementation — follow the spec-loop workflow in `.windsurf/skills/spec-driven-dev/references/spec-loop.md`
-
-**Rules (always in effect):**
-- Follow the spec. Don't invent requirements or skip tasks.
-- Check task dependencies before starting — never skip ahead.
-- Write tests first, then production code.
-- Commit per task: `feat(<spec>/T[N]): [description]`
-- Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
-
+Read the `spec-driven-dev` skill before modifying any `.windloop/` files.
 Run `/spec-help` for the full command list.
 ```
 
