@@ -281,7 +281,7 @@ Omit sections that don't apply. Use Mermaid syntax.
 
 ## Tasks
 
-- [ ] 1. [Phase or group title]
+- [ ] 1. [Phase title — REQUIRED, never leave blank]
   - [ ] 1.1 [Task title]
     - [What to implement]
     - **Depends**: —
@@ -329,7 +329,7 @@ Omit sections that don't apply. Use Mermaid syntax.
 
 **Task conventions**:
 - IDs use hierarchical numbering: `1.1`, `1.2`, `2.1`, etc.
-- Parent items (`1.`, `2.`) are phase/group headers — their checkbox tracks phase completion.
+- Parent items (`1.`, `2.`) are phase/group headers — their checkbox tracks phase completion. **Always include a descriptive title** (e.g. `- [ ] 1. Set up project infrastructure`).
 - `[ ]*` marks optional tasks.
 - `[~]` = partial/skipped, `[!]` = blocked.
 - **Depends**, **Files**, **Verify** are windloop enhancements that Kiro tasks don't have — always include them.
