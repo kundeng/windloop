@@ -1,18 +1,18 @@
 
 ## Audit a Spec
 
-Pass the spec name in your message (e.g. `/spec-audit myfeature`).
-If omitted, check `.windloop/index.md`. If only one active spec exists, use it.
+Pass the spec name (e.g. `/spec-audit myfeature`).
+If omitted, use the **Spec Resolution** rules from SKILL.md.
 
-Let SPEC be the resolved spec name.
+Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
 
-1. Read `.windloop/SPEC/spec.md`, `design.md`, `tasks.md`.
+1. Read `SPEC_DIR/requirements.md`, `design.md`, `tasks.md`.
 
 2. **Traceability check**:
-   - Extract all requirement IDs (R-numbers, NF-numbers) from spec.md
+   - Extract all requirement IDs (Requirement N, criteria N.N, NF N) from requirements.md
    - Extract all property IDs and their `Validates:` references from design.md
-   - Extract all task `Requirements:` and `Properties:` references from tasks.md
-   - Report: orphan requirements (no property), orphan properties (no task), broken references (nonexistent IDs)
+   - Extract all task Requirements and Properties references from tasks.md
+   - Report: orphan requirements (no property), orphan properties (no task), broken references
 
 3. **Redundancy check**:
    - Flag requirements in different sections that describe the same behavior
@@ -20,17 +20,16 @@ Let SPEC be the resolved spec name.
    - Flag requirements that are implementation details (belong in Constraints)
 
 4. **Stale language check**:
-   - Flag requirements using future tense ("should be", "must be", "currently") where the implementing task is done (`[x]`)
-   - Flag goals checked off (`[x]`) but with unchecked sub-requirements
+   - Flag requirements using future tense where the implementing task is done (`[x]`)
+   - Flag goals checked off but with unchecked sub-requirements
 
 5. **Spec↔disk drift check**:
-   - Parse the directory structure block from spec.md
+   - Parse the directory structure block from design.md
    - Compare against actual repo layout
    - Flag: paths in spec but not on disk, significant files on disk but not in spec
-   - Compare Data Models examples against actual files
 
 6. **Documentation sync check**:
-   - If project documentation files exist (README, architecture docs, agent docs), compare key facts (ports, tool versions, directory paths, command names) against spec.md
+   - Compare key facts in README, architecture docs, etc. against requirements.md and design.md
    - Flag inconsistencies
 
 7. **Print findings report**:
@@ -42,15 +41,15 @@ Let SPEC be the resolved spec name.
 
 Traceability:
   ✓ N requirements, M properties, K tasks
-  ⚠ [R-id] has no validating property (orphan)
+  ⚠ Requirement [N] has no validating property
   ✓ All property→task references valid
 
 Redundancy:
-  ⚠ [R-id] and [R-id] both describe "[behavior]"
-  ⚠ [P-id] is a subset of [P-id]
+  ⚠ Requirement [N] and [M] both describe "[behavior]"
+  ⚠ Property [N] is a subset of Property [M]
 
 Stale Language:
-  ⚠ [R-id] says "[phrase]" but [T-id] is done
+  ⚠ Requirement [N] says "[phrase]" but task [N.N] is done
 
 Spec↔Disk Drift:
   ✗ spec lists "[path]" — not found on disk

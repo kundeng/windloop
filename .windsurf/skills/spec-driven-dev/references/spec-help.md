@@ -6,7 +6,9 @@ Print the following guide:
 
 ### Windloop — Spec-Driven Autonomous Development
 
-**Lifecycle**: idea → `spec.md` (why) → `design.md` (what + how) → `tasks.md` (steps) → autonomous implementation loop
+**Lifecycle**: idea → `requirements.md` (why) → `design.md` (what + how) → `tasks.md` (steps) → autonomous implementation loop
+
+Specs live in `.windloop/<name>/` or `.kiro/specs/<name>/` — same format, auto-detected.
 
 **Available commands** (all accept an optional `<spec>` name):
 
@@ -16,69 +18,58 @@ Print the following guide:
 | `/spec-plan <name> [create\|refine]` | Create or refine a spec (auto-detected) |
 | `/spec-audit <name>` | Validate spec consistency: traceability, redundancy, drift |
 | `/spec-go <name>` | Autonomous loop: pick task → implement → test → commit → repeat. Also resumes work. |
-| `/spec-task <name> T[N]` | Implement a single task by ID (for parallel worktree use) |
+| `/spec-task <name> <task>` | Implement a single task by ID (for parallel worktree use) |
 | `/spec-merge <name>` | Merge parallel branches/worktrees, resolve conflicts, verify |
 | `/spec-status` | Dashboard: show progress across all specs |
 | `/spec-reset <name>` | Reset a spec: clear progress, uncheck tasks |
 
-> If only one spec exists, the `<name>` can be omitted.
+> If only one spec exists, `<name>` can be omitted.
 
 ### Quick Start
 
-1. **New spec?** → `/spec-plan myfeature` — describe your idea, get spec + design + tasks
+1. **New spec?** → `/spec-plan myfeature` — describe your idea, get requirements + design + tasks
 2. **Ready to build?** → `/spec-go myfeature` — autonomous implementation loop
-3. **Parallel work?** → Open **worktree** Cascades, each runs `/spec-task myfeature T[N]`
+3. **Parallel work?** → Open **worktree** Cascades, each runs `/spec-task myfeature 1.3`
 4. **Check progress?** → `/spec-status`
 
-> **Important**: Never run multiple Cascade sessions on the same branch. Sessions sharing a working tree will overwrite each other's changes.
+> **Important**: Never run multiple Cascade sessions on the same branch.
 
 ### Parallel Sessions (Worktrees)
 
 **Option A — Windsurf Worktree Mode** (if available):
-Toggle **Worktree Mode** in the Cascade input bar. Windsurf creates an isolated worktree automatically.
+Toggle **Worktree Mode** in the Cascade input bar.
 
-**Option B — Manual worktrees** (always works):
+**Option B — Manual worktrees**:
 ```bash
-# From your repo root, create a worktree per task
-git worktree add ../myproject-T2 main
-git worktree add ../myproject-T3 main
-
-# Open each worktree in a separate Windsurf window
-# In window 1: /spec-task myfeature T2
-# In window 2: /spec-task myfeature T3
-
-# When done, merge back
-cd /path/to/main/repo
-git merge ../myproject-T2
-git merge ../myproject-T3
-git worktree remove ../myproject-T2
-git worktree remove ../myproject-T3
+git worktree add ../myproject-1.2 main
+git worktree add ../myproject-1.3 main
+# Open each in a separate Windsurf window
+# /spec-task myfeature 1.2  and  /spec-task myfeature 1.3
+# Merge back when done
 ```
 
 **Option C — Feature branches** (simplest):
 ```bash
-git checkout -b task/T2 main
-# Open in Windsurf, run /spec-task myfeature T2
-# Repeat for T3 on another branch in another window
-# Merge branches when done
+git checkout -b task/1.2 main
+# /spec-task myfeature 1.2
+# Merge when done
 ```
 
 ### Installation
 
 Copy the `.windsurf/` directory into any project. Everything else is auto-created:
-- `.windloop/` is scaffolded automatically by `/spec-plan`
-- `AGENTS.md` is created/appended automatically by `/spec-plan`
+- If `.kiro/` exists, specs go under `.kiro/specs/`
+- Otherwise, `.windloop/` is scaffolded by `/spec-plan`
+- `AGENTS.md` is created/appended automatically
 
-### Key Files (auto-created)
+### Spec Files (auto-created)
 
 | File | Purpose |
 |------|---------|
-| `.windloop/index.md` | Registry of all specs |
-| `.windloop/<name>/spec.md` | Spec requirements and constraints |
-| `.windloop/<name>/design.md` | Architecture, interfaces, property tests |
-| `.windloop/<name>/tasks.md` | Ordered task list with dependencies |
-| `.windloop/<name>/progress.txt` | Auto-updated progress log |
-| `.windloop/dependencies.md` | Cross-spec dependency graph |
+| `requirements.md` | Requirements with user stories and WHEN/SHALL criteria |
+| `design.md` | Architecture, interfaces, correctness properties |
+| `tasks.md` | Task list with dependencies, files, verify commands |
+| `progress.txt` | Auto-updated progress log |
 
 ### Settings for Maximum Autonomy
 

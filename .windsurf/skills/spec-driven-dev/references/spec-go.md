@@ -1,50 +1,49 @@
 
 ## Spec Go — Autonomous Implementation
 
-This workflow supports multiple specs. Pass the spec name in your message (e.g. `/spec-go taskrunner`).
-Optionally specify a task count (e.g. `/spec-go taskrunner 5` or "implement next 3 tasks"). If a count is given, stop after that many tasks instead of looping until done.
-If omitted, check `.windloop/index.md` for available specs. If only one active spec exists, use it.
+Pass the spec name in your message (e.g. `/spec-go taskrunner`).
+Optionally specify a task count (e.g. `/spec-go taskrunner 5` or "implement next 3 tasks"). If a count is given, stop after that many tasks.
+If omitted, use the **Spec Resolution** rules from SKILL.md.
 
-Let SPEC be the resolved spec name. All paths below use `.windloop/SPEC/`.
+Let SPEC be the resolved spec name and SPEC_DIR be the resolved directory.
 
-1. Read `.windloop/SPEC/spec.md` to understand the requirements and scope.
+1. Read `SPEC_DIR/requirements.md` to understand the requirements and scope.
 
-2. Read `.windloop/SPEC/design.md` to understand architecture, tech stack, testing strategy, and property tests.
+2. Read `SPEC_DIR/design.md` to understand architecture, tech stack, testing strategy, and correctness properties.
 
-3. Read `.windloop/SPEC/tasks.md` to get the full task list with dependencies and acceptance criteria.
+3. Read `SPEC_DIR/tasks.md` to get the full task list with dependencies.
 
-4. Read `.windloop/SPEC/progress.txt` to understand what has already been completed.
+4. Read `SPEC_DIR/progress.txt` to understand what has already been completed.
 
-5. Identify the NEXT uncompleted task (status `[ ]`) whose dependencies are ALL satisfied (`[x]` or `[~]`). A `[~]` dependency counts as satisfied. Skip `[ ]*` optional tasks if their dependencies aren't met — they can be done later or skipped entirely. Tasks are ordered by phase, then by ID. If ALL required tasks are `[x]` or `[~]` and only optional tasks remain, print a summary and STOP.
+5. Identify the NEXT uncompleted task (`[ ]`) whose dependencies are ALL satisfied (`[x]` or `[~]`). Skip `[ ]*` optional tasks if their dependencies aren't met. If ALL required tasks are done and only optional tasks remain, print a summary and STOP.
 
 6. Announce: "Starting task [TASK_ID]: [TASK_TITLE] (spec: SPEC)"
 
-7. Read the task's acceptance criteria, files to modify, and verification command carefully.
+7. Read the task's description, files to modify, and verification command.
 
 8. Implement the task (test-first):
-   - Read any relevant existing code first to understand current patterns
-   - **Write tests first**: if the task has a `Tests` field, implement those property tests before production code
+   - Read any relevant existing code first
+   - **Write tests first**: if the task has a Tests field, implement those property tests before production code
    - Then write the production code to make the tests pass
-   - For E2E test tasks (no production code): implement the test, run it, verify it passes
-   - Follow the coding conventions from `.windloop/SPEC/design.md`
-   - Add type hints where the spec requires them
+   - For E2E test tasks: implement the test, run it, verify it passes
+   - Follow the coding conventions from `SPEC_DIR/design.md`
 
-9. Run the task's specific verification command (from the task's `Verify` field).
+9. Run the task's verification command (from the Verify field).
 
-10. If verification fails, analyze the error output and fix the issue. Retry verification up to 3 times. If still failing after 3 retries, update `.windloop/SPEC/progress.txt` with a BLOCKED entry and the reason, then move to the next task.
-
-// turbo
-11. Run the lint check if one is configured in `.windloop/SPEC/design.md` (e.g. `ruff check src/ tests/`). Fix any lint issues found.
-
-12. Update `.windloop/SPEC/tasks.md`: change the task's `Status` from `[ ]` to `[x]` and check off completed acceptance criteria.
+10. If verification fails, analyze and fix. Retry up to 3 times. If still failing, update `SPEC_DIR/progress.txt` with a BLOCKED entry and move to the next task.
 
 // turbo
-13. Stage and commit the changes with a descriptive message: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description of what was implemented]"`
+11. Run the lint check if one is configured in `SPEC_DIR/design.md`. Fix any lint issues.
 
-14. **Post-commit tracking guard**: For each file listed in the task's `Files` field, run `git ls-files <file>` to confirm it is tracked. If any file is missing from git (likely gitignored), run `git add -f <file>` for each untracked file, then `git commit --amend --no-edit` to include them. Report a warning: "File <file> was gitignored — force-added to commit."
+12. Update `SPEC_DIR/tasks.md`: change the task's checkbox from `[ ]` to `[x]`.
 
-15. Update `.windloop/SPEC/progress.txt`:
-    - Append a line: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
-    - Update the `# SUMMARY:` line to reflect current counts and next task.
+// turbo
+13. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [brief description]"`
 
-16. If a task count was specified and you've completed that many tasks, print a summary and STOP. Otherwise, go back to step 5 to continue with the next task.
+14. **Post-commit tracking guard**: For each file in the task's Files field, run `git ls-files <file>`. If any file is untracked (likely gitignored), `git add -f <file>` then `git commit --amend --no-edit`.
+
+15. Update `SPEC_DIR/progress.txt`:
+    - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
+    - Update the `# SUMMARY:` line.
+
+16. If a task count was specified and reached, print a summary and STOP. Otherwise, go back to step 5.

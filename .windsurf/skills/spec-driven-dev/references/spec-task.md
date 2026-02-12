@@ -1,45 +1,44 @@
 
 ## Implement a Single Task
 
-Specify the spec name and task ID in your message (e.g. `/spec-task taskrunner T3`).
-If only one spec exists in `.windloop/index.md`, the spec name can be omitted (e.g. `/spec-task T3`).
+Specify the spec name and task ID (e.g. `/spec-task taskrunner 1.3`).
+If only one spec exists, the name can be omitted (e.g. `/spec-task 1.3`).
 
-Let SPEC be the resolved spec name.
+Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
 
-1. Read `.windloop/SPEC/spec.md` to understand the requirements and scope.
+1. Read `SPEC_DIR/requirements.md` to understand the requirements and scope.
 
-2. Read `.windloop/SPEC/design.md` to understand architecture, tech stack, testing strategy, and property tests.
+2. Read `SPEC_DIR/design.md` to understand architecture, tech stack, testing strategy, and correctness properties.
 
-3. Read `.windloop/SPEC/tasks.md` and locate the specified task by ID.
+3. Read `SPEC_DIR/tasks.md` and locate the specified task by ID.
 
-4. Verify that all dependencies for this task are satisfied (`[x]` or `[~]`). If not, report which dependencies are missing and STOP.
+4. Verify that all dependencies are satisfied (`[x]` or `[~]`). If not, report which are missing and STOP.
 
-5. Read any existing source files that this task depends on or modifies to understand the current state.
+5. Read any existing source files that this task depends on or modifies.
 
-7. Implement the task (test-first):
-   - **Write tests first**: if the task has a `Tests` field, implement those property tests before production code
+6. Implement the task (test-first):
+   - **Write tests first**: if the task has a Tests field, implement those property tests before production code
    - Then write the production code to make the tests pass
-   - For E2E test tasks (no production code): implement the test, run it, verify it passes
-   - Create or modify only the files listed in the task's `Files` field
-   - Add type hints where required
+   - For E2E test tasks: implement the test, run it, verify it passes
+   - Create or modify only the files listed in the task's Files field
    - Follow existing code patterns and conventions
 
-8. Run the task's verification command (from the `Verify` field).
+7. Run the task's verification command (from the Verify field).
 
-9. If verification fails, analyze and fix. Retry up to 3 times.
-
-// turbo
-10. Run lint if configured: check `.windloop/SPEC/design.md` for the lint command.
-
-11. Update `.windloop/SPEC/tasks.md`: mark the task status as `[x]` and check off acceptance criteria.
+8. If verification fails, analyze and fix. Retry up to 3 times.
 
 // turbo
-12. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
+9. Run lint if configured in `SPEC_DIR/design.md`.
 
-13. **Post-commit tracking guard**: For each file listed in the task's `Files` field, run `git ls-files <file>` to confirm it is tracked. If any file is missing from git (likely gitignored), run `git add -f <file>` for each untracked file, then `git commit --amend --no-edit` to include them. Report a warning: "File <file> was gitignored — force-added to commit."
+10. Update `SPEC_DIR/tasks.md`: change the task's checkbox from `[ ]` to `[x]`.
 
-14. Update `.windloop/SPEC/progress.txt`:
+// turbo
+11. Commit: `git add -A && git commit -m "feat(SPEC/[TASK_ID]): [description]"`
+
+12. **Post-commit tracking guard**: For each file in the task's Files field, run `git ls-files <file>`. If untracked, `git add -f <file>` then `git commit --amend --no-edit`.
+
+13. Update `SPEC_DIR/progress.txt`:
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
-    - Update the `# SUMMARY:` line to reflect current counts and next task.
+    - Update the `# SUMMARY:` line.
 
-15. Report completion and list any issues encountered.
+14. Report completion and list any issues encountered.

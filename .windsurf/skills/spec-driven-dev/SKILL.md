@@ -1,22 +1,22 @@
 ---
 name: spec-driven-dev
-description: "IMPORTANT: Files in .windloop/ are spec-driven artifacts. NEVER edit spec.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
+description: "IMPORTANT: Files in .windloop/ and .kiro/specs/ are spec-driven artifacts. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
 ## Spec-Driven Development
 
-This skill powers the windloop framework. Specs live in `.windloop/<name>/` and are registered in `.windloop/index.md`.
+This skill powers the windloop framework. Specs live in a **spec directory** — either `.windloop/<name>/` or `.kiro/specs/<name>/`. The format is the same regardless of location.
 
 ### Spec Lifecycle
 
 ```
-idea → spec.md (why) → design.md (what + how) → tasks.md (steps) → [implement loop] → done
+idea → requirements.md (why) → design.md (what + how) → tasks.md (steps) → [implement loop] → done
 ```
 
-The traceability chain ensures nothing is lost:
-- **spec.md** — requirements as user stories (R1.1, R1.2, NF1) — the *why*
-- **design.md** — architecture, tech stack, constraints, testing strategy, properties (P1, P2 validate R-numbers) — the *what + how*
-- **tasks.md** — tasks reference both requirements and properties they fulfill — the *steps*
+The traceability chain:
+- **requirements.md** — requirements as user stories with WHEN/SHALL acceptance criteria — the *why*
+- **design.md** — architecture, tech stack, constraints, testing strategy, correctness properties — the *what + how*
+- **tasks.md** — implementation tasks referencing requirements and properties — the *steps*
 - **progress.txt** — auto-updated log
 
 ### Workflow References
@@ -31,106 +31,114 @@ Detailed instructions for each command live in `references/` alongside this file
 | `/spec-plan <name> [create\|refine]` | [spec-plan.md](references/spec-plan.md) | Create or refine a spec |
 | `/spec-audit <name>` | [spec-audit.md](references/spec-audit.md) | Validate spec consistency |
 | `/spec-go <name>` | [spec-go.md](references/spec-go.md) | Autonomous implement loop |
-| `/spec-task <name> T[N]` | [spec-task.md](references/spec-task.md) | Implement single task |
+| `/spec-task <name> <task>` | [spec-task.md](references/spec-task.md) | Implement single task |
 | `/spec-merge <name>` | [spec-merge.md](references/spec-merge.md) | Merge parallel branches, resolve conflicts, verify |
 | `/spec-status` | [spec-status.md](references/spec-status.md) | Progress dashboard |
 | `/spec-reset <name>` | [spec-reset.md](references/spec-reset.md) | Clear progress for re-run |
 
+### Spec Resolution
+
+When a command receives a spec name SPEC, resolve its directory:
+
+1. `.windloop/SPEC/` — if exists, use it
+2. `.kiro/specs/SPEC/` — if exists, use it
+3. Neither → error
+
+When no name is given, list directories in `.windloop/` and `.kiro/specs/`. If exactly one spec exists, use it automatically.
+
+Let **SPEC_DIR** be the resolved directory.
+
 ### Rules
 
-1. **One session per working tree**: never run multiple Cascade sessions on the same branch/worktree. Use worktrees or branches to isolate parallel work — sessions that share a working tree will conflict.
-2. Read `.windloop/index.md` first to find specs
-3. Read spec.md AND design.md before implementing
-4. Check task dependencies — never skip ahead
+1. **One session per working tree**: use worktrees or branches to isolate parallel work.
+2. **Resolve the spec** using the Spec Resolution rules above.
+3. Read `requirements.md` AND `design.md` before implementing.
+4. Check task dependencies — never skip ahead.
 5. **Write tests first**: implement the task's property tests before production code. E2E tests are separate tasks.
-6. Run verify after implementation; fix up to 3 times before BLOCKED
-7. Commit per task: `feat(<spec>/T[N]): [description]`
-8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task
-9. Keep changes minimal and focused
+6. Run verify after implementation; fix up to 3 times before BLOCKED.
+7. Commit per task: `feat(<spec>/<task>): [description]`
+8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
+9. Keep changes minimal and focused.
 
 ### Scaffolding
 
-When `/spec-plan` runs and `.windloop/` doesn't exist, auto-create:
+When `/spec-plan` creates a new spec:
+
+**If `.kiro/` exists** → create under `.kiro/specs/<name>/`
+**Otherwise** → create under `.windloop/<name>/`
+
 ```
-.windloop/
-  index.md
-  dependencies.md
-  <name>/
-    spec.md
-    design.md
-    tasks.md
-    progress.txt
+<spec-dir>/
+  requirements.md
+  design.md
+  tasks.md
+  progress.txt
 ```
 
-If the host project already has an `AGENTS.md`, append the windloop snippet (see below). If not, create it.
+If the host project has an `AGENTS.md`, append the windloop snippet (see below). If not, create it.
 
 ### AGENTS.md Snippet
-
-When creating or updating AGENTS.md for a host project, append this block:
 
 ```markdown
 ## Windloop
 
-This project uses spec-driven development. Specs live in `.windloop/`.
-Read the `spec-driven-dev` skill before modifying any `.windloop/` files.
+This project uses spec-driven development. Specs live in `.windloop/` or `.kiro/specs/`.
+Read the `spec-driven-dev` skill before modifying any spec files.
 Run `/spec-help` for the full command list.
 ```
 
 ### Spec Refinement Principles
 
-When running `/spec-plan <name> refine`, follow these principles to simplify while keeping completeness:
+When running `/spec-plan <name> refine`:
 
-1. **Merge redundant requirements**: If two requirements describe the same behavior in different sections, merge them into the earlier/more natural location and delete the duplicate.
-2. **Separate what from how**: Move implementation details (specific file contents, build instructions, config snippets) from Requirements to Constraints. Requirements describe *what the user can do*; constraints describe *how it must be built*.
-3. **Collapse over-specified sub-requirements**: If multiple sub-requirements describe individual assertions inside a single feature, collapse them into one requirement. The individual checks become acceptance criteria on the implementing task, not separate requirements.
-4. **Demote aspirational items**: If a requirement describes a *supported pattern* rather than a *tested feature*, demote it to a Note under the parent requirement section. Requirements must be testable.
-5. **Merge overlapping properties**: If one property is a strict subset of another, merge the smaller into the larger and renumber.
-6. **Cascade renumbering**: After merging or removing requirements/properties, update ALL references in:
-   - `design.md` — property `Validates:` lines
-   - `tasks.md` — task `Requirements:`, `Properties:`, and `Tests:` lines
-   - Verify no orphan references remain
-7. **Validate traceability**: After refactoring, check:
-   - Every R maps to ≥1 P in design.md
-   - Every P maps to ≥1 T in tasks.md
-   - No T references a nonexistent R or P
-   - Flag orphans in the change summary
-8. **Present tense for done work**: Rewrite completed requirements in present tense ("X does Y") not future tense ("X should do Y", "currently missing"). The spec describes the system as it is, plus pending goals.
-9. **Sync derived documents**: If spec changes affect project documentation files (e.g., README, architecture docs, agent docs), update them. The spec is the source of truth.
-10. **Align spec with disk**: Verify the directory structure in the spec matches the actual repo layout. Fix stale paths, add missing entries, remove entries for deleted files.
+1. **Merge redundant requirements**: combine duplicates into the earlier/more natural location.
+2. **Separate what from how**: move implementation details from Requirements to Constraints.
+3. **Collapse over-specified sub-requirements**: individual assertions become acceptance criteria on tasks, not separate requirements.
+4. **Demote aspirational items**: untestable patterns become Notes, not requirements.
+5. **Merge overlapping properties**: if one is a subset of another, merge and renumber.
+6. **Cascade renumbering**: update ALL references in design.md and tasks.md after merging/removing.
+7. **Validate traceability**: every requirement → ≥1 property → ≥1 task. Flag orphans.
+8. **Present tense for done work**: completed requirements describe the system as-is.
+9. **Sync derived documents**: update README, architecture docs, etc. if affected.
+10. **Align spec with disk**: fix stale paths, add missing entries, remove deleted files.
 
 ### Embedded Templates
 
-#### spec.md template
+#### requirements.md template
 
 ```markdown
-# Specification: [SPEC NAME]
+# Requirements Document
 
-## Overview
+## Introduction
 <!-- Brief description of what this spec covers and why -->
 
-## Goals
-- [ ] Goal 1
-- [ ] Goal 2
+## Glossary
+
+- **Term_1**: Definition
+- **Term_2**: Definition
 
 ## Requirements
 
-<!-- Requirements are numbered hierarchically (R1, R1.1, R1.2, R2, etc.)
-     and framed as user stories where applicable.
-     Requirements describe WHY — what the user needs and why. -->
+### Requirement 1: [Feature area]
 
-### R1: [Feature area]
+**User Story:** As a [role], I want [action], so that [benefit].
 
-**R1.1**: As a [role], I should be able to [action] so that [benefit].
+#### Acceptance Criteria
 
-**R1.2**: As a [role], I should be able to [action] so that [benefit].
+1. WHEN [trigger], THE [Component] SHALL [expected behavior]
+2. WHEN [trigger], THE [Component] SHALL [expected behavior]
 
-### R2: [Feature area]
+### Requirement 2: [Feature area]
 
-**R2.1**: As a [role], I should be able to [action] so that [benefit].
+**User Story:** As a [role], I want [action], so that [benefit].
+
+#### Acceptance Criteria
+
+1. WHEN [trigger], THE [Component] SHALL [expected behavior]
 
 ### Non-Functional
 
-**NF1**: [Performance / reliability / security requirement]
+**NF 1**: [Performance / reliability / security requirement]
 
 ## Out of Scope
 <!-- What this spec explicitly does NOT cover -->
@@ -155,8 +163,6 @@ tests/
 
 ## Architecture Overview
 
-<!-- Include a Mermaid component diagram showing major modules and their relationships -->
-
 \```mermaid
 graph TD
     A[Module A] --> B[Module B]
@@ -177,8 +183,6 @@ graph TD
 
 ## Data Flow
 
-<!-- Include a Mermaid sequence diagram for key interactions -->
-
 \```mermaid
 sequenceDiagram
     participant User
@@ -194,30 +198,10 @@ sequenceDiagram
 \```
 
 ## State Management
-
-<!-- Include a Mermaid state diagram if the system has stateful behavior -->
-<!-- Omit this section if the system is stateless -->
-
-\```mermaid
-stateDiagram-v2
-    [*] --> Idle
-    Idle --> Processing: request
-    Processing --> Success: ok
-    Processing --> Error: fail
-    Success --> Idle
-    Error --> Idle: retry
-\```
+<!-- Omit if stateless -->
 
 ## Data Models
-
-<!-- Include a Mermaid ER diagram if there are data relationships -->
-<!-- Omit this section for simple data models -->
-
-\```mermaid
-erDiagram
-    USER ||--o{ ORDER : places
-    ORDER ||--|{ ITEM : contains
-\```
+<!-- Omit if simple -->
 
 ## Error Handling Strategy
 <!-- How errors are propagated and handled -->
@@ -234,19 +218,19 @@ erDiagram
 ## Constraints
 <!-- Important decisions and constraints -->
 
-## Property Tests
+## Correctness Properties
 
-Properties that must hold true. Each property validates one or more requirements from spec.md.
+Properties that must hold true. Each validates one or more requirements.
 
-### P1: [Property name]
+### Property 1: [Property name]
 - **Statement**: *For any* [condition], when [action], then [expected outcome]
-- **Validates**: R1.1, R1.2
+- **Validates**: Requirement 1.1, 1.2
 - **Example**: [concrete example]
 - **Test approach**: [how to verify]
 
-### P2: [Property name]
+### Property 2: [Property name]
 - **Statement**: *For any* [condition], when [action], then [expected outcome]
-- **Validates**: R2.1
+- **Validates**: Requirement 2.1
 - **Example**: [example]
 - **Test approach**: [approach]
 
@@ -260,94 +244,76 @@ Properties that must hold true. Each property validates one or more requirements
 <!-- If applicable -->
 ```
 
-**Diagram guidance**: Include diagrams that match the spec's complexity:
+**Diagram guidance**: Include diagrams that match complexity:
 - **Always**: Component diagram (architecture overview)
-- **Multi-actor systems**: Sequence diagram (swimming lanes)
+- **Multi-actor systems**: Sequence diagram
 - **Stateful systems**: State diagram
 - **Data-heavy systems**: ER diagram
-- **Complex logic**: Flowchart
 
-Omit diagram sections that don't apply. Use Mermaid syntax (renders in GitHub, VS Code, most markdown viewers).
+Omit sections that don't apply. Use Mermaid syntax.
 
 #### tasks.md template
 
 ```markdown
 # Tasks: [SPEC NAME]
 
-<!--
-STATUS: [ ] pending | [x] done | [~] partial/skipped | [!] blocked
-OPTIONAL: add * after bracket to mark optional, e.g. [ ]* or [x]*
-PRIORITY: P0 critical | P1 important | P2 nice-to-have
-DEPENDS: task IDs that must complete first
-REQUIREMENTS: requirement IDs from spec.md this task fulfills
-PROPERTIES: property IDs from design.md this task should satisfy
--->
+## Overview
+<!-- Brief description of implementation approach -->
 
-## Phase 1: Foundation
+## Tasks
 
-### T1: [Task title] `P0`
-- **Description**: [What to implement]
-- **Requirements**: R1.1, R1.2
-- **Properties**: P1
-- **Tests**:
-  - [ ] Property test — P1: [Property name] (validates R1.1, R1.2)
-- **Acceptance criteria**:
-  - [ ] Criterion 1
-  - [ ]* Criterion 2 (optional)
-- **Files**: `src/...`, `tests/...`
-- **Verify**: `[command]`
-- **Status**: [ ]
+- [ ] 1. [Phase or group title]
+  - [ ] 1.1 [Task title]
+    - [What to implement]
+    - **Depends**: —
+    - **Requirements**: 1.1, 1.2
+    - **Properties**: 1
+    - **Tests**: Property 1 (validates 1.1, 1.2)
+    - **Files**: `src/...`, `tests/...`
+    - **Verify**: `[command]`
 
-### T2: [Task title] `P0`
-- **Description**: [What to implement]
-- **Depends**: T1
-- **Requirements**: R2.1
-- **Properties**: P2
-- **Tests**:
-  - [ ] Property test — P2: [Property name] (validates R2.1)
-- **Acceptance criteria**:
-  - [ ] Criterion 1
-- **Files**: `src/...`, `tests/...`
-- **Verify**: `[command]`
-- **Status**: [ ]
+  - [ ] 1.2 [Task title]
+    - [What to implement]
+    - **Depends**: 1.1
+    - **Requirements**: 2.1
+    - **Properties**: 2
+    - **Tests**: Property 2 (validates 2.1)
+    - **Files**: `src/...`, `tests/...`
+    - **Verify**: `[command]`
 
-## Phase 2: Core
+  - [ ]* 1.3 [Optional task title]
+    - [What to implement]
+    - **Depends**: 1.1
+    - **Files**: `tests/...`
+    - **Verify**: `[command]`
 
-### T3: [Task title] `P1`
-- **Depends**: T1, T2
-- **Requirements**: R1.3, R2.2
-- **Properties**: P1, P2
-- ...
+- [ ] 2. [Phase or group title]
+  - [ ] 2.1 [Task title]
+    - [What to implement]
+    - **Depends**: 1.1, 1.2
+    - **Requirements**: 1.3, 2.2
+    - **Properties**: 1, 2
+    - **Files**: `src/...`
+    - **Verify**: `[command]`
 
-## Phase 3: E2E Tests
+- [ ] 3. E2E Tests
+  - [ ] 3.1 E2E — [User story scenario]
+    - End-to-end test validating [user story]
+    - **Depends**: 1.1, 1.2
+    - **Requirements**: 1.1, 1.2, 2.1
+    - **Files**: `tests/...`
+    - **Verify**: `[command]`
 
-### T4: E2E — [User story scenario] `P0`
-- **Description**: End-to-end test validating [user story]
-- **Depends**: T1, T2
-- **Requirements**: R1.1, R1.2, R2.1
-- **Acceptance criteria**:
-  - [ ] [Full scenario passes]
-- **Files**: `tests/...`
-- **Verify**: `[command]`
-- **Status**: [ ]
-
-### T5: E2E — [Another scenario] `P1`
-- **Description**: End-to-end test validating [user story]
-- **Depends**: T3
-- **Requirements**: R1.3
-- **Acceptance criteria**:
-  - [ ] [Full scenario passes]
-- **Files**: `tests/...`
-- **Verify**: `[command]`
-- **Status**: [ ]
-
-## Phase 4: Polish
-
-### T6: [Task title] `P2`
-- **Depends**: T4
-- **Requirements**: NF1
-- ...
+## Notes
+<!-- Implementation notes, known issues, etc. -->
 ```
+
+**Task conventions**:
+- IDs use hierarchical numbering: `1.1`, `1.2`, `2.1`, etc.
+- Parent items (`1.`, `2.`) are phase/group headers — their checkbox tracks phase completion.
+- `[ ]*` marks optional tasks.
+- `[~]` = partial/skipped, `[!]` = blocked.
+- **Depends**, **Files**, **Verify** are windloop enhancements that Kiro tasks don't have — always include them.
 
 #### progress.txt template
 
@@ -356,38 +322,15 @@ PROPERTIES: property IDs from design.md this task should satisfy
 # Auto-updated by spec-go workflow
 # Format: [TIMESTAMP] [STATUS] [TASK_ID] - [DESCRIPTION]
 # STATUS: DONE | BLOCKED | SKIPPED | IN_PROGRESS
-# SUMMARY: 0/N done | next: T1
+# SUMMARY: 0/N done | next: 1.1
 ```
 
-The `# SUMMARY:` line is a machine-readable one-liner that agents update after each task. Format: `# SUMMARY: <done>/<total> done | next: <NEXT_TASK_ID or DONE>`
-
-#### index.md template
-
-```markdown
-# Windloop Specs
-
-| Spec | Status | Description |
-|------|--------|-------------|
-| [name] | active | [description] |
-```
-
-#### dependencies.md template
-
-```markdown
-# Spec Dependencies
-
-Format: `<spec> -> <prerequisite>` (dependent -> prerequisite)
-
-<!-- Example:
-api -> auth
-dashboard -> api
--->
-```
+The `# SUMMARY:` line is machine-readable. Format: `# SUMMARY: <done>/<total> done | next: <NEXT_TASK_ID or DONE>`
 
 ### Parallel Execution
 
 For independent tasks, use worktree mode:
 1. Open a new Cascade in Worktree mode
-2. Run `/spec-task <name> T[N]`
+2. Run `/spec-task <name> <task>`
 3. Merge back when done
 

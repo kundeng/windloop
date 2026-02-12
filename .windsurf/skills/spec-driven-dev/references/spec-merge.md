@@ -1,55 +1,52 @@
 
 ## Merge Parallel Work
 
-Pass the spec name in your message (e.g. `/spec-merge taskrunner`).
-If omitted, check `.windloop/index.md`. If only one active spec exists, use it.
+Pass the spec name (e.g. `/spec-merge taskrunner`).
+If omitted, use the **Spec Resolution** rules from SKILL.md.
 
-Let SPEC be the resolved spec name.
+Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
 
 ### 1. Discover branches to merge
 
 // turbo
 Run `git branch --list "task/*"` and `git worktree list` to find branches or worktrees created for parallel tasks.
 
-List the candidates and ask the user which to merge (or merge all if they say so). If the user specified branches in their prompt, use those.
+List the candidates and ask the user which to merge (or merge all). If the user specified branches, use those.
 
 ### 2. Merge each branch
 
-For each branch to merge:
+For each branch:
 
 // turbo
 a. `git merge <branch> --no-edit`
 
 b. If there are **merge conflicts**:
-   - Read the conflicting files (`git diff --name-only --diff-filter=U`)
-   - For each conflict, read the file and resolve it intelligently:
-     - If both sides added different tasks/tests, keep both
-     - If both sides modified the same function, merge the intent
-     - If unclear, show the conflict to the user and ask
+   - Read conflicting files (`git diff --name-only --diff-filter=U`)
+   - Resolve intelligently: keep both sides if they added different things, merge intent if same function, ask user if unclear
    - After resolving: `git add <resolved-files> && git commit --no-edit`
 
-c. If the merge was clean, report: "Merged `<branch>` cleanly."
+c. If clean: "Merged `<branch>` cleanly."
 
 ### 3. Clean up merged branches
 
 // turbo
-For each successfully merged branch:
-- `git branch -d <branch>` (delete local branch)
-- If it was a worktree: `git worktree remove <path>` (ask user to confirm)
+For each merged branch:
+- `git branch -d <branch>`
+- If worktree: `git worktree remove <path>` (ask user to confirm)
 
 ### 4. Verify after merge
 
-a. Read `.windloop/SPEC/tasks.md` — count done vs remaining.
+a. Read `SPEC_DIR/tasks.md` — count done vs remaining.
 
-b. **File-tracking audit**: Collect all files from completed tasks' `Files` fields. Run `git ls-files <file>` for each. Report any untracked files as warnings.
+b. **File-tracking audit**: check all files from completed tasks' Files fields with `git ls-files`.
 
 // turbo
-c. Run the test suite (from `.windloop/SPEC/design.md`).
+c. Run the test suite (from `SPEC_DIR/design.md`).
 
 // turbo
 d. Run lint if configured.
 
-e. If tests or lint fail, identify which merge introduced the issue and describe the fix.
+e. If tests or lint fail, identify which merge introduced the issue.
 
 ### 5. Summarize
 
