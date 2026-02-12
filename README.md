@@ -49,7 +49,7 @@ Windloop turns Windsurf's Cascade into an autonomous development loop:
 
 Each stage is reviewed with you before proceeding.
 
-**Modes**: `/spec-plan <name> create` (new), `refine` (broad rethink), `update` (targeted back-propagation from implementation). Auto-detected if omitted.
+**Modes**: `/spec-plan <name> create` (new) or `refine` (change anything — broad rethink or targeted fix). Auto-detected if omitted.
 
 ## What Gets Created
 

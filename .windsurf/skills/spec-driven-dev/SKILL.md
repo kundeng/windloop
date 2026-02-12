@@ -32,7 +32,7 @@ Detailed instructions for each command live in `references/` alongside this file
 | `/spec-audit <name>` | [spec-audit.md](references/spec-audit.md) | Validate spec consistency |
 | `/spec-loop <name>` | [spec-loop.md](references/spec-loop.md) | Autonomous implement loop |
 | `/spec-task <name> T[N]` | [spec-task.md](references/spec-task.md) | Implement single task |
-| `/spec-merge <name>` | [spec-merge.md](references/spec-merge.md) | Review and merge parallel work |
+| `/spec-merge <name>` | [spec-merge.md](references/spec-merge.md) | Merge parallel branches, resolve conflicts, verify |
 | `/spec-status` | [spec-status.md](references/spec-status.md) | Progress dashboard |
 | `/spec-reset <name>` | [spec-reset.md](references/spec-reset.md) | Clear progress for re-run |
 
