@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: "IMPORTANT: Files in .windloop/ and .kiro/specs/ are spec-driven artifacts. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches), spec-reset (clear progress), spec-help (onboarding)."
+description: "IMPORTANT: Files in .windloop/ and .kiro/specs/ are spec-driven artifacts. IF THERE IS ANY CHANCE YOU MAY DEVIATE FROM THE SPEC OR SPEC-DRIVEN WORKFLOW, STOP AND REFER TO THIS SKILL AND THE RELEVANT references/ DOC (TYPICALLY references/spec-go.md OR references/spec-task.md) BEFORE PROCEEDING. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches/worktrees back into main, resolve conflicts, verify), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
 ## Spec-Driven Development
@@ -54,12 +54,13 @@ Let **SPEC_DIR** be the resolved directory.
 1. **One session per working tree**: use worktrees or branches to isolate parallel work.
 2. **Resolve the spec** using the Spec Resolution rules above.
 3. Read `requirements.md` AND `design.md` before implementing. If `steering/` exists, read it too.
-4. Check task dependencies — never skip ahead.
-5. **Tests are separate tasks**: property tests and E2E tests each get their own task. Don't embed test work inside implementation tasks.
-6. Run tests after implementation; fix up to 3 times before BLOCKED.
-7. Commit per task: `feat(<spec>/<task>): [description]`
-8. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
-9. Keep changes minimal and focused.
+4. **When in doubt, stop and re-anchor to the spec**: if there is any chance the next action could deviate from spec-driven development (unclear scope, missing task, ambiguous acceptance criteria, tempting “quick fix”, undocumented refactor), STOP and re-read `requirements.md`, `design.md`, `tasks.md`, and the relevant workflow in `references/` (typically `references/spec-go.md` or `references/spec-task.md`) before proceeding. If it still isn’t clearly supported by the spec, ask the user to refine the spec (via `/spec-plan ... refine`) instead of guessing.
+5. Check task dependencies — never skip ahead.
+6. **Tests are separate tasks**: property tests and E2E tests each get their own task. Don't embed test work inside implementation tasks.
+7. Run tests after implementation; fix up to 3 times before BLOCKED.
+8. Commit per task: `feat(<spec>/<task>): [description]`
+9. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
+10. Keep changes minimal and focused.
 
 ### Scaffolding
 
