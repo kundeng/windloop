@@ -64,18 +64,28 @@ Let **SPEC_DIR** be the resolved directory.
 
 ### Scaffolding
 
-When `/spec-plan` creates a new spec:
+When `/spec-plan` creates a new spec, it must create a **per-spec subdirectory** — never put spec files directly in `.windloop/` or `.kiro/`.
 
-**If `.kiro/` exists** → create under `.kiro/specs/<name>/`
-**Otherwise** → create under `.windloop/<name>/`
+**If `.kiro/` exists:**
+1. Create `.kiro/specs/` if it doesn't exist
+2. Create `.kiro/specs/<name>/` — this is the spec directory
+3. Create all spec files inside `.kiro/specs/<name>/`
 
+**Otherwise:**
+1. Create `.windloop/` if it doesn't exist
+2. Create `.windloop/<name>/` — this is the spec directory
+3. Create all spec files inside `.windloop/<name>/`
+
+The spec directory must contain:
 ```
-<spec-dir>/
+.windloop/<name>/          # or .kiro/specs/<name>/
   requirements.md
   design.md
   tasks.md
   progress.txt
 ```
+
+**Common mistake**: placing spec files directly in `.windloop/` or `.kiro/specs/` without the `<name>/` subdirectory. Each spec MUST have its own subdirectory.
 
 ### Steering Docs (optional)
 

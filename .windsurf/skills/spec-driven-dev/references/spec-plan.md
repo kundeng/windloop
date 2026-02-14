@@ -14,8 +14,17 @@ Let SPEC be the spec name. Resolve SPEC_DIR using the **Spec Resolution** rules 
 
 #### 0. Scaffold
 
-**If `.kiro/` exists** → create `.kiro/specs/SPEC/`
-**Otherwise** → create `.windloop/SPEC/`
+Each spec MUST have its own subdirectory — never put spec files directly in `.windloop/` or `.kiro/`.
+
+**If `.kiro/` exists:**
+1. Create `.kiro/specs/` if it doesn't exist
+2. Create `.kiro/specs/SPEC/`
+3. All spec files go inside `.kiro/specs/SPEC/`
+
+**Otherwise:**
+1. Create `.windloop/` if it doesn't exist
+2. Create `.windloop/SPEC/`
+3. All spec files go inside `.windloop/SPEC/`
 
 If the host project has an `AGENTS.md`, append the windloop snippet from SKILL.md. If not, create it.
 
