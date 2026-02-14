@@ -8,7 +8,7 @@ Print the following guide:
 
 **Lifecycle**: idea → `requirements.md` (why) → `design.md` (what + how) → `tasks.md` (steps) → autonomous implementation loop
 
-Specs live in `.windloop/<name>/` or `.kiro/specs/<name>/` — same format, auto-detected.
+Specs live in `.windloop/specs/<name>/` or `.kiro/specs/<name>/` — same format, auto-detected.
 
 **Available commands** (all accept an optional `<spec>` name):
 
@@ -59,7 +59,7 @@ git checkout -b task/1.2 main
 
 Copy the `.windsurf/` directory into any project. Everything else is auto-created:
 - If `.kiro/` exists, specs go under `.kiro/specs/`
-- Otherwise, `.windloop/` is scaffolded by `/spec-plan`
+- Otherwise, `.windloop/specs/` is scaffolded by `/spec-plan`
 - `AGENTS.md` is created/appended automatically
 
 ### Spec Files (auto-created)

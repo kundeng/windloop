@@ -1,11 +1,11 @@
 ---
 name: spec-driven-dev
-description: "IMPORTANT: Files in .windloop/ and .kiro/specs/ are spec-driven artifacts. IF THERE IS ANY CHANCE YOU MAY DEVIATE FROM THE SPEC OR SPEC-DRIVEN WORKFLOW, STOP AND REFER TO THIS SKILL AND THE RELEVANT references/ DOC (TYPICALLY references/spec-go.md OR references/spec-task.md) BEFORE PROCEEDING. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches/worktrees back into main, resolve conflicts, verify), spec-reset (clear progress), spec-help (onboarding)."
+description: "IMPORTANT: Files in .windloop/specs/ and .kiro/specs/ are spec-driven artifacts. IF THERE IS ANY CHANCE YOU MAY DEVIATE FROM THE SPEC OR SPEC-DRIVEN WORKFLOW, STOP AND REFER TO THIS SKILL AND THE RELEVANT references/ DOC (TYPICALLY references/spec-go.md OR references/spec-task.md) BEFORE PROCEEDING. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches/worktrees back into main, resolve conflicts, verify), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
 ## Spec-Driven Development
 
-This skill powers the windloop framework. Specs live in a **spec directory** — either `.windloop/<name>/` or `.kiro/specs/<name>/`. The format is the same regardless of location.
+This skill powers the windloop framework. Specs live in a **spec directory** — either `.windloop/specs/<name>/` or `.kiro/specs/<name>/`. The format is the same regardless of location.
 
 ### Spec Lifecycle
 
@@ -41,11 +41,11 @@ Detailed instructions for each command live in `references/` alongside this file
 
 When a command receives a spec name SPEC, resolve its directory:
 
-1. `.windloop/SPEC/` — if exists, use it
+1. `.windloop/specs/SPEC/` — if exists, use it
 2. `.kiro/specs/SPEC/` — if exists, use it
 3. Neither → error
 
-When no name is given, list directories in `.windloop/` and `.kiro/specs/`. If exactly one spec exists, use it automatically.
+When no name is given, list directories in `.windloop/specs/` and `.kiro/specs/`. If exactly one spec exists, use it automatically.
 
 Let **SPEC_DIR** be the resolved directory.
 
@@ -64,7 +64,7 @@ Let **SPEC_DIR** be the resolved directory.
 
 ### Scaffolding
 
-When `/spec-plan` creates a new spec, it must create a **per-spec subdirectory** — never put spec files directly in `.windloop/` or `.kiro/`.
+When `/spec-plan` creates a new spec, it must create a **per-spec subdirectory** — never put spec files directly in `.windloop/specs/` or `.kiro/specs/`.
 
 **If `.kiro/` exists:**
 1. Create `.kiro/specs/` if it doesn't exist
@@ -72,26 +72,28 @@ When `/spec-plan` creates a new spec, it must create a **per-spec subdirectory**
 3. Create all spec files inside `.kiro/specs/<name>/`
 
 **Otherwise:**
-1. Create `.windloop/` if it doesn't exist
-2. Create `.windloop/<name>/` — this is the spec directory
-3. Create all spec files inside `.windloop/<name>/`
+1. Create `.windloop/specs/` if it doesn't exist
+2. Create `.windloop/specs/<name>/` — this is the spec directory
+3. Create all spec files inside `.windloop/specs/<name>/`
 
 The spec directory must contain:
 ```
-.windloop/<name>/          # or .kiro/specs/<name>/
+.windloop/specs/<name>/    # or .kiro/specs/<name>/
   requirements.md
   design.md
   tasks.md
   progress.txt
 ```
 
-**Common mistake**: placing spec files directly in `.windloop/` or `.kiro/specs/` without the `<name>/` subdirectory. Each spec MUST have its own subdirectory.
+**Common mistake**: placing spec files directly in `.windloop/specs/` or `.kiro/specs/` without the `<name>/` subdirectory. Each spec MUST have its own subdirectory.
 
 ### Steering Docs (optional)
 
 Steering docs provide project-level context that applies across all specs. They live at the root of the spec area:
 
 - `.windloop/steering/` or `.kiro/steering/`
+
+Note: steering docs live at the root (`.windloop/steering/`, not `.windloop/specs/steering/`).
 
 | File | Purpose |
 |------|--------|
@@ -112,7 +114,7 @@ If the host project has an `AGENTS.md`, append the windloop snippet (see below).
 ```markdown
 ## Windloop
 
-This project uses spec-driven development. Specs live in `.windloop/` or `.kiro/specs/`.
+This project uses spec-driven development. Specs live in `.windloop/specs/` or `.kiro/specs/`.
 Read the `spec-driven-dev` skill before modifying any spec files.
 Run `/spec-help` for the full command list.
 ```

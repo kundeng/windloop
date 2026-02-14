@@ -1,7 +1,7 @@
 
 ## Spec Status Dashboard
 
-1. Discover all specs: list directories in `.windloop/` and `.kiro/specs/`.
+1. Discover all specs: list directories in `.windloop/specs/` and `.kiro/specs/`.
 
 2. For EACH spec (let SPEC_DIR be its directory):
    a. Read `SPEC_DIR/tasks.md` and count:

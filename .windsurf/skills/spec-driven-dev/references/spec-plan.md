@@ -14,7 +14,7 @@ Let SPEC be the spec name. Resolve SPEC_DIR using the **Spec Resolution** rules 
 
 #### 0. Scaffold
 
-Each spec MUST have its own subdirectory — never put spec files directly in `.windloop/` or `.kiro/`.
+Each spec MUST have its own subdirectory — never put spec files directly in `.windloop/specs/` or `.kiro/specs/`.
 
 **If `.kiro/` exists:**
 1. Create `.kiro/specs/` if it doesn't exist
@@ -22,9 +22,9 @@ Each spec MUST have its own subdirectory — never put spec files directly in `.
 3. All spec files go inside `.kiro/specs/SPEC/`
 
 **Otherwise:**
-1. Create `.windloop/` if it doesn't exist
-2. Create `.windloop/SPEC/`
-3. All spec files go inside `.windloop/SPEC/`
+1. Create `.windloop/specs/` if it doesn't exist
+2. Create `.windloop/specs/SPEC/`
+3. All spec files go inside `.windloop/specs/SPEC/`
 
 If the host project has an `AGENTS.md`, append the windloop snippet from SKILL.md. If not, create it.
 
@@ -35,7 +35,7 @@ Before gathering requirements, understand what already exists:
 - Scan the source directory structure (e.g. `src/`, `lib/`, `app/`)
 - Read key source files to understand existing patterns, conventions, and architecture
 - Note existing tests, linting config, CI setup
-- If `steering/` exists (`.windloop/steering/` or `.kiro/steering/`), read `product.md`, `structure.md`, and `tech.md` for project context
+- If steering docs exist (`.windloop/steering/` or `.kiro/steering/`), read `product.md`, `structure.md`, and `tech.md` for project context
 
 The spec should **align with the existing codebase** — preserve conventions, tech stack, and patterns unless the user explicitly asks for a rewrite.
 
