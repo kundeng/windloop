@@ -8,7 +8,7 @@ Print the following guide:
 
 **Lifecycle**: idea → `requirements.md` (why) → `design.md` (what + how) → `tasks.md` (steps) → autonomous implementation loop
 
-Specs live in `.windloop/specs/<name>/` or `.kiro/specs/<name>/` — same format, auto-detected.
+Specs live in `.windloop/specs/<name>/` or `.kiro/specs/<name>/` — same format, auto-detected. Specs are **Kiro-compatible**: the same `requirements.md` → `design.md` → `tasks.md` format and EARS acceptance criteria used by [Kiro](https://kiro.dev). Switch IDEs without losing planning artifacts.
 
 **Available commands** (all accept an optional `<spec>` name):
 

@@ -45,7 +45,17 @@ Ask the user to describe the idea, goals, and constraints. If they already provi
 
 #### 3. Generate requirements.md
 
-Create `SPEC_DIR/requirements.md` using the template from SKILL.md. This is the *why*:
+Create `SPEC_DIR/requirements.md` using the template from SKILL.md. This is the *why*.
+
+**Generate first, iterate second** — don't ask a long series of questions before producing anything. Write a complete first draft of requirements based on what you know, then iterate with the user. This is faster and gives the user something concrete to react to.
+
+**EARS format quick reference** (Easy Approach to Requirements Syntax):
+- `WHEN [event] THEN [system] SHALL [response]` — Event-driven
+- `IF [condition] THEN [system] SHALL [response]` — Conditional
+- `WHILE [state] [system] SHALL [response]` — State-driven
+- `[system] SHALL [response]` — Unconditional
+
+Requirements structure:
 - Each requirement has a **User Story** and **WHEN/SHALL Acceptance Criteria**
 - Number hierarchically: `Requirement 1`, criteria `1.1`, `1.2`, etc.
 - Include non-functional requirements (`NF 1`, `NF 2`)
@@ -57,6 +67,7 @@ Present to the user for review. Iterate until approved.
 #### 4. Generate design.md
 
 Create `SPEC_DIR/design.md` using the template from SKILL.md. This is the *what + how*:
+- Research technical approaches if the domain is unfamiliar — use available tools (web search, documentation) to inform decisions. Summarize findings in the Architecture or Decisions section, not in a separate file.
 - If existing code was found, align tech stack, directory structure, and conventions with it
 - Define module architecture and interfaces
 - Specify data flow between components

@@ -23,11 +23,18 @@ Let SPEC be the resolved spec name and SPEC_DIR be the resolved directory.
 
 8. Implement the task:
    - Read any relevant existing code first
-   - If this is a test task, write the tests and verify they pass
+   - If this is a test task, follow the **Red-Green-Refactor** cycle:
+     - **RED**: Write a failing test that describes expected behavior
+     - **GREEN**: Write the minimum code to make the test pass
+     - **REFACTOR**: Clean up without changing behavior, re-run tests
    - If this is an implementation task, write the code and run existing tests to confirm nothing breaks
    - Follow the coding conventions from `SPEC_DIR/design.md`
 
-9. Run relevant tests. If failures, analyze and fix. Retry up to 3 times. If still failing, update `SPEC_DIR/progress.txt` with a BLOCKED entry and move to the next task.
+9. Run relevant tests. If failures, analyze and fix. Retry up to 3 times. If still failing:
+   - Update `SPEC_DIR/progress.txt` with a BLOCKED entry
+   - Log the failure reason clearly (e.g. "BLOCKED 2.1 - test_auth fails: missing DB fixture")
+   - Move to the next task whose dependencies are satisfied
+   - If no unblocked tasks remain, print a summary of all blocked tasks and STOP
 
 // turbo
 10. Run the lint check if one is configured in `SPEC_DIR/design.md`. Fix any lint issues.
@@ -41,4 +48,13 @@ Let SPEC be the resolved spec name and SPEC_DIR be the resolved directory.
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [brief description]`
     - Update the `# SUMMARY:` line.
 
-14. If a task count was specified and reached, print a summary and STOP. Otherwise, go back to step 5.
+14. **Checkpoint** (every 3 completed tasks or when stopping):
+    ```
+    Checkpoint: [N]/[TOTAL] tasks done
+    Completed this session: [list task IDs and titles]
+    Tests: PASS/FAIL
+    Blocked: [list or "none"]
+    Next: [task ID and title]
+    ```
+
+15. If a task count was specified and reached, print a summary and STOP. Otherwise, go back to step 5.

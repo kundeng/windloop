@@ -18,11 +18,14 @@ Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
 
 6. Implement the task:
    - Read any relevant existing code first
-   - If this is a test task, write the tests and verify they pass
+   - If this is a test task, follow the **Red-Green-Refactor** cycle:
+     - **RED**: Write a failing test that describes expected behavior
+     - **GREEN**: Write the minimum code to make the test pass
+     - **REFACTOR**: Clean up without changing behavior, re-run tests
    - If this is an implementation task, write the code and run existing tests to confirm nothing breaks
    - Follow existing code patterns and conventions
 
-7. Run relevant tests. If failures, analyze and fix. Retry up to 3 times.
+7. Run relevant tests. If failures, analyze and fix. Retry up to 3 times. If still failing, mark as BLOCKED in progress.txt with a clear reason and STOP.
 
 // turbo
 8. Run lint if configured in `SPEC_DIR/design.md`.
@@ -36,4 +39,10 @@ Let SPEC be the resolved spec name and SPEC_DIR the resolved directory.
     - Append: `[YYYY-MM-DD HH:MM] DONE [TASK_ID] - [description]`
     - Update the `# SUMMARY:` line.
 
-12. Report completion and list any issues encountered.
+12. Report completion:
+    ```
+    Task [TASK_ID] complete: [brief description]
+    Tests: PASS/FAIL
+    Files changed: [list]
+    ```
+    List any issues encountered or follow-up items discovered.
