@@ -61,6 +61,35 @@ Requirements ──[approve]──> Design ──[approve]──> Tasks ──[a
 - After generating `tasks.md`: ask *"Do the tasks look good? Ready to implement?"*
 - **Never skip a phase or combine phases.** If running `/spec-go` (autonomous mode), the user has pre-approved all phases by invoking the command.
 
+```mermaid
+stateDiagram-v2
+  [*] --> Requirements
+
+  Requirements --> ReviewReq : Complete
+  ReviewReq --> Requirements : Changes requested
+  ReviewReq --> Design : Approved
+
+  Design --> ReviewDesign : Complete
+  ReviewDesign --> Design : Changes requested
+  ReviewDesign --> Tasks : Approved
+
+  Tasks --> ReviewTasks : Complete
+  ReviewTasks --> Tasks : Changes requested
+  ReviewTasks --> Implement : Approved
+
+  Implement --> TaskDone : Task complete
+  TaskDone --> Implement : Next task
+  TaskDone --> [*] : All tasks done
+
+  state Implement {
+    [*] --> PickTask
+    PickTask --> Code
+    Code --> Test
+    Test --> Commit
+    Commit --> UpdateProgress
+  }
+```
+
 ### Resume / Detection Protocol
 
 Determine current phase by checking which files exist in SPEC_DIR:
@@ -152,6 +181,32 @@ Let **SPEC_DIR** be the resolved directory.
 8. Commit per task: `feat(<spec>/<task>): [description]`
 9. Update `tasks.md` (checkbox) and `progress.txt` (log line) after each task.
 10. Keep changes minimal and focused.
+
+### Common Pitfalls
+
+**Vague requirements:**
+- Bad: "System should be fast"
+- Good: "WHEN user submits search THEN system SHALL return results within 2 seconds"
+
+**Implementation details in requirements:**
+- Bad: "System shall use Redis for caching"
+- Good: "WHEN user requests frequently accessed data THEN system SHALL return cached results"
+
+**Skipping phases:**
+- Bad: Jump straight to tasks.md without requirements or design
+- Good: Complete each phase, get approval, then advance
+
+**Monolithic tasks:**
+- Bad: "Implement the entire authentication system" (one task)
+- Good: Break into 30-min–2-hour tasks with clear boundaries and test coverage
+
+**Missing error cases:**
+- Bad: Only documenting the happy path
+- Good: Include WHEN/IF statements for all error conditions and edge cases
+
+**Embedding tests in implementation tasks:**
+- Bad: "Implement user model and write all tests" (one task)
+- Good: Separate tasks: "Implement user model" → "Write property test for user validation"
 
 ### Scaffolding
 
@@ -361,7 +416,14 @@ Properties that must hold true. Each validates one or more requirements.
 <!-- Known edge cases and how they should be handled -->
 
 ## Decisions
-<!-- Key design decisions and rationale -->
+
+### Decision: [Title]
+**Context:** [Situation requiring a decision]
+**Options Considered:**
+1. [Option 1] — Pros: [benefits] / Cons: [drawbacks]
+2. [Option 2] — Pros: [benefits] / Cons: [drawbacks]
+**Decision:** [Chosen option]
+**Rationale:** [Why this was selected]
 
 ## Security Considerations
 <!-- If applicable -->

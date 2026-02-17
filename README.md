@@ -2,11 +2,20 @@
 
 A spec-driven autonomous development framework for [Windsurf](https://windsurf.com). Copy one directory into any project and get an AI-powered development loop that turns ideas into working code.
 
+**Kiro-compatible specs** — Windloop uses the same `requirements.md` → `design.md` → `tasks.md` spec format and EARS acceptance criteria as [Kiro](https://kiro.dev). Specs created in Windloop work in Kiro and vice versa — switch IDEs without losing your planning artifacts.
+
+**Best-of-breed design** — We studied the top spec-driven skills on [skills.sh](https://skills.sh/?q=spec+driven) (including [jasonkneen/kiro](https://skills.sh/jasonkneen/kiro/spec-driven-development), [feiskyer/kiro-skill](https://skills.sh/feiskyer/claude-code-settings/kiro-skill), [xbklairith/kisune](https://skills.sh/xbklairith/kisune/spec-driven-planning), and [obra/superpowers](https://skills.sh/obra/superpowers)) and incorporated the strongest patterns: phase gate protocols, resume detection, quality checklists, decision documentation, and common-pitfall guardrails — on top of Windloop's unique autonomous implement loop, correctness properties, spec refinement engine, and parallel worktree execution.
+
 ## Install
 
+**Option A — Copy into your project:**
 ```bash
-# Copy .windsurf/ into your project (that's it — everything else is auto-created)
 cp -r path/to/windloop/.windsurf/ your-project/.windsurf/
+```
+
+**Option B — Install via [skills.sh](https://skills.sh):**
+```bash
+npx skills add https://github.com/kundeng/windloop/tree/main/.windsurf/skills/spec-driven-dev
 ```
 
 Then open your project in Windsurf and type `/spec-help`.
