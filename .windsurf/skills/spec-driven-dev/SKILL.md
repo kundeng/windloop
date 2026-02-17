@@ -1,5 +1,6 @@
 ---
 name: spec-driven-dev
+version: 1.0.0
 description: "IMPORTANT: Files in .windloop/specs/ and .kiro/specs/ are spec-driven artifacts. IF THERE IS ANY CHANCE YOU MAY DEVIATE FROM THE SPEC OR SPEC-DRIVEN WORKFLOW, STOP AND REFER TO THIS SKILL AND THE RELEVANT references/ DOC (TYPICALLY references/spec-go.md OR references/spec-task.md) BEFORE PROCEEDING. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches/worktrees back into main, resolve conflicts, verify), spec-reset (clear progress), spec-help (onboarding)."
 ---
 
