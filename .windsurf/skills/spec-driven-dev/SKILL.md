@@ -1,12 +1,102 @@
 ---
 name: spec-driven-dev
-version: 1.0.0
-description: "IMPORTANT: Files in .windloop/specs/ and .kiro/specs/ are spec-driven artifacts. IF THERE IS ANY CHANCE YOU MAY DEVIATE FROM THE SPEC OR SPEC-DRIVEN WORKFLOW, STOP AND REFER TO THIS SKILL AND THE RELEVANT references/ DOC (TYPICALLY references/spec-go.md OR references/spec-task.md) BEFORE PROCEEDING. NEVER edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill's rules and the relevant workflow in references/. Always check tasks.md for the next uncompleted task and follow the spec-go workflow to implement it. Commands: spec-plan (create/refine specs), spec-go (autonomous implement loop — also use for resume/continue), spec-task (single task), spec-audit (validate consistency), spec-status (dashboard), spec-merge (merge branches/worktrees back into main, resolve conflicts, verify), spec-reset (clear progress), spec-help (onboarding)."
+version: 1.1.0
+description: "Spec-driven development workflow: requirements → design → tasks → implement loop. Use when planning features, implementing from specs, or resuming work. Commands: spec-plan, spec-go, spec-task, spec-audit, spec-status, spec-merge, spec-reset, spec-help. IMPORTANT: Never edit requirements.md, design.md, tasks.md, or progress.txt without first reading this skill and the relevant references/ doc."
 ---
 
 ## Spec-Driven Development
 
 This skill powers the windloop framework. Specs live in a **spec directory** — either `.windloop/specs/<name>/` or `.kiro/specs/<name>/`. The format is the same regardless of location.
+
+### When to Use
+
+- Complex features with multiple components or integrations
+- Multi-step work where rework costs are significant
+- AI-assisted development where structured planning improves output quality
+- Team collaboration requiring shared understanding and traceability
+- Resuming implementation across sessions
+
+### When NOT to Use
+
+- Simple bug fixes with obvious one-file solutions
+- Time-critical hotfixes requiring immediate action
+- Experimental prototypes for rapid throwaway iteration
+- Trivial changes with no ambiguity
+
+### Quick Start
+
+**New feature:**
+```
+/spec-plan my-feature create
+```
+Creates `requirements.md`, `design.md`, `tasks.md`, `progress.txt` in a new spec directory. Walk through requirements → design → tasks with approval gates between each phase.
+
+**Refine existing spec:**
+```
+/spec-plan my-feature refine
+```
+Merges redundant requirements, fixes stale paths, cascades renumbering, validates traceability.
+
+**Resume implementation:**
+```
+/spec-go my-feature
+```
+Reads the spec, finds the next uncompleted task, implements it test-first, commits, and repeats.
+
+**Check progress:**
+```
+/spec-status
+```
+
+### Phase Gate Protocol
+
+Each phase requires **explicit user approval** before advancing:
+
+```
+Requirements ──[approve]──> Design ──[approve]──> Tasks ──[approve]──> Implement
+```
+
+- After generating `requirements.md`: ask *"Do the requirements look good? Ready for design?"*
+- After generating `design.md`: ask *"Does the design look good? Ready for task breakdown?"*
+- After generating `tasks.md`: ask *"Do the tasks look good? Ready to implement?"*
+- **Never skip a phase or combine phases.** If running `/spec-go` (autonomous mode), the user has pre-approved all phases by invoking the command.
+
+### Resume / Detection Protocol
+
+Determine current phase by checking which files exist in SPEC_DIR:
+
+| Files present | Phase | Next action |
+|---------------|-------|-------------|
+| None | New | `/spec-plan <name> create` — start with requirements |
+| `requirements.md` only | Design needed | Generate `design.md`, then ask for approval |
+| `requirements.md` + `design.md` | Tasks needed | Generate `tasks.md`, then ask for approval |
+| All 3 + unchecked tasks | Implementation | `/spec-go` or `/spec-task` — pick next unchecked task |
+| All tasks checked | Done | `/spec-merge` — merge branch, clean up |
+
+When resuming, **always re-read** `requirements.md`, `design.md`, and `tasks.md` before acting.
+
+### Quality Checklists
+
+**Requirements checklist** (validate before advancing to design):
+- [ ] All user roles identified
+- [ ] Normal, edge, and error cases covered
+- [ ] Every criterion uses WHEN/SHALL (EARS) format
+- [ ] Requirements are testable and measurable
+- [ ] No conflicting requirements
+
+**Design checklist** (validate before advancing to tasks):
+- [ ] All requirements addressed in design
+- [ ] Component responsibilities and interfaces specified
+- [ ] Correctness properties defined with test approaches
+- [ ] Error handling covers expected failures
+- [ ] Diagrams match system complexity
+
+**Tasks checklist** (validate before implementing):
+- [ ] Every requirement traced to ≥1 task
+- [ ] Tasks ordered to respect dependencies
+- [ ] Tests are separate tasks (not embedded)
+- [ ] Each task is independently completable
+- [ ] Scope is appropriate (30 min – 2 hours each)
 
 ### Spec Lifecycle
 
